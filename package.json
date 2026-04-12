@@ -1,0 +1,14 @@
+{
+  "name": "xyapi_doc",
+  "version": "1.0.0",
+  "description": "心雨 API - 为 AI 应用提供统一的资源与调用网关。",
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "devDependencies": {
+    "vitepress": "^1.0.0",
+    "vue": "^3.0.0"
+  }
+}
