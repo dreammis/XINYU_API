@@ -6,7 +6,7 @@
 
 您可以直接在此试听生成的音频效果：
 
-<audio controls src="/q.mp3" style="width: 100%; margin-top: 10px;"></audio>
+<audio controls src="/XINYU_API/q.mp3" style="width: 100%; margin-top: 10px;"></audio>
 
 > **提示**：这是基于我们后台实际生成的音频效果展示。
 
