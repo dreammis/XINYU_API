@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
+  base: '/XINYU_API/',
   title: "心雨 API",
   description: "全聚合模型接口层 · 100+ 热门模型",
   themeConfig: {
