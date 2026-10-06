@@ -25,7 +25,7 @@ OpenAPI 描述路径、方法、鉴权、参数、默认值、响应和示例；
 
 只修改源工程适配器和对应公开契约。字段、默认值、限制或结果改变时更新规范版本和指南，保持公开示例测试通过。发布未完成时不要将待上线能力写入已发布契约。
 
-源工程通知 → 文档仓库读取登记 ref → 记录提交 SHA 和哈希 → 构建与校验 → 提交 catalog/gitbook → Cloudflare Pages 自动构建部署。
+源工程通知 → 文档仓库读取登记 ref → 记录提交 SHA 和哈希 → 构建与校验 → 提交 catalog、gitbook 和 site/public-endpoints.mjs → Cloudflare Pages 自动构建部署。
 
 通知不携带正文，汇总站只读取已登记文件。内部报告、调试 JSON、渠道密钥不会因为位于源工程就自动进入页面。
 
@@ -35,7 +35,7 @@ OpenAPI 描述路径、方法、鉴权、参数、默认值、响应和示例；
 
 当前来源 ref 为 main。本次首次导入来自本机工作区，新增文件未提交，`catalog/*/provenance.json` 如实记录 workingTreeChanges。因此 GitHub 自动导入尚未具备全部远程文件。
 
-文档仓库本次已发布到 master 并导入 GitBook，首次展示的是已经校验的本机快照。自动远端导入还需先提交源工程公开导出文件和已上线适配器。图片 plugin.js 原本尚未跟踪，源工程发布提交必须包含实际插件；否则公开契约测试无法读取其实现。不要只提交测试而漏掉实现。
+文档仓库本次已发布到 master，Cloudflare Pages 已成功自动部署，当前展示的是已经校验的本机快照。此前 GitBook 导入保留为历史记录。自动远端导入还需先提交源工程公开导出文件和已上线适配器，并配置 DOCS_SOURCE_TOKEN / DOCS_DISPATCH_TOKEN。图片 plugin.js 原本尚未跟踪，源工程发布提交必须包含实际插件；否则公开契约测试无法读取其实现。不要只提交测试而漏掉实现。
 
 源工程 integrations/newapi/AGENTS.md 和文档仓库 AGENTS.md 已记录维护入口，让后续代码助手随接口改动更新公开契约。当前托管、自动部署与域名状态见 cloudflare-setup.md；GitBook 历史状态见 gitbook-setup.md。
 
