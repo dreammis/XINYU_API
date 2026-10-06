@@ -1,0 +1,16 @@
+{
+  "repository": "dreammis/vidu2api",
+  "revision": "c66fb5e475e16130fe4615244bc34aeadbbcfc1b",
+  "ref": "main",
+  "workingTreeChanges": [
+    "?? integrations/newapi/media-video/public-docs.json",
+    "?? integrations/newapi/media-video/public-guide.en.md",
+    "?? integrations/newapi/media-video/public-openapi.json"
+  ],
+  "hashes": {
+    "public-docs.json": "fcbd30a571895b2331b1f4d430a37a3664dbe6de4fd74255c0fc5b575b021af3",
+    "openapi.json": "a5b3f9edd1546f0699bf846567be5e333a610f4e8573f322ff7958667e1ea6c7",
+    "guide.zh.md": "ea7616c3ca1646902e4a702238782c843ca1e9fd4f823c102ed4a44d97e956c7",
+    "guide.en.md": "89df0e1c2bad4fbb2395af3f85ee3935697192ff00c0867b777d375337c7acc3"
+  }
+}

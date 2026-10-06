@@ -1,0 +1,1445 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "XY API Videos",
+    "version": "1.0.0",
+    "description": "XY API public gateway contract. Product route names do not imply an original-provider connection."
+  },
+  "servers": [
+    {
+      "url": "https://openai.2yanx.dpdns.org"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Videos"
+    }
+  ],
+  "paths": {
+    "/v1/videos": {
+      "post": {
+        "tags": [
+          "Videos"
+        ],
+        "operationId": "createVideo",
+        "summary": "Create a video task",
+        "x-title-zh": "创建视频任务",
+        "description": "Create one asynchronous task. Fixed per-video billing; failed tasks are refunded. Do not re-submit after a client timeout without checking the existing task.",
+        "responses": {
+          "200": {
+            "description": "Task accepted. Save id and poll; task status determines eventual success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VideoTask"
+                },
+                "example": {
+                  "id": "task_EXAMPLE",
+                  "object": "video",
+                  "status": "queued",
+                  "progress": 0,
+                  "created_at": 1790980000
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unsupported or conflicting parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid customer API Key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Capacity or rate limit exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateVideoRequest"
+              },
+              "example": {
+                "model": "cogvideo-fast",
+                "prompt": "红色纸船在平静的池塘上缓缓漂浮",
+                "seconds": "5",
+                "size": "1920x1080"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "model",
+                  "prompt"
+                ],
+                "properties": {
+                  "model": {
+                    "type": "string",
+                    "enum": [
+                      "cogvideo-fast",
+                      "cogvideo-pro",
+                      "cogvideo-basic",
+                      "cogvideo-short"
+                    ]
+                  },
+                  "prompt": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4096,
+                    "pattern": "\\S",
+                    "description": "Non-blank prompt, at most 4096 Unicode characters."
+                  },
+                  "seconds": {
+                    "oneOf": [
+                      {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 10
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(10|[1-9])$"
+                      }
+                    ],
+                    "description": "Defaults: fast/pro/basic=5; short=8. Basic maximum 5; reference mode minimum 3; short exactly 8."
+                  },
+                  "duration": {
+                    "oneOf": [
+                      {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 10
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(10|[1-9])$"
+                      }
+                    ],
+                    "description": "Defaults: fast/pro/basic=5; short=8. Basic maximum 5; reference mode minimum 3; short exactly 8."
+                  },
+                  "size": {
+                    "type": "string",
+                    "enum": [
+                      "1920x1080",
+                      "1080x1920",
+                      "1080x1080",
+                      "1440x1080",
+                      "1080x1440",
+                      "720x1280"
+                    ],
+                    "description": "fast/pro/basic: 1080p sizes only; short: 720x1280 only. Actual encoding dimensions are read from the file."
+                  },
+                  "resolution": {
+                    "enum": [
+                      "1080p",
+                      "720p"
+                    ]
+                  },
+                  "aspect_ratio": {
+                    "enum": [
+                      "16:9",
+                      "9:16",
+                      "1:1",
+                      "4:3",
+                      "3:4"
+                    ]
+                  },
+                  "input_reference": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "At most one image file, 20 MiB maximum."
+                  },
+                  "image_url": {
+                    "type": "string",
+                    "pattern": "^(https?://|data:image/)",
+                    "description": "HTTP(S) image URL or Base64 image data URL."
+                  },
+                  "reference_images": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "pattern": "^(https?://|data:image/)",
+                      "description": "HTTP(S) image URL or Base64 image data URL."
+                    }
+                  },
+                  "generation_mode": {
+                    "enum": [
+                      "speed",
+                      "pro",
+                      "pro_ad"
+                    ]
+                  },
+                  "n": {
+                    "type": "integer",
+                    "const": 1,
+                    "default": 1
+                  },
+                  "sample_count": {
+                    "type": "integer",
+                    "const": 1,
+                    "default": 1
+                  },
+                  "metadata": {
+                    "type": "string",
+                    "description": "JSON-encoded metadata object."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-description-zh": "创建一个异步视频任务，按条计费，失败退款。保存任务 ID；客户端超时后先检查原任务，避免重复生成。"
+      }
+    },
+    "/v1/videos/{video_id}": {
+      "get": {
+        "tags": [
+          "Videos"
+        ],
+        "operationId": "getVideo",
+        "summary": "Get video task status",
+        "x-title-zh": "查询视频状态",
+        "description": "Poll every 3–5 seconds using a customer key belonging to the task owner. Completed tasks can be downloaded via /content.",
+        "responses": {
+          "200": {
+            "description": "Current status.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VideoTask"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unsupported or conflicting parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid customer API Key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Task is not accessible.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Capacity or rate limit exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "x-description-zh": "使用任务所属账户的客户密钥，每 3–5 秒查询一次。完成后从 /content 下载文件。"
+      },
+      "parameters": [
+        {
+          "name": "video_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID returned by the create operation."
+        }
+      ]
+    },
+    "/v1/videos/{video_id}/content": {
+      "parameters": [
+        {
+          "name": "video_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "ID returned by the create operation."
+        }
+      ],
+      "get": {
+        "tags": [
+          "Videos"
+        ],
+        "operationId": "downloadVideo",
+        "summary": "Download a video",
+        "x-title-zh": "下载视频",
+        "description": "Use the task owner customer key. Available after status=completed. Supports HEAD and byte Range.",
+        "responses": {
+          "200": {
+            "description": "Full completed video.",
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "206": {
+            "description": "Partial content for a Range request.",
+            "headers": {
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "video/mp4": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unsupported or conflicting parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid customer API Key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Task/content is not accessible or unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Capacity or rate limit exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Range",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "bytes=0-1023"
+          }
+        ],
+        "x-description-zh": "任务完成后下载视频，使用任务所属账户的客户密钥，支持 HEAD 与 Range。"
+      },
+      "head": {
+        "tags": [
+          "Videos"
+        ],
+        "operationId": "headVideo",
+        "summary": "Inspect video headers",
+        "x-title-zh": "检查视频文件",
+        "description": "Read content headers without downloading a body.",
+        "responses": {
+          "200": {
+            "description": "Video headers only."
+          },
+          "400": {
+            "description": "Unsupported or conflicting parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid customer API Key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Content unavailable."
+          },
+          "429": {
+            "description": "Capacity or rate limit exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "x-description-zh": "读取文件响应头，不下载正文。"
+      }
+    },
+    "/v1/responses": {
+      "post": {
+        "tags": [
+          "Videos"
+        ],
+        "operationId": "createVideoResponse",
+        "summary": "Stream or run a video response",
+        "x-title-zh": "视频 stream 与后台调用",
+        "description": "stream=true reports progress and a final video link via Responses SSE, ending with response.completed. background=true returns a resp_ ID to poll. SSE does not contain video frames.",
+        "responses": {
+          "200": {
+            "description": "Response envelope or Responses SSE; inspect the terminal response status, not HTTP status alone.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VideoResponse"
+                }
+              },
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unsupported or conflicting parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid customer API Key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Capacity or rate limit exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VideoResponseRequest"
+              },
+              "example": {
+                "model": "cogvideo-fast",
+                "input": "红色纸船在池塘上缓缓漂浮",
+                "seconds": "5",
+                "stream": true
+              }
+            }
+          }
+        },
+        "x-description-zh": "stream:true 返回进度和最终视频链接，以 response.completed 结束；background:true 返回 resp_ ID 供后续查询。流中没有实时视频帧。"
+      }
+    },
+    "/v1/responses/{response_id}": {
+      "get": {
+        "tags": [
+          "Videos"
+        ],
+        "operationId": "getVideoResponse",
+        "summary": "Get a background video response",
+        "x-title-zh": "查询后台 Response",
+        "description": "Poll the resp_ ID returned by background=true. Preserve metadata.task_id for video download.",
+        "responses": {
+          "200": {
+            "description": "Current response state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VideoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unsupported or conflicting parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid customer API Key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Response is not accessible.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Capacity or rate limit exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "x-description-zh": "查询 background:true 返回的 resp_ ID。metadata.task_id 可用于下载视频。"
+      },
+      "parameters": [
+        {
+          "name": "response_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Customer API Key from the console, not an administrator token."
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "CreateVideoRequest": {
+        "type": "object",
+        "required": [
+          "model",
+          "prompt"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "model": {
+            "type": "string",
+            "enum": [
+              "cogvideo-fast",
+              "cogvideo-pro",
+              "cogvideo-basic",
+              "cogvideo-short"
+            ],
+            "x-description-zh": "本站公开调用名称，具体能力与限制见指南。"
+          },
+          "prompt": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096,
+            "pattern": "\\S",
+            "description": "Non-blank prompt, at most 4096 Unicode characters.",
+            "x-description-zh": "必填，不能为空白，最多 4096 个 Unicode 字符。"
+          },
+          "seconds": {
+            "oneOf": [
+              {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10
+              },
+              {
+                "type": "string",
+                "pattern": "^(10|[1-9])$"
+              }
+            ],
+            "description": "Defaults: fast/pro/basic=5; short=8. Basic maximum 5; reference mode minimum 3; short exactly 8.",
+            "x-description-zh": "整数或整数字符串。fast/pro/basic 默认 5 秒，short 固定 8 秒；basic 最多 5 秒，参考生视频至少 3 秒。"
+          },
+          "duration": {
+            "oneOf": [
+              {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10
+              },
+              {
+                "type": "string",
+                "pattern": "^(10|[1-9])$"
+              }
+            ],
+            "description": "Defaults: fast/pro/basic=5; short=8. Basic maximum 5; reference mode minimum 3; short exactly 8.",
+            "x-description-zh": "seconds 的兼容名称，两种写法同时出现时必须一致。"
+          },
+          "size": {
+            "type": "string",
+            "enum": [
+              "1920x1080",
+              "1080x1920",
+              "1080x1080",
+              "1440x1080",
+              "1080x1440",
+              "720x1280"
+            ],
+            "description": "fast/pro/basic: 1080p sizes only; short: 720x1280 only. Actual encoding dimensions are read from the file.",
+            "x-description-zh": "fast/pro/basic 仅接受 1080p 尺寸，short 仅接受 720x1280；具体枚举见指南。"
+          },
+          "resolution": {
+            "enum": [
+              "1080p",
+              "720p"
+            ],
+            "x-description-zh": "fast/pro/basic 为 1080p，short 为 720p。"
+          },
+          "aspect_ratio": {
+            "enum": [
+              "16:9",
+              "9:16",
+              "1:1",
+              "4:3",
+              "3:4"
+            ],
+            "x-description-zh": "画面比例；图片默认 1:1，普通视频默认 16:9，short 固定 9:16。"
+          },
+          "input_reference": {
+            "type": "string",
+            "pattern": "^(https?://|data:image/)",
+            "description": "HTTP(S) image URL or Base64 image data URL.",
+            "x-description-zh": "单张参考图片 URL / data URL；multipart 使用一个文件，最多 20 MiB。"
+          },
+          "image_url": {
+            "type": "string",
+            "pattern": "^(https?://|data:image/)",
+            "description": "HTTP(S) image URL or Base64 image data URL.",
+            "x-description-zh": "单张 HTTP(S) 图片 URL 或图片 Base64 data URL。"
+          },
+          "reference_images": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^(https?://|data:image/)",
+              "description": "HTTP(S) image URL or Base64 image data URL."
+            },
+            "x-description-zh": "非空参考图 URL / data URL 数组；与单图输入互斥。"
+          },
+          "generation_mode": {
+            "enum": [
+              "speed",
+              "pro",
+              "pro_ad"
+            ],
+            "x-description-zh": "仅参考生视频使用，默认 pro_ad。"
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "mode": {
+                "enum": [
+                  "text_to_video",
+                  "image_to_video",
+                  "reference_to_video"
+                ],
+                "description": "Must match supplied images."
+              },
+              "resolution": {
+                "enum": [
+                  "1080p",
+                  "720p"
+                ]
+              },
+              "aspect_ratio": {
+                "enum": [
+                  "16:9",
+                  "9:16",
+                  "1:1",
+                  "4:3",
+                  "3:4"
+                ]
+              },
+              "reference_images": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "pattern": "^(https?://|data:image/)",
+                  "description": "HTTP(S) image URL or Base64 image data URL."
+                }
+              },
+              "generation_mode": {
+                "enum": [
+                  "speed",
+                  "pro",
+                  "pro_ad"
+                ],
+                "default": "pro_ad",
+                "description": "Reference mode only."
+              }
+            },
+            "x-description-zh": "视频扩展参数对象；multipart 表单使用 JSON 编码字符串。"
+          },
+          "n": {
+            "type": "integer",
+            "const": 1,
+            "default": 1,
+            "x-description-zh": "每次仅生成一个产物。"
+          },
+          "sample_count": {
+            "type": "integer",
+            "const": 1,
+            "default": 1,
+            "x-description-zh": "仅接受 1，不支持多产物。"
+          }
+        },
+        "allOf": [
+          {
+            "not": {
+              "required": [
+                "input_reference",
+                "image_url"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "model": {
+                  "const": "cogvideo-basic"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "seconds": {
+                  "oneOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 5
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[1-5]$"
+                    }
+                  ]
+                },
+                "duration": {
+                  "oneOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 5
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[1-5]$"
+                    }
+                  ]
+                }
+              },
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "reference_images"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "metadata"
+                    ],
+                    "properties": {
+                      "metadata": {
+                        "required": [
+                          "reference_images"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "model": {
+                  "const": "cogvideo-short"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "seconds": {
+                  "enum": [
+                    8,
+                    "8"
+                  ]
+                },
+                "duration": {
+                  "enum": [
+                    8,
+                    "8"
+                  ]
+                },
+                "size": {
+                  "const": "720x1280"
+                },
+                "resolution": {
+                  "const": "720p"
+                },
+                "aspect_ratio": {
+                  "const": "9:16"
+                }
+              },
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "input_reference"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "image_url"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "reference_images"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "metadata"
+                    ],
+                    "properties": {
+                      "metadata": {
+                        "required": [
+                          "reference_images"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "else": {
+              "properties": {
+                "size": {
+                  "enum": [
+                    "1920x1080",
+                    "1080x1920",
+                    "1080x1080",
+                    "1440x1080",
+                    "1080x1440"
+                  ]
+                },
+                "resolution": {
+                  "const": "1080p"
+                }
+              }
+            }
+          }
+        ],
+        "description": "Conflicting aliases/metadata are rejected. Single-image and reference-image inputs are mutually exclusive. For reference mode use fast/pro and 3–10 seconds."
+      },
+      "VideoTask": {
+        "type": "object",
+        "required": [
+          "id",
+          "object",
+          "status",
+          "progress",
+          "created_at"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "object": {
+            "const": "video"
+          },
+          "status": {
+            "enum": [
+              "queued",
+              "in_progress",
+              "completed",
+              "failed",
+              "unknown"
+            ],
+            "description": "unknown means an unrecognized task state; do not interpret as completion."
+          },
+          "progress": {
+            "type": "number"
+          },
+          "created_at": {
+            "type": "integer"
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "const": "video_generation_failed"
+              },
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "description": "Task status only. Download completed video with /v1/videos/{video_id}/content; no data[0].url is exposed here."
+      },
+      "VideoResponseRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "model"
+        ],
+        "properties": {
+          "model": {
+            "type": "string",
+            "enum": [
+              "cogvideo-fast",
+              "cogvideo-pro",
+              "cogvideo-basic",
+              "cogvideo-short"
+            ],
+            "x-description-zh": "本站公开调用名称，具体能力与限制见指南。"
+          },
+          "prompt": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096,
+            "pattern": "\\S",
+            "description": "Non-blank prompt, at most 4096 Unicode characters.",
+            "x-description-zh": "必填，不能为空白，最多 4096 个 Unicode 字符。"
+          },
+          "seconds": {
+            "oneOf": [
+              {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10
+              },
+              {
+                "type": "string",
+                "pattern": "^(10|[1-9])$"
+              }
+            ],
+            "description": "Defaults: fast/pro/basic=5; short=8. Basic maximum 5; reference mode minimum 3; short exactly 8.",
+            "x-description-zh": "整数或整数字符串。fast/pro/basic 默认 5 秒，short 固定 8 秒；basic 最多 5 秒，参考生视频至少 3 秒。"
+          },
+          "duration": {
+            "oneOf": [
+              {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10
+              },
+              {
+                "type": "string",
+                "pattern": "^(10|[1-9])$"
+              }
+            ],
+            "description": "Defaults: fast/pro/basic=5; short=8. Basic maximum 5; reference mode minimum 3; short exactly 8.",
+            "x-description-zh": "seconds 的兼容名称，两种写法同时出现时必须一致。"
+          },
+          "size": {
+            "type": "string",
+            "enum": [
+              "1920x1080",
+              "1080x1920",
+              "1080x1080",
+              "1440x1080",
+              "1080x1440",
+              "720x1280"
+            ],
+            "description": "fast/pro/basic: 1080p sizes only; short: 720x1280 only. Actual encoding dimensions are read from the file.",
+            "x-description-zh": "fast/pro/basic 仅接受 1080p 尺寸，short 仅接受 720x1280；具体枚举见指南。"
+          },
+          "resolution": {
+            "enum": [
+              "1080p",
+              "720p"
+            ],
+            "x-description-zh": "fast/pro/basic 为 1080p，short 为 720p。"
+          },
+          "aspect_ratio": {
+            "enum": [
+              "16:9",
+              "9:16",
+              "1:1",
+              "4:3",
+              "3:4"
+            ],
+            "x-description-zh": "画面比例；图片默认 1:1，普通视频默认 16:9，short 固定 9:16。"
+          },
+          "input_reference": {
+            "type": "string",
+            "pattern": "^(https?://|data:image/)",
+            "description": "HTTP(S) image URL or Base64 image data URL.",
+            "x-description-zh": "单张参考图片 URL / data URL；multipart 使用一个文件，最多 20 MiB。"
+          },
+          "image_url": {
+            "type": "string",
+            "pattern": "^(https?://|data:image/)",
+            "description": "HTTP(S) image URL or Base64 image data URL.",
+            "x-description-zh": "单张 HTTP(S) 图片 URL 或图片 Base64 data URL。"
+          },
+          "reference_images": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^(https?://|data:image/)",
+              "description": "HTTP(S) image URL or Base64 image data URL."
+            },
+            "x-description-zh": "非空参考图 URL / data URL 数组；与单图输入互斥。"
+          },
+          "generation_mode": {
+            "enum": [
+              "speed",
+              "pro",
+              "pro_ad"
+            ],
+            "x-description-zh": "仅参考生视频使用，默认 pro_ad。"
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "mode": {
+                "enum": [
+                  "text_to_video",
+                  "image_to_video",
+                  "reference_to_video"
+                ],
+                "description": "Must match supplied images."
+              },
+              "resolution": {
+                "enum": [
+                  "1080p",
+                  "720p"
+                ]
+              },
+              "aspect_ratio": {
+                "enum": [
+                  "16:9",
+                  "9:16",
+                  "1:1",
+                  "4:3",
+                  "3:4"
+                ]
+              },
+              "reference_images": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "pattern": "^(https?://|data:image/)",
+                  "description": "HTTP(S) image URL or Base64 image data URL."
+                }
+              },
+              "generation_mode": {
+                "enum": [
+                  "speed",
+                  "pro",
+                  "pro_ad"
+                ],
+                "default": "pro_ad",
+                "description": "Reference mode only."
+              }
+            },
+            "x-description-zh": "视频扩展参数对象；multipart 表单使用 JSON 编码字符串。"
+          },
+          "n": {
+            "type": "integer",
+            "const": 1,
+            "default": 1,
+            "x-description-zh": "每次仅生成一个产物。"
+          },
+          "sample_count": {
+            "type": "integer",
+            "const": 1,
+            "default": 1,
+            "x-description-zh": "仅接受 1，不支持多产物。"
+          },
+          "input": {
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "object",
+                      "description": "Message content with input_text/text and input_image/image_url parts. See guide for structured input."
+                    }
+                  ]
+                }
+              }
+            ],
+            "description": "Text or structured text/image messages; cannot be combined with prompt.",
+            "x-description-zh": "提示词文本或由 input_text/input_image 等内容组成的消息数组，与 prompt 互斥。"
+          },
+          "stream": {
+            "type": "boolean",
+            "default": false,
+            "x-description-zh": "true 返回视频任务进度和最终视频链接。"
+          },
+          "background": {
+            "type": "boolean",
+            "default": false,
+            "x-description-zh": "true 时立即返回 Response ID，之后查询结果。"
+          },
+          "store": {
+            "type": "boolean",
+            "description": "Responses protocol field accepted by the host.",
+            "x-description-zh": "宿主接受的 Responses 协议字段。"
+          }
+        },
+        "oneOf": [
+          {
+            "required": [
+              "input"
+            ],
+            "not": {
+              "required": [
+                "prompt"
+              ]
+            }
+          },
+          {
+            "required": [
+              "prompt"
+            ],
+            "not": {
+              "required": [
+                "input"
+              ]
+            }
+          }
+        ],
+        "allOf": [
+          {
+            "not": {
+              "required": [
+                "input_reference",
+                "image_url"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "model": {
+                  "const": "cogvideo-basic"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "seconds": {
+                  "oneOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 5
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[1-5]$"
+                    }
+                  ]
+                },
+                "duration": {
+                  "oneOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 5
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[1-5]$"
+                    }
+                  ]
+                }
+              },
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "reference_images"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "metadata"
+                    ],
+                    "properties": {
+                      "metadata": {
+                        "required": [
+                          "reference_images"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "model": {
+                  "const": "cogvideo-short"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "seconds": {
+                  "enum": [
+                    8,
+                    "8"
+                  ]
+                },
+                "duration": {
+                  "enum": [
+                    8,
+                    "8"
+                  ]
+                },
+                "size": {
+                  "const": "720x1280"
+                },
+                "resolution": {
+                  "const": "720p"
+                },
+                "aspect_ratio": {
+                  "const": "9:16"
+                }
+              },
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "input_reference"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "image_url"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "reference_images"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "metadata"
+                    ],
+                    "properties": {
+                      "metadata": {
+                        "required": [
+                          "reference_images"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "else": {
+              "properties": {
+                "size": {
+                  "enum": [
+                    "1920x1080",
+                    "1080x1920",
+                    "1080x1080",
+                    "1440x1080",
+                    "1080x1440"
+                  ]
+                },
+                "resolution": {
+                  "const": "1080p"
+                }
+              }
+            }
+          }
+        ],
+        "description": "Use stream=true or background=true for long video requests. Video-specific fields are site extensions; no chat/completions protocol."
+      },
+      "VideoResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "object": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "task_id": {
+                "type": "string"
+              }
+            },
+            "x-description-zh": "视频扩展参数对象；multipart 表单使用 JSON 编码字符串。"
+          },
+          "output": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string"
+                      },
+                      "text": {
+                        "type": "string",
+                        "description": "HTML video element with a private sharing URL. Protect it as a bearer capability."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Response envelope from New API. Successful output[].content[].text contains an HTML video element. metadata.task_id can be used for authenticated /content download."
+      }
+    }
+  }
+}

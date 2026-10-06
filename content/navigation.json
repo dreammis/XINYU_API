@@ -1,0 +1,8 @@
+[
+  { "file": "README.md", "title": { "zh": "欢迎使用 XY API", "en": "Welcome to XY API" } },
+  { "file": "quickstart.md", "title": { "zh": "快速开始", "en": "Quickstart" } },
+  { "file": "authentication.md", "title": { "zh": "鉴权", "en": "Authentication" } },
+  { "file": "billing.md", "title": { "zh": "计费", "en": "Billing" } },
+  { "file": "errors.md", "title": { "zh": "错误与任务恢复", "en": "Errors and task recovery" } },
+  { "file": "elevenlabs-tts.md", "title": { "zh": "ElevenLabs TTS（原有文档）", "en": "ElevenLabs TTS (existing documentation)" } }
+]

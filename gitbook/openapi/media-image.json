@@ -1,0 +1,1031 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "XY API Images",
+    "version": "1.1.1",
+    "description": "XY API public gateway contract. Product route names do not imply an original-provider connection."
+  },
+  "servers": [
+    {
+      "url": "https://openai.2yanx.dpdns.org"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Images"
+    }
+  ],
+  "paths": {
+    "/v1/images/generations": {
+      "post": {
+        "tags": [
+          "Images"
+        ],
+        "operationId": "generateImage",
+        "summary": "Generate an image",
+        "x-title-zh": "生成图片",
+        "description": "Generate one image. Prefer stream=true for long requests. See the image guide for model-specific quality and pixel limits.",
+        "responses": {
+          "200": {
+            "description": "JSON result, or SSE comment heartbeats then a completion/error event. HTTP 200 alone is not proof of generation success.",
+            "headers": {
+              "X-Image-Request-Id": {
+                "description": "Request ID for support; may differ from the final New API request_id.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImageResult"
+                },
+                "example": {
+                  "created": 1790980000,
+                  "data": [
+                    {
+                      "url": "https://s3.yanxinyu.ggff.net/media_outputs/0123456789abcdef0123456789abcdef.png"
+                    }
+                  ]
+                }
+              },
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "event: image_url.completed\ndata: {\"type\":\"image_url.completed\",\"operation\":\"generate\",\"url\":\"https://s3.yanxinyu.ggff.net/media_outputs/0123456789abcdef0123456789abcdef.png\",\"request_id\":\"REQUEST_ID\",\"created_at\":1790980000}\n\ndata: [DONE]\n\n"
+              }
+            }
+          },
+          "400": {
+            "description": "Unsupported or conflicting parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid customer API Key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request exceeds upload limits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Capacity or rate limit exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Generation or image delivery failed; do not automatically resubmit.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "507": {
+            "description": "Insufficient capacity before submission.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImageGenerationRequest"
+              },
+              "example": {
+                "model": "gpt-image-2",
+                "prompt": "白色背景上的黄色圆形，简洁插画",
+                "resolution": "4k",
+                "aspect_ratio": "16:9",
+                "stream": true,
+                "delivery": "url"
+              }
+            }
+          }
+        },
+        "x-description-zh": "生成一张图片。耗时请求建议开启 stream；各模型的质量与实际像素限制见图片指南。"
+      }
+    },
+    "/v1/images/edits": {
+      "post": {
+        "tags": [
+          "Images"
+        ],
+        "operationId": "editImage",
+        "summary": "Edit an image",
+        "x-title-zh": "编辑图片",
+        "description": "Reference-image editing without masks. JSON image accepts one or more sources. Multipart uses image or repeated image[] files, each at most 20 MiB.",
+        "responses": {
+          "200": {
+            "description": "JSON result, or SSE comment heartbeats then a completion/error event. HTTP 200 alone is not proof of generation success.",
+            "headers": {
+              "X-Image-Request-Id": {
+                "description": "Request ID for support; may differ from the final New API request_id.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImageResult"
+                },
+                "example": {
+                  "created": 1790980000,
+                  "data": [
+                    {
+                      "url": "https://s3.yanxinyu.ggff.net/media_outputs/0123456789abcdef0123456789abcdef.png"
+                    }
+                  ]
+                }
+              },
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "event: image_url.completed\ndata: {\"type\":\"image_url.completed\",\"operation\":\"generate\",\"url\":\"https://s3.yanxinyu.ggff.net/media_outputs/0123456789abcdef0123456789abcdef.png\",\"request_id\":\"REQUEST_ID\",\"created_at\":1790980000}\n\ndata: [DONE]\n\n"
+              }
+            }
+          },
+          "400": {
+            "description": "Unsupported or conflicting parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid customer API Key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request exceeds upload limits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Capacity or rate limit exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Generation or image delivery failed; do not automatically resubmit.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "507": {
+            "description": "Insufficient capacity before submission.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImageEditRequest"
+              },
+              "example": {
+                "model": "gemini-3-pro-image",
+                "prompt": "保持构图，将红色改为蓝色",
+                "image": "https://example.com/reference.png",
+                "stream": true,
+                "partial_images": 0
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "model",
+                  "prompt"
+                ],
+                "properties": {
+                  "model": {
+                    "type": "string",
+                    "enum": [
+                      "gemini-3.1-flash-lite-image",
+                      "gemini-3.1-flash-image",
+                      "gemini-3-pro-image",
+                      "gpt-image-2.5-fast",
+                      "gpt-image-2.5-pro",
+                      "gpt-image-2",
+                      "image-basic",
+                      "image-fast",
+                      "image-pro",
+                      "image-creative"
+                    ],
+                    "description": "Public product route. Lite accepts 1K only."
+                  },
+                  "prompt": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4096,
+                    "pattern": "\\S",
+                    "description": "Non-blank prompt, at most 4096 Unicode characters."
+                  },
+                  "size": {
+                    "type": "string",
+                    "enum": [
+                      "auto",
+                      "1024x1024",
+                      "1536x1024",
+                      "1024x1536",
+                      "1792x1024",
+                      "1024x1792",
+                      "2048x2048",
+                      "2048x1152",
+                      "1152x2048",
+                      "4096x4096",
+                      "4096x2304",
+                      "2304x4096"
+                    ],
+                    "description": "Target tier and aspect ratio; actual output pixels depend on the model. Must agree with resolution/aspect_ratio."
+                  },
+                  "resolution": {
+                    "type": "string",
+                    "pattern": "^(1[kK]|1080[pP]|2[kK]|4[kK])$",
+                    "default": "1k",
+                    "description": "Case-insensitive tier; Lite only accepts 1k/1080p."
+                  },
+                  "aspect_ratio": {
+                    "type": "string",
+                    "enum": [
+                      "1:1",
+                      "16:9",
+                      "9:16",
+                      "4:3",
+                      "3:4",
+                      "3:2",
+                      "2:3",
+                      "21:9"
+                    ],
+                    "default": "1:1"
+                  },
+                  "quality": {
+                    "type": "string",
+                    "enum": [
+                      "auto",
+                      "standard",
+                      "hd"
+                    ],
+                    "description": "Fixed per model; standard for Lite/Flash/2.5-fast/basic/fast, hd for Pro/2.5-pro/2/pro/creative. auto accepts the fixed tier."
+                  },
+                  "n": {
+                    "type": "integer",
+                    "const": 1,
+                    "default": 1
+                  },
+                  "response_format": {
+                    "type": "string",
+                    "enum": [
+                      "url",
+                      "b64_json"
+                    ],
+                    "default": "url",
+                    "description": "Non-streaming response defaults to URL. Default SSE still embeds Base64, even when url is requested."
+                  },
+                  "enhance": {
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "stream": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Use true for SSE heartbeats followed by a completion event. No partial previews."
+                  },
+                  "partial_images": {
+                    "type": "integer",
+                    "const": 0
+                  },
+                  "delivery": {
+                    "type": "string",
+                    "const": "url",
+                    "description": "Site extension: stream=true only, incompatible with response_format=b64_json. Emits image_url.completed."
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "One reference file. For multiple files use repeated image[]. At most 20 MiB per file."
+                  },
+                  "image[]": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                },
+                "oneOf": [
+                  {
+                    "required": [
+                      "image"
+                    ],
+                    "not": {
+                      "required": [
+                        "image[]"
+                      ]
+                    }
+                  },
+                  {
+                    "required": [
+                      "image[]"
+                    ],
+                    "not": {
+                      "required": [
+                        "image"
+                      ]
+                    }
+                  }
+                ],
+                "description": "Boolean form fields use true/false; n and partial_images are integer strings."
+              }
+            }
+          }
+        },
+        "x-description-zh": "基于参考图编辑，不支持遮罩。JSON 使用 image；multipart 使用 image 或重复 image[] 文件字段，单文件最多 20 MiB。"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Customer API Key from the console, not an administrator token."
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "ImageGenerationRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "model",
+          "prompt"
+        ],
+        "properties": {
+          "model": {
+            "type": "string",
+            "enum": [
+              "gemini-3.1-flash-lite-image",
+              "gemini-3.1-flash-image",
+              "gemini-3-pro-image",
+              "gpt-image-2.5-fast",
+              "gpt-image-2.5-pro",
+              "gpt-image-2",
+              "image-basic",
+              "image-fast",
+              "image-pro",
+              "image-creative"
+            ],
+            "description": "Public product route. Lite accepts 1K only.",
+            "x-description-zh": "本站公开调用名称，具体能力与限制见指南。"
+          },
+          "prompt": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096,
+            "pattern": "\\S",
+            "description": "Non-blank prompt, at most 4096 Unicode characters.",
+            "x-description-zh": "必填，不能为空白，最多 4096 个 Unicode 字符。"
+          },
+          "size": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "1024x1024",
+              "1536x1024",
+              "1024x1536",
+              "1792x1024",
+              "1024x1792",
+              "2048x2048",
+              "2048x1152",
+              "1152x2048",
+              "4096x4096",
+              "4096x2304",
+              "2304x4096"
+            ],
+            "description": "Target tier and aspect ratio; actual output pixels depend on the model. Must agree with resolution/aspect_ratio.",
+            "x-description-zh": "分辨率档位与比例预设，实际像素以返回文件为准；必须与 resolution/aspect_ratio 一致。"
+          },
+          "resolution": {
+            "type": "string",
+            "pattern": "^(1[kK]|1080[pP]|2[kK]|4[kK])$",
+            "default": "1k",
+            "description": "Case-insensitive tier; Lite only accepts 1k/1080p.",
+            "x-description-zh": "分辨率档位大小写不敏感，默认 1K，Lite 仅支持 1K。"
+          },
+          "aspect_ratio": {
+            "type": "string",
+            "enum": [
+              "1:1",
+              "16:9",
+              "9:16",
+              "4:3",
+              "3:4",
+              "3:2",
+              "2:3",
+              "21:9"
+            ],
+            "default": "1:1",
+            "x-description-zh": "画面比例；图片默认 1:1，普通视频默认 16:9，short 固定 9:16。"
+          },
+          "quality": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "standard",
+              "hd"
+            ],
+            "description": "Fixed per model; standard for Lite/Flash/2.5-fast/basic/fast, hd for Pro/2.5-pro/2/pro/creative. auto accepts the fixed tier.",
+            "x-description-zh": "质量随模型固定，只接受 auto 或该模型的 standard/hd，不支持 low/medium/high。"
+          },
+          "n": {
+            "type": "integer",
+            "const": 1,
+            "default": 1,
+            "x-description-zh": "每次仅生成一个产物。"
+          },
+          "response_format": {
+            "type": "string",
+            "enum": [
+              "url",
+              "b64_json"
+            ],
+            "default": "url",
+            "description": "Non-streaming response defaults to URL. Default SSE still embeds Base64, even when url is requested.",
+            "x-description-zh": "普通 JSON 默认只返回 URL；默认 SSE 即使填写 url 也仍包含 Base64。"
+          },
+          "enhance": {
+            "type": "boolean",
+            "default": true,
+            "x-description-zh": "提示词增强开关，默认 true。"
+          },
+          "stream": {
+            "type": "boolean",
+            "default": false,
+            "description": "Use true for SSE heartbeats followed by a completion event. No partial previews.",
+            "x-description-zh": "true 返回等待心跳和最终图片事件。"
+          },
+          "partial_images": {
+            "type": "integer",
+            "const": 0,
+            "x-description-zh": "仅接受 0，暂不提供中途预览图。"
+          },
+          "delivery": {
+            "type": "string",
+            "const": "url",
+            "description": "Site extension: stream=true only, incompatible with response_format=b64_json. Emits image_url.completed.",
+            "x-description-zh": "本站 URL 交付扩展，仅与 stream:true 同用，不能同时请求 b64_json；完成事件为 image_url.completed。"
+          },
+          "image_url": {
+            "type": "string",
+            "pattern": "^(https?://|data:image/)",
+            "description": "HTTP(S) image URL or Base64 image data URL.",
+            "x-description-zh": "单张 HTTP(S) 图片 URL 或图片 Base64 data URL。"
+          },
+          "reference_images": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^(https?://|data:image/)",
+              "description": "HTTP(S) image URL or Base64 image data URL."
+            },
+            "x-description-zh": "非空参考图 URL / data URL 数组；与单图输入互斥。"
+          }
+        },
+        "allOf": [
+          {
+            "not": {
+              "required": [
+                "image_url",
+                "reference_images"
+              ]
+            }
+          },
+          {
+            "if": {
+              "required": [
+                "delivery"
+              ]
+            },
+            "then": {
+              "required": [
+                "stream"
+              ],
+              "properties": {
+                "stream": {
+                  "const": true
+                },
+                "response_format": {
+                  "const": "url"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "model": {
+                  "const": "gemini-3.1-flash-lite-image"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "resolution": {
+                  "pattern": "^(1[kK]|1080[pP])$"
+                },
+                "size": {
+                  "enum": [
+                    "auto",
+                    "1024x1024",
+                    "1536x1024",
+                    "1024x1536",
+                    "1792x1024",
+                    "1024x1792"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "model": {
+                  "enum": [
+                    "gemini-3-pro-image",
+                    "gpt-image-2.5-pro",
+                    "gpt-image-2",
+                    "image-pro",
+                    "image-creative"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "quality": {
+                  "enum": [
+                    "auto",
+                    "hd"
+                  ]
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "quality": {
+                  "enum": [
+                    "auto",
+                    "standard"
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      },
+      "ImageEditRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "model",
+          "prompt",
+          "image"
+        ],
+        "properties": {
+          "model": {
+            "type": "string",
+            "enum": [
+              "gemini-3.1-flash-lite-image",
+              "gemini-3.1-flash-image",
+              "gemini-3-pro-image",
+              "gpt-image-2.5-fast",
+              "gpt-image-2.5-pro",
+              "gpt-image-2",
+              "image-basic",
+              "image-fast",
+              "image-pro",
+              "image-creative"
+            ],
+            "description": "Public product route. Lite accepts 1K only.",
+            "x-description-zh": "本站公开调用名称，具体能力与限制见指南。"
+          },
+          "prompt": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096,
+            "pattern": "\\S",
+            "description": "Non-blank prompt, at most 4096 Unicode characters.",
+            "x-description-zh": "必填，不能为空白，最多 4096 个 Unicode 字符。"
+          },
+          "size": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "1024x1024",
+              "1536x1024",
+              "1024x1536",
+              "1792x1024",
+              "1024x1792",
+              "2048x2048",
+              "2048x1152",
+              "1152x2048",
+              "4096x4096",
+              "4096x2304",
+              "2304x4096"
+            ],
+            "description": "Target tier and aspect ratio; actual output pixels depend on the model. Must agree with resolution/aspect_ratio.",
+            "x-description-zh": "分辨率档位与比例预设，实际像素以返回文件为准；必须与 resolution/aspect_ratio 一致。"
+          },
+          "resolution": {
+            "type": "string",
+            "pattern": "^(1[kK]|1080[pP]|2[kK]|4[kK])$",
+            "default": "1k",
+            "description": "Case-insensitive tier; Lite only accepts 1k/1080p.",
+            "x-description-zh": "分辨率档位大小写不敏感，默认 1K，Lite 仅支持 1K。"
+          },
+          "aspect_ratio": {
+            "type": "string",
+            "enum": [
+              "1:1",
+              "16:9",
+              "9:16",
+              "4:3",
+              "3:4",
+              "3:2",
+              "2:3",
+              "21:9"
+            ],
+            "default": "1:1",
+            "x-description-zh": "画面比例；图片默认 1:1，普通视频默认 16:9，short 固定 9:16。"
+          },
+          "quality": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "standard",
+              "hd"
+            ],
+            "description": "Fixed per model; standard for Lite/Flash/2.5-fast/basic/fast, hd for Pro/2.5-pro/2/pro/creative. auto accepts the fixed tier.",
+            "x-description-zh": "质量随模型固定，只接受 auto 或该模型的 standard/hd，不支持 low/medium/high。"
+          },
+          "n": {
+            "type": "integer",
+            "const": 1,
+            "default": 1,
+            "x-description-zh": "每次仅生成一个产物。"
+          },
+          "response_format": {
+            "type": "string",
+            "enum": [
+              "url",
+              "b64_json"
+            ],
+            "default": "url",
+            "description": "Non-streaming response defaults to URL. Default SSE still embeds Base64, even when url is requested.",
+            "x-description-zh": "普通 JSON 默认只返回 URL；默认 SSE 即使填写 url 也仍包含 Base64。"
+          },
+          "enhance": {
+            "type": "boolean",
+            "default": true,
+            "x-description-zh": "提示词增强开关，默认 true。"
+          },
+          "stream": {
+            "type": "boolean",
+            "default": false,
+            "description": "Use true for SSE heartbeats followed by a completion event. No partial previews.",
+            "x-description-zh": "true 返回等待心跳和最终图片事件。"
+          },
+          "partial_images": {
+            "type": "integer",
+            "const": 0,
+            "x-description-zh": "仅接受 0，暂不提供中途预览图。"
+          },
+          "delivery": {
+            "type": "string",
+            "const": "url",
+            "description": "Site extension: stream=true only, incompatible with response_format=b64_json. Emits image_url.completed.",
+            "x-description-zh": "本站 URL 交付扩展，仅与 stream:true 同用，不能同时请求 b64_json；完成事件为 image_url.completed。"
+          },
+          "image": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^(https?://|data:image/)",
+                "description": "HTTP(S) image URL or Base64 image data URL."
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "pattern": "^(https?://|data:image/)",
+                  "description": "HTTP(S) image URL or Base64 image data URL."
+                }
+              }
+            ],
+            "description": "Required reference image(s); JSON accepts URLs or image data URLs.",
+            "x-description-zh": "参考图片，JSON 使用 URL / data URL 或其数组；multipart 使用文件。"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "required": [
+                "delivery"
+              ]
+            },
+            "then": {
+              "required": [
+                "stream"
+              ],
+              "properties": {
+                "stream": {
+                  "const": true
+                },
+                "response_format": {
+                  "const": "url"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "model": {
+                  "const": "gemini-3.1-flash-lite-image"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "resolution": {
+                  "pattern": "^(1[kK]|1080[pP])$"
+                },
+                "size": {
+                  "enum": [
+                    "auto",
+                    "1024x1024",
+                    "1536x1024",
+                    "1024x1536",
+                    "1792x1024",
+                    "1024x1792"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "model": {
+                  "enum": [
+                    "gemini-3-pro-image",
+                    "gpt-image-2.5-pro",
+                    "gpt-image-2",
+                    "image-pro",
+                    "image-creative"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "quality": {
+                  "enum": [
+                    "auto",
+                    "hd"
+                  ]
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "quality": {
+                  "enum": [
+                    "auto",
+                    "standard"
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      },
+      "ImageResult": {
+        "type": "object",
+        "required": [
+          "created",
+          "data"
+        ],
+        "properties": {
+          "created": {
+            "type": "integer"
+          },
+          "data": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 1,
+            "items": {
+              "type": "object",
+              "required": [
+                "url"
+              ],
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "b64_json": {
+                  "type": "string",
+                  "description": "Present when explicitly requested in a successful non-streaming response."
+                }
+              }
+            }
+          }
+        }
+      },
+      "ImageCompletedEvent": {
+        "type": "object",
+        "required": [
+          "type",
+          "created_at",
+          "url",
+          "request_id",
+          "b64_json",
+          "size",
+          "output_format"
+        ],
+        "properties": {
+          "type": {
+            "enum": [
+              "image_generation.completed",
+              "image_edit.completed"
+            ]
+          },
+          "created_at": {
+            "type": "integer"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "request_id": {
+            "type": "string"
+          },
+          "b64_json": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string",
+            "description": "Verified actual dimensions.",
+            "x-description-zh": "分辨率档位与比例预设，实际像素以返回文件为准；必须与 resolution/aspect_ratio 一致。"
+          },
+          "output_format": {
+            "enum": [
+              "png",
+              "jpeg",
+              "webp"
+            ]
+          },
+          "background": {
+            "enum": [
+              "auto",
+              "opaque"
+            ],
+            "x-description-zh": "true 时立即返回 Response ID，之后查询结果。"
+          },
+          "quality": {
+            "const": "auto",
+            "x-description-zh": "质量随模型固定，只接受 auto 或该模型的 standard/hd，不支持 low/medium/high。"
+          }
+        }
+      },
+      "ImageURLCompletedEvent": {
+        "type": "object",
+        "required": [
+          "type",
+          "operation",
+          "created_at",
+          "url",
+          "request_id"
+        ],
+        "properties": {
+          "type": {
+            "const": "image_url.completed"
+          },
+          "operation": {
+            "enum": [
+              "generate",
+              "edit"
+            ]
+          },
+          "created_at": {
+            "type": "integer"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "request_id": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

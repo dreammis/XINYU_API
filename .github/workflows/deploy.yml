@@ -1,17 +1,16 @@
-name: Deploy VitePress site to Pages
+name: Validate GitBook docs
 
 on:
   push:
     branches: [main, master]
+  pull_request:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: docs-check-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -22,26 +21,11 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
+          node-version: 22
+          cache: npm
       - name: Install dependencies
-        run: npm install
-      - name: Build with VitePress
-        run: npm run docs:build
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs/.vitepress/dist
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    needs: build
-    runs-on: ubuntu-latest
-    name: Deploy
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        run: npm ci
+      - name: Check generated docs and OpenAPI
+        run: npm run docs:check
+      - name: Check aggregation behavior
+        run: npm test

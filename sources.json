@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "specBaseUrl": "https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi",
+  "sources": [
+    {
+      "id": "media-image",
+      "repository": "dreammis/vidu2api",
+      "ref": "main",
+      "localDirectory": "../vidu2api",
+      "manifest": "integrations/newapi/media-image/public-docs.json"
+    },
+    {
+      "id": "media-video",
+      "repository": "dreammis/vidu2api",
+      "ref": "main",
+      "localDirectory": "../vidu2api",
+      "manifest": "integrations/newapi/media-video/public-docs.json"
+    }
+  ]
+}

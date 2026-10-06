@@ -1,4 +1,8 @@
 node_modules/
 docs/.vitepress/dist
 docs/.vitepress/cache
+.next/
+out/
 .env
+.superpowers/
+.cache/

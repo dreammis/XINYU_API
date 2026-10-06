@@ -1,0 +1,41 @@
+# 放到源工程的 .github/workflows/public-docs.yml。
+# 成功发布对外适配器后触发；不要把未经上线验收的契约自动声明为已发布。
+name: Notify public docs release
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'integrations/newapi/**/public-docs.json'
+      - 'integrations/newapi/**/public-openapi.json'
+      - 'integrations/newapi/**/public-guide.*.md'
+      - 'integrations/newapi/media-image/README.md'
+      - 'docs/video_studio_api.md'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify docs repository
+        env:
+          DOCS_DISPATCH_TOKEN: ${{ secrets.DOCS_DISPATCH_TOKEN }}
+        run: |
+          node --input-type=module <<'JS'
+          const token = process.env.DOCS_DISPATCH_TOKEN;
+          if (!token) throw new Error('DOCS_DISPATCH_TOKEN is required');
+          const response = await fetch('https://api.github.com/repos/dreammis/XINYU_API/dispatches', {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${token}`,
+              Accept: 'application/vnd.github+json',
+              'X-GitHub-Api-Version': '2022-11-28',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ event_type: 'public-docs-updated' }),
+          });
+          if (!response.ok) throw new Error(`Docs notification failed (${response.status})`);
+          console.log('Docs release notified');
+          JS

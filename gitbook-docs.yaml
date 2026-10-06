@@ -1,0 +1,19 @@
+$schema: https://api.gitbook.com/gitbook-docs.yaml
+site:
+  title: XY API
+  structure:
+    - type: space
+      key: xyapi-docs-zh
+      title: 中文
+      path: zh
+      default: true
+      content:
+        directory: ./gitbook/zh
+        language: zh
+    - type: space
+      key: xyapi-docs-en
+      title: English
+      path: en
+      content:
+        directory: ./gitbook/en
+        language: en

@@ -1,14 +1,20 @@
 {
   "name": "xyapi_doc",
   "version": "1.0.0",
-  "description": "心雨 API - 为 AI 应用提供统一的资源与调用网关。",
+  "description": "XY API GitBook 文档与多工程公开接口契约汇总。",
   "scripts": {
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "build": "node scripts/build-docs.mjs",
+    "docs:sync": "node scripts/sync-docs.mjs",
+    "docs:sync:remote": "node scripts/sync-docs.mjs --remote",
+    "docs:check": "node scripts/build-docs.mjs --check && node scripts/validate-openapi.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "dev:legacy": "vitepress dev docs",
+    "build:legacy": "vitepress build docs",
+    "start:legacy": "vitepress preview docs"
   },
   "devDependencies": {
     "vitepress": "^1.0.0",
-    "vue": "^3.0.0"
+    "vue": "^3.0.0",
+    "@apidevtools/swagger-parser": "^12.1.0"
   }
 }

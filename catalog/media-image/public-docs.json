@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "media-image",
+  "title": {
+    "zh": "图片",
+    "en": "Images"
+  },
+  "version": "1.1.1",
+  "models": [
+    "gemini-3.1-flash-lite-image",
+    "gemini-3.1-flash-image",
+    "gemini-3-pro-image",
+    "gpt-image-2.5-fast",
+    "gpt-image-2.5-pro",
+    "gpt-image-2",
+    "image-basic",
+    "image-fast",
+    "image-pro",
+    "image-creative"
+  ],
+  "openapi": "integrations/newapi/media-image/public-openapi.json",
+  "guides": {
+    "zh": "integrations/newapi/media-image/README.md",
+    "en": "integrations/newapi/media-image/public-guide.en.md"
+  }
+}

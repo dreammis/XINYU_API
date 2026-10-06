@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "media-video",
+  "title": {
+    "zh": "视频",
+    "en": "Videos"
+  },
+  "version": "1.0.0",
+  "models": [
+    "cogvideo-fast",
+    "cogvideo-pro",
+    "cogvideo-basic",
+    "cogvideo-short"
+  ],
+  "openapi": "integrations/newapi/media-video/public-openapi.json",
+  "guides": {
+    "zh": "docs/video_studio_api.md",
+    "en": "integrations/newapi/media-video/public-guide.en.md"
+  }
+}
