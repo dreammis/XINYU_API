@@ -183,7 +183,7 @@
                 "schema": {
                   "type": "string"
                 },
-                "example": "event: image_url.completed\ndata: {\"type\":\"image_url.completed\",\"operation\":\"generate\",\"url\":\"https://s3.yanxinyu.ggff.net/media_outputs/0123456789abcdef0123456789abcdef.png\",\"request_id\":\"REQUEST_ID\",\"created_at\":1790980000}\n\ndata: [DONE]\n\n"
+                "example": "event: image_url.completed\ndata: {\"type\":\"image_url.completed\",\"operation\":\"edit\",\"url\":\"https://s3.yanxinyu.ggff.net/media_outputs/0123456789abcdef0123456789abcdef.png\",\"request_id\":\"REQUEST_ID\",\"created_at\":1790980000}\n\ndata: [DONE]\n\n"
               }
             }
           },
@@ -607,10 +607,12 @@
               ],
               "properties": {
                 "stream": {
-                  "const": true
+                  "const": true,
+                  "type": "boolean"
                 },
                 "response_format": {
-                  "const": "url"
+                  "const": "url",
+                  "type": "string"
                 }
               }
             }
@@ -619,7 +621,8 @@
             "if": {
               "properties": {
                 "model": {
-                  "const": "gemini-3.1-flash-lite-image"
+                  "const": "gemini-3.1-flash-lite-image",
+                  "type": "string"
                 }
               }
             },
@@ -636,7 +639,8 @@
                     "1024x1536",
                     "1792x1024",
                     "1024x1792"
-                  ]
+                  ],
+                  "type": "string"
                 }
               }
             }
@@ -651,7 +655,8 @@
                     "gpt-image-2",
                     "image-pro",
                     "image-creative"
-                  ]
+                  ],
+                  "type": "string"
                 }
               }
             },
@@ -661,7 +666,8 @@
                   "enum": [
                     "auto",
                     "hd"
-                  ]
+                  ],
+                  "type": "string"
                 }
               }
             },
@@ -671,7 +677,8 @@
                   "enum": [
                     "auto",
                     "standard"
-                  ]
+                  ],
+                  "type": "string"
                 }
               }
             }
@@ -835,10 +842,12 @@
               ],
               "properties": {
                 "stream": {
-                  "const": true
+                  "const": true,
+                  "type": "boolean"
                 },
                 "response_format": {
-                  "const": "url"
+                  "const": "url",
+                  "type": "string"
                 }
               }
             }
@@ -847,7 +856,8 @@
             "if": {
               "properties": {
                 "model": {
-                  "const": "gemini-3.1-flash-lite-image"
+                  "const": "gemini-3.1-flash-lite-image",
+                  "type": "string"
                 }
               }
             },
@@ -864,7 +874,8 @@
                     "1024x1536",
                     "1792x1024",
                     "1024x1792"
-                  ]
+                  ],
+                  "type": "string"
                 }
               }
             }
@@ -879,7 +890,8 @@
                     "gpt-image-2",
                     "image-pro",
                     "image-creative"
-                  ]
+                  ],
+                  "type": "string"
                 }
               }
             },
@@ -889,7 +901,8 @@
                   "enum": [
                     "auto",
                     "hd"
-                  ]
+                  ],
+                  "type": "string"
                 }
               }
             },
@@ -899,7 +912,8 @@
                   "enum": [
                     "auto",
                     "standard"
-                  ]
+                  ],
+                  "type": "string"
                 }
               }
             }
@@ -955,7 +969,8 @@
             "enum": [
               "image_generation.completed",
               "image_edit.completed"
-            ]
+            ],
+            "type": "string"
           },
           "created_at": {
             "type": "integer"
@@ -980,18 +995,21 @@
               "png",
               "jpeg",
               "webp"
-            ]
+            ],
+            "type": "string"
           },
           "background": {
             "enum": [
               "auto",
               "opaque"
             ],
-            "x-description-zh": "true 时立即返回 Response ID，之后查询结果。"
+            "x-description-zh": "true 时立即返回 Response ID，之后查询结果。",
+            "type": "string"
           },
           "quality": {
             "const": "auto",
-            "x-description-zh": "质量随模型固定，只接受 auto 或该模型的 standard/hd，不支持 low/medium/high。"
+            "x-description-zh": "质量随模型固定，只接受 auto 或该模型的 standard/hd，不支持 low/medium/high。",
+            "type": "string"
           }
         }
       },
@@ -1006,13 +1024,15 @@
         ],
         "properties": {
           "type": {
-            "const": "image_url.completed"
+            "const": "image_url.completed",
+            "type": "string"
           },
           "operation": {
             "enum": [
               "generate",
               "edit"
-            ]
+            ],
+            "type": "string"
           },
           "created_at": {
             "type": "integer"

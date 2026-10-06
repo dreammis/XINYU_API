@@ -6,8 +6,8 @@ Reference-image editing without masks. JSON image accepts one or more sources. M
 
 [Guide and limits](../../guides/media-image.md)
 
-{% openapi src="https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-image.json" path="/v1/images/edits" method="post" %}
-https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-image.json
+{% openapi src="https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-image.json?version=279c9438570f1271" path="/v1/images/edits" method="post" %}
+https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-image.json?version=279c9438570f1271
 {% endopenapi %}
 
 ## application/json
@@ -90,7 +90,7 @@ Boolean form fields use true/false; n and partial_images are integer strings.
 
 ```text
 event: image_url.completed
-data: {"type":"image_url.completed","operation":"generate","url":"https://s3.yanxinyu.ggff.net/media_outputs/0123456789abcdef0123456789abcdef.png","request_id":"REQUEST_ID","created_at":1790980000}
+data: {"type":"image_url.completed","operation":"edit","url":"https://s3.yanxinyu.ggff.net/media_outputs/0123456789abcdef0123456789abcdef.png","request_id":"REQUEST_ID","created_at":1790980000}
 
 data: [DONE]
 

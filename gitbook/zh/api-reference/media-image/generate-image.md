@@ -6,8 +6,8 @@
 
 [调用指南与限制](../../guides/media-image.md)
 
-{% openapi src="https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-image.json" path="/v1/images/generations" method="post" %}
-https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-image.json
+{% openapi src="https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-image.json?version=279c9438570f1271" path="/v1/images/generations" method="post" %}
+https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-image.json?version=279c9438570f1271
 {% endopenapi %}
 
 ## application/json

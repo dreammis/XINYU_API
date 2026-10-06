@@ -6,8 +6,8 @@
 
 [调用指南与限制](../../guides/media-video.md)
 
-{% openapi src="https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-video.json" path="/v1/videos/{video_id}/content" method="get" %}
-https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-video.json
+{% openapi src="https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-video.json?version=9ea567a7401837be" path="/v1/videos/{video_id}/content" method="get" %}
+https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-video.json?version=9ea567a7401837be
 {% endopenapi %}
 
 ## 路径与请求头

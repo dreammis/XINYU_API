@@ -162,7 +162,8 @@
                     "enum": [
                       "1080p",
                       "720p"
-                    ]
+                    ],
+                    "type": "string"
                   },
                   "aspect_ratio": {
                     "enum": [
@@ -171,7 +172,8 @@
                       "1:1",
                       "4:3",
                       "3:4"
-                    ]
+                    ],
+                    "type": "string"
                   },
                   "input_reference": {
                     "type": "string",
@@ -197,7 +199,8 @@
                       "speed",
                       "pro",
                       "pro_ad"
-                    ]
+                    ],
+                    "type": "string"
                   },
                   "n": {
                     "type": "integer",
@@ -237,6 +240,13 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/VideoTask"
+                },
+                "example": {
+                  "id": "task_EXAMPLE",
+                  "object": "video",
+                  "status": "in_progress",
+                  "progress": 50,
+                  "created_at": 1790980000
                 }
               }
             }
@@ -700,7 +710,8 @@
               "1080p",
               "720p"
             ],
-            "x-description-zh": "fast/pro/basic 为 1080p，short 为 720p。"
+            "x-description-zh": "fast/pro/basic 为 1080p，short 为 720p。",
+            "type": "string"
           },
           "aspect_ratio": {
             "enum": [
@@ -710,7 +721,8 @@
               "4:3",
               "3:4"
             ],
-            "x-description-zh": "画面比例；图片默认 1:1，普通视频默认 16:9，short 固定 9:16。"
+            "x-description-zh": "画面比例；图片默认 1:1，普通视频默认 16:9，short 固定 9:16。",
+            "type": "string"
           },
           "input_reference": {
             "type": "string",
@@ -740,7 +752,8 @@
               "pro",
               "pro_ad"
             ],
-            "x-description-zh": "仅参考生视频使用，默认 pro_ad。"
+            "x-description-zh": "仅参考生视频使用，默认 pro_ad。",
+            "type": "string"
           },
           "metadata": {
             "type": "object",
@@ -752,13 +765,15 @@
                   "image_to_video",
                   "reference_to_video"
                 ],
-                "description": "Must match supplied images."
+                "description": "Must match supplied images.",
+                "type": "string"
               },
               "resolution": {
                 "enum": [
                   "1080p",
                   "720p"
-                ]
+                ],
+                "type": "string"
               },
               "aspect_ratio": {
                 "enum": [
@@ -767,7 +782,8 @@
                   "1:1",
                   "4:3",
                   "3:4"
-                ]
+                ],
+                "type": "string"
               },
               "reference_images": {
                 "type": "array",
@@ -785,7 +801,8 @@
                   "pro_ad"
                 ],
                 "default": "pro_ad",
-                "description": "Reference mode only."
+                "description": "Reference mode only.",
+                "type": "string"
               }
             },
             "x-description-zh": "视频扩展参数对象；multipart 表单使用 JSON 编码字符串。"
@@ -816,7 +833,8 @@
             "if": {
               "properties": {
                 "model": {
-                  "const": "cogvideo-basic"
+                  "const": "cogvideo-basic",
+                  "type": "string"
                 }
               }
             },
@@ -876,7 +894,8 @@
             "if": {
               "properties": {
                 "model": {
-                  "const": "cogvideo-short"
+                  "const": "cogvideo-short",
+                  "type": "string"
                 }
               }
             },
@@ -895,13 +914,16 @@
                   ]
                 },
                 "size": {
-                  "const": "720x1280"
+                  "const": "720x1280",
+                  "type": "string"
                 },
                 "resolution": {
-                  "const": "720p"
+                  "const": "720p",
+                  "type": "string"
                 },
                 "aspect_ratio": {
-                  "const": "9:16"
+                  "const": "9:16",
+                  "type": "string"
                 }
               },
               "not": {
@@ -945,10 +967,12 @@
                     "1080x1080",
                     "1440x1080",
                     "1080x1440"
-                  ]
+                  ],
+                  "type": "string"
                 },
                 "resolution": {
-                  "const": "1080p"
+                  "const": "1080p",
+                  "type": "string"
                 }
               }
             }
@@ -970,7 +994,8 @@
             "type": "string"
           },
           "object": {
-            "const": "video"
+            "const": "video",
+            "type": "string"
           },
           "status": {
             "enum": [
@@ -980,7 +1005,8 @@
               "failed",
               "unknown"
             ],
-            "description": "unknown means an unrecognized task state; do not interpret as completion."
+            "description": "unknown means an unrecognized task state; do not interpret as completion.",
+            "type": "string"
           },
           "progress": {
             "type": "number"
@@ -992,7 +1018,8 @@
             "type": "object",
             "properties": {
               "code": {
-                "const": "video_generation_failed"
+                "const": "video_generation_failed",
+                "type": "string"
               },
               "message": {
                 "type": "string"
@@ -1075,7 +1102,8 @@
               "1080p",
               "720p"
             ],
-            "x-description-zh": "fast/pro/basic 为 1080p，short 为 720p。"
+            "x-description-zh": "fast/pro/basic 为 1080p，short 为 720p。",
+            "type": "string"
           },
           "aspect_ratio": {
             "enum": [
@@ -1085,7 +1113,8 @@
               "4:3",
               "3:4"
             ],
-            "x-description-zh": "画面比例；图片默认 1:1，普通视频默认 16:9，short 固定 9:16。"
+            "x-description-zh": "画面比例；图片默认 1:1，普通视频默认 16:9，short 固定 9:16。",
+            "type": "string"
           },
           "input_reference": {
             "type": "string",
@@ -1115,7 +1144,8 @@
               "pro",
               "pro_ad"
             ],
-            "x-description-zh": "仅参考生视频使用，默认 pro_ad。"
+            "x-description-zh": "仅参考生视频使用，默认 pro_ad。",
+            "type": "string"
           },
           "metadata": {
             "type": "object",
@@ -1127,13 +1157,15 @@
                   "image_to_video",
                   "reference_to_video"
                 ],
-                "description": "Must match supplied images."
+                "description": "Must match supplied images.",
+                "type": "string"
               },
               "resolution": {
                 "enum": [
                   "1080p",
                   "720p"
-                ]
+                ],
+                "type": "string"
               },
               "aspect_ratio": {
                 "enum": [
@@ -1142,7 +1174,8 @@
                   "1:1",
                   "4:3",
                   "3:4"
-                ]
+                ],
+                "type": "string"
               },
               "reference_images": {
                 "type": "array",
@@ -1160,7 +1193,8 @@
                   "pro_ad"
                 ],
                 "default": "pro_ad",
-                "description": "Reference mode only."
+                "description": "Reference mode only.",
+                "type": "string"
               }
             },
             "x-description-zh": "视频扩展参数对象；multipart 表单使用 JSON 编码字符串。"
@@ -1253,7 +1287,8 @@
             "if": {
               "properties": {
                 "model": {
-                  "const": "cogvideo-basic"
+                  "const": "cogvideo-basic",
+                  "type": "string"
                 }
               }
             },
@@ -1313,7 +1348,8 @@
             "if": {
               "properties": {
                 "model": {
-                  "const": "cogvideo-short"
+                  "const": "cogvideo-short",
+                  "type": "string"
                 }
               }
             },
@@ -1332,13 +1368,16 @@
                   ]
                 },
                 "size": {
-                  "const": "720x1280"
+                  "const": "720x1280",
+                  "type": "string"
                 },
                 "resolution": {
-                  "const": "720p"
+                  "const": "720p",
+                  "type": "string"
                 },
                 "aspect_ratio": {
-                  "const": "9:16"
+                  "const": "9:16",
+                  "type": "string"
                 }
               },
               "not": {
@@ -1382,10 +1421,12 @@
                     "1080x1080",
                     "1440x1080",
                     "1080x1440"
-                  ]
+                  ],
+                  "type": "string"
                 },
                 "resolution": {
-                  "const": "1080p"
+                  "const": "1080p",
+                  "type": "string"
                 }
               }
             }

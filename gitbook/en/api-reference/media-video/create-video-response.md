@@ -6,8 +6,8 @@ stream=true reports progress and a final video link via Responses SSE, ending wi
 
 [Guide and limits](../../guides/media-video.md)
 
-{% openapi src="https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-video.json" path="/v1/responses" method="post" %}
-https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-video.json
+{% openapi src="https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-video.json?version=9ea567a7401837be" path="/v1/responses" method="post" %}
+https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-video.json?version=9ea567a7401837be
 {% endopenapi %}
 
 ## application/json

@@ -62,7 +62,8 @@ for (const locale of locales) {
       const filename = `${slug}.md`;
       index.push(`| ${method.toUpperCase()} | \`${endpoint}\` | [${title}](${filename}) |`);
       referenceSummary.push(`  * [${title}](api-reference/${manifest.id}/${filename})`);
-      const specUrl = `${registry.specBaseUrl}/${manifest.id}.json`;
+      // 规范变更时改变导入地址，让 GitBook 在导入新页面时读取新版参数和示例。
+      const specUrl = `${registry.specBaseUrl}/${manifest.id}.json?version=${sha256(JSON.stringify(spec)).slice(0, 16)}`;
       const page = [`# ${title}`, '', `\`${method.toUpperCase()} ${endpoint}\``, '', (zh ? operation['x-description-zh'] : undefined) ?? operation.description ?? '', '', `[${zh ? '调用指南与限制' : 'Guide and limits'}](../../guides/${manifest.id}.md)`, '', `{% openapi src="${specUrl}" path="${endpoint}" method="${method}" %}`, specUrl, '{% endopenapi %}', ''];
       if (parameters.length) {
         page.push(`## ${zh ? '路径与请求头' : 'Path and header parameters'}`, '', '| Name | In | Required | Description |', '| --- | --- | --- | --- |');

@@ -1,6 +1,6 @@
 # GitBook 首次托管设置
 
-GitBook 插件已连接，已在组织 `-LReNmlWasTFD0ptGuSE` 创建 XY API Basic 网站 `site_L6ohK`。管理入口：<https://app.gitbook.com/o/-LReNmlWasTFD0ptGuSE/sites/site_L6ohK>。内容导入、公开发布和原生 Git Sync 的状态见本文末尾记录。
+GitBook 插件已连接，已在组织 `-LReNmlWasTFD0ptGuSE` 创建并发布 XY API Basic 网站 `site_L6ohK`。中文：<https://system-design-primer.gitbook.io/xy-api/>；英文：<https://system-design-primer.gitbook.io/xy-api/en/>。管理入口：<https://app.gitbook.com/o/-LReNmlWasTFD0ptGuSE/sites/site_L6ohK>。原生 Git Sync 的状态见本文末尾记录。
 
 ## 推送来源
 
@@ -19,7 +19,7 @@ GitBook 插件已连接，已在组织 `-LReNmlWasTFD0ptGuSE` 创建 XY API Basi
 | 中文空间 / Project directory | NffagFSNEMYHNBZF4XiM / gitbook/zh |
 | 英文空间 / Project directory | tcgo5Wpp4DDLs4RvPM6J / gitbook/en |
 
-首次选择 **从 GitHub 导入**。当前网站采用两个语言空间，各空间分别绑定同一仓库、分支及上表目录，读取各目录 .gitbook.yaml 和 SUMMARY.md。网站路径分别为 zh、en，中文为默认语言。
+首次选择 **从 GitHub 导入**。当前网站采用两个语言空间，各空间分别绑定同一仓库、分支及上表目录，读取各目录 .gitbook.yaml 和 SUMMARY.md。网站路径分别配置为 zh、en；GitBook 将默认中文空间发布在网站根路径，英文在 /en/。
 
 根目录 gitbook-docs.yaml 保留与当前网站一致的结构，供以后使用整站 Git Sync；当前空间独立绑定不依赖根目录配置。若改为整站绑定，先在 GitBook 关联现有空间 key xyapi-docs-zh / xyapi-docs-en，避免建立重复空间。
 
@@ -34,9 +34,9 @@ https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/medi
 https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-video.json
 ```
 
-两个地址推送后才存在。参数交互和 Test it 由 GitBook 提供，用户发起生成会正常计费。当前文档仓库经 GitHub API 核实是公开仓库；以后改私有或换分支时更新 sources.json 的 specBaseUrl，或把规范上传 GitBook 并调整块来源。
+两个地址已推送且可公开读取。参数交互和 Test it 由 GitBook 提供，用户发起生成会正常计费。当前文档仓库经 GitHub API 核实是公开仓库；以后改私有或换分支时更新 sources.json 的 specBaseUrl，或把规范上传 GitBook 并调整块来源。
 
-GitBook 对 URL 规范通常约每 6 小时检查更新；Markdown Git Sync 和 OpenAPI URL 刷新是两个流程。首次确认规范导入，需即时更新时在 OpenAPI 中 Check for updates，或设置 GitBook token 与组织 ID 后按官方 CI/CD 发布规范。原生 Git Sync 的日常 Markdown 同步不要求在仓库保存 GitBook token。
+生成器在接口块 URL 加上规范内容哈希作为 version 查询参数；规范修改后导入地址也随之改变，让 GitBook 重新读取新版。URL 来源的后台自动检查通常约每 6 小时执行，Markdown Git Sync 和该后台检查是两个流程。需单独刷新旧来源时在 OpenAPI 中 Check for updates，或按官方 CI/CD 更新规范。原生 Git Sync 的日常 Markdown 同步不要求在仓库保存 GitBook token。
 
 ## GitHub 权限
 
@@ -56,7 +56,8 @@ GitBook 对 URL 规范通常约每 6 小时检查更新；Markdown Git Sync 和 
 
 ## 发布接线记录（2026-10-06）
 
-- 已创建中英文空间及网站，网站尚待导入和发布核验。
+- 已从文档仓库 master 导入两个语言空间并发布 Basic 网站。中英文首页及抽查的图片/视频接口参考页均 HTTP 200；中文首页搜索、语言选择器和分组导航已通过浏览器核验。接口块已渲染鉴权、参数、示例和 Test it。未提交真实生成请求，浏览器跨域与付费请求仍需客户调用验收。
+- 文档仓库 GitHub Actions 校验通过：<https://github.com/dreammis/XINYU_API/actions/runs/37414589871>。
 - 原生 Git Sync 尚未配置：当前插件 API 可触发导入，但无法完成 GitHub App 的账户授权绑定；浏览器显示登录页，需要用户完成网页登录后继续配置。单次 API 导入不代表自动 Git Sync 已生效。
 - 源工程 vidu2api 的本机插件提交领先于 origin/main，公开导出文件也尚未发布到 main。首次网站可使用经过本地契约校验的 catalog 快照，provenance.json 如实记录本机提交与未提交导出文件；不把这些快照标为远端发布版本。
 - 自动源工程导入需先发布真实适配器及公开导出文件，再设置私有源工程读取 / 跨仓库通知所需的 Actions Secrets。当前两个 Secrets 尚未设置。

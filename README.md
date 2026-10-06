@@ -2,7 +2,7 @@
 
 客户文档由 **GitBook 托管**。本仓库维护通用指南、导入各工程公开接口契约并生成 GitBook 页面。参考站为 <https://docs.stackai.com/workflow-builder/inputs>；侧栏、搜索、主题与移动端布局由 GitBook 提供。
 
-中文入口：[`gitbook/zh/README.md`](gitbook/zh/README.md)。英文入口：[`gitbook/en/README.md`](gitbook/en/README.md)。导航：各语言的 `SUMMARY.md`。
+线上：[中文文档](https://system-design-primer.gitbook.io/xy-api/) · [English](https://system-design-primer.gitbook.io/xy-api/en/)。源文件：[`gitbook/zh/README.md`](gitbook/zh/README.md)、[`gitbook/en/README.md`](gitbook/en/README.md)。导航：各语言的 `SUMMARY.md`。
 
 ## 维护流程
 
@@ -45,10 +45,10 @@ npm test
 | `scripts/`、`tests/` | 导入、构建、校验与回归测试 |
 | `templates/` | 新工程的清单和更新通知模板 |
 
-当前文档覆盖图片生成/编辑/SSE、视频任务创建/查询/下载/HEAD、视频 Responses stream/后台创建/查询。公开视频模型为 `cogvideo-*`，视频状态查询不返回内部 `data[0].url`，文件从 `/content` 下载。
+当前文档覆盖图片生成/编辑/SSE、视频任务创建/查询/下载/HEAD、视频 Responses stream/后台创建/查询。公开视频模型为 `cogvideo-*`，视频状态查询不返回内部 `data[0].url`，文件从 `/content` 下载。原有 ElevenLabs TTS 文档已保留，标明其网关响应尚待重新验证的差异。
 
 ## 首次托管
 
-见 [`docs/maintenance/gitbook-setup.md`](docs/maintenance/gitbook-setup.md)。GitBook XY API 网站已创建；原生 Git Sync 目标为 `dreammis/XINYU_API` 的 `master` 分支，中英文空间分别使用 Project directory `gitbook/zh`、`gitbook/en`。当前账户绑定与自动同步状态以该设置文档的发布记录为准。
+见 [`docs/maintenance/gitbook-setup.md`](docs/maintenance/gitbook-setup.md)。GitBook XY API 网站已发布；原生 Git Sync 目标为 `dreammis/XINYU_API` 的 `master` 分支，中英文空间分别使用 Project directory `gitbook/zh`、`gitbook/en`。原生账户绑定尚未完成，单次导入已经成功；自动同步状态以该设置文档的发布记录为准。
 
 远端已有的 VitePress 文件保留用于查看旧文档；旧站命令为 `dev:legacy`、`build:legacy`、`start:legacy`。本机尚未推送的 Next.js/Fumadocs 工作没有并入此次发布。
