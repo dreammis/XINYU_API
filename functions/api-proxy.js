@@ -1,4 +1,4 @@
-import endpoints from './public-endpoints.json' with { type: 'json' };
+import endpoints from '../site/public-endpoints.mjs';
 
 // 目的地和方法来自公开规范，不能把调试入口变成任意地址的开放代理。
 const allowed = endpoints.map((endpoint) => ({

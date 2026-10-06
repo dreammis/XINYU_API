@@ -80,6 +80,7 @@ for (const locale of ['zh', 'en']) {
   sidebar[`/${locale}/`] = groups;
 }
 generated.set('.vitepress/sidebar.json', JSON.stringify(sidebar, null, 2) + '\n');
+generated.set('public-endpoints.mjs', '// 自动从公开 OpenAPI 生成；不手动修改。\nexport default ' + JSON.stringify(endpoints, null, 2) + ';\n');
 
 const manifestPath = path.join(site, '.generated.json');
 let previous = [];
@@ -91,6 +92,4 @@ for (const [filename, content] of generated) {
   await writeFile(destination, content);
 }
 await writeFile(manifestPath, JSON.stringify([...generated.keys()].sort(), null, 2) + '\n');
-await mkdir(path.join(root, 'functions'), { recursive: true });
-await writeFile(path.join(root, 'functions/public-endpoints.json'), JSON.stringify(endpoints, null, 2) + '\n');
 console.log(`Prepared ${generated.size} site files and ${endpoints.length} public debug endpoints.`);

@@ -35,6 +35,7 @@ onMounted(async () => {
       documentDownloadType: 'none',
       persistAuth: false,
       telemetry: false,
+      agent: { disabled: true },
       proxyUrl: '/api-proxy',
       defaultHttpClient: { targetKey: 'shell', clientKey: 'curl' },
     });

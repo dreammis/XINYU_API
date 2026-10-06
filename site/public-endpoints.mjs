@@ -1,4 +1,5 @@
-[
+// 自动从公开 OpenAPI 生成；不手动修改。
+export default [
   {
     "origin": "https://openai.2yanx.dpdns.org",
     "path": "/v1/images/generations",
@@ -39,4 +40,4 @@
     "path": "/v1/responses/{response_id}",
     "method": "GET"
   }
-]
+];

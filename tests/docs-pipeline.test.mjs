@@ -138,7 +138,7 @@ test('a registered non-model capability gets pages without frontend code changes
     assert.doesNotMatch(sitePage, /{%/);
     const sidebar = JSON.parse(await readFile(path.join(directory, 'site/.vitepress/sidebar.json'), 'utf8'));
     assert.ok(JSON.stringify(sidebar).includes('/en/api-reference/file-conversion/convert-file'));
-    const endpoints = JSON.parse(await readFile(path.join(directory, 'functions/public-endpoints.json'), 'utf8'));
+    const { default: endpoints } = await import(pathToFileURL(path.join(directory, 'site/public-endpoints.mjs')).href);
     assert.ok(endpoints.some((item) => item.origin === 'https://example.com' && item.path === '/v1/tools/convert' && item.method === 'POST'));
   } finally {
     await rm(directory, { recursive: true, force: true });
