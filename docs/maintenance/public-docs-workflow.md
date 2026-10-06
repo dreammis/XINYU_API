@@ -35,7 +35,9 @@ OpenAPI 描述路径、方法、鉴权、参数、默认值、响应和示例；
 
 当前来源 ref 为 main。本次首次导入来自本机工作区，新增文件未提交，`catalog/*/provenance.json` 如实记录 workingTreeChanges。因此 GitHub 自动导入尚未具备全部远程文件。
 
-先提交源工程公开导出文件和已上线适配器，再推送文档仓库。图片 plugin.js 原本尚未跟踪，源工程发布提交必须包含实际插件；否则公开契约测试无法读取其实现。不要只提交测试而漏掉实现。
+文档仓库本次已发布到 master 并导入 GitBook，首次展示的是已经校验的本机快照。自动远端导入还需先提交源工程公开导出文件和已上线适配器。图片 plugin.js 原本尚未跟踪，源工程发布提交必须包含实际插件；否则公开契约测试无法读取其实现。不要只提交测试而漏掉实现。
+
+源工程 integrations/newapi/AGENTS.md 和文档仓库 AGENTS.md 已记录维护入口，让后续代码助手随接口改动更新公开契约。实际 GitBook 地址、原生 Git Sync 与 Secrets 状态见 gitbook-setup.md。
 
 ## 修改入口与退役
 

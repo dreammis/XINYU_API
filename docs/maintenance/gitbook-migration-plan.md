@@ -37,3 +37,4 @@
 - GitBook 官方 `gitbook-docs.yaml` JSON Schema 验证通过，4 份 Actions YAML 解析通过；14 个不支持的请求示例被公开 JSON Schema 拒绝。
 - 未调用真实生成接口，没有为本轮文档验证产生付费任务。
 - GitBook 插件已连接，XY API Basic 网站与中英文空间已创建。实际云端导入、发布和 Git Sync 的状态见 gitbook-setup.md；GitHub Secrets 尚未设置。浏览器尚未登录，插件授权不能代替原生 Git Sync 的 GitHub App 账户绑定。
+- 网站已从 master 导入并公开发布，中英文首页和全部 8 个接口参考页核验通过；OpenAPI 鉴权、类型与示例已渲染。文档发布基于独立工作区，未推送原有未发布的前端历史。

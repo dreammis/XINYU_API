@@ -56,8 +56,8 @@ https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/medi
 
 ## 发布接线记录（2026-10-06）
 
-- 已从文档仓库 master 导入两个语言空间并发布 Basic 网站。中英文首页及抽查的图片/视频接口参考页均 HTTP 200；中文首页搜索、语言选择器和分组导航已通过浏览器核验。接口块已渲染鉴权、参数、示例和 Test it。未提交真实生成请求，浏览器跨域与付费请求仍需客户调用验收。
-- 文档仓库 GitHub Actions 校验通过：<https://github.com/dreammis/XINYU_API/actions/runs/37414589871>。
+- 已从文档仓库 master 导入两个语言空间并发布 Basic 网站。中英文首页及全部 8 个图片/视频接口参考页均 HTTP 200；中文首页搜索、语言选择器和分组导航已通过浏览器核验。接口块已渲染鉴权、参数、示例和 Test it。补齐 enum/const 类型后，8 个接口块都没有 undefined 枚举类型；视频状态查询已显示正确的 task_EXAMPLE 示例。未提交真实生成请求，浏览器跨域与付费请求仍需客户调用验收。
+- 实现提交 bf53f0f 的 GitHub Actions 校验通过：<https://github.com/dreammis/XINYU_API/actions/runs/37415406729>。
 - 原生 Git Sync 尚未配置：当前插件 API 可触发导入，但无法完成 GitHub App 的账户授权绑定；浏览器显示登录页，需要用户完成网页登录后继续配置。单次 API 导入不代表自动 Git Sync 已生效。
 - 源工程 vidu2api 的本机插件提交领先于 origin/main，公开导出文件也尚未发布到 main。首次网站可使用经过本地契约校验的 catalog 快照，provenance.json 如实记录本机提交与未提交导出文件；不把这些快照标为远端发布版本。
 - 自动源工程导入需先发布真实适配器及公开导出文件，再设置私有源工程读取 / 跨仓库通知所需的 Actions Secrets。当前两个 Secrets 尚未设置。
