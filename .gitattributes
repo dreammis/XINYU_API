@@ -1,0 +1,5 @@
+# 快照哈希和生成结果按 LF 保存，避免 Windows checkout 改写换行后校验失败。
+catalog/** text eol=lf
+content/** text eol=lf
+gitbook/** text eol=lf
+sources.json text eol=lf
