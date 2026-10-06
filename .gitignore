@@ -6,3 +6,13 @@ out/
 .env
 .superpowers/
 .cache/
+site/zh/
+site/en/
+site/public/openapi/
+site/.generated.json
+site/.vitepress/sidebar.json
+site/.vitepress/dist/
+site/.vitepress/cache/
+.wrangler/
+.dev.vars*
+worker-configuration.d.ts

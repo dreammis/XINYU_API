@@ -132,6 +132,14 @@ test('a registered non-model capability gets pages without frontend code changes
     assert.match(page, /POST \/v1\/tools\/convert/);
     assert.doesNotMatch(page, /model/);
     build(directory, true);
+    execFileSync(process.execPath, [path.join(root, 'scripts/build-site.mjs')], { env: { ...process.env, DOCS_ROOT: directory }, stdio: 'pipe' });
+    const sitePage = await readFile(path.join(directory, 'site/en/api-reference/file-conversion/convert-file.md'), 'utf8');
+    assert.match(sitePage, /ApiPlayground spec="\/openapi\/file-conversion.json" endpoint="\/v1\/tools\/convert" method="post"/);
+    assert.doesNotMatch(sitePage, /{%/);
+    const sidebar = JSON.parse(await readFile(path.join(directory, 'site/.vitepress/sidebar.json'), 'utf8'));
+    assert.ok(JSON.stringify(sidebar).includes('/en/api-reference/file-conversion/convert-file'));
+    const endpoints = JSON.parse(await readFile(path.join(directory, 'functions/public-endpoints.json'), 'utf8'));
+    assert.ok(endpoints.some((item) => item.origin === 'https://example.com' && item.path === '/v1/tools/convert' && item.method === 'POST'));
   } finally {
     await rm(directory, { recursive: true, force: true });
   }

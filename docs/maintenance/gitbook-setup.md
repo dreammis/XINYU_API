@@ -1,5 +1,7 @@
 # GitBook 首次托管设置
 
+> 历史记录：最终站点改用 Cloudflare Pages，当前维护入口见 [cloudflare-setup.md](cloudflare-setup.md)。以下记录保留此前 GitBook 的创建与导入状态。
+
 GitBook 插件已连接，已在组织 `-LReNmlWasTFD0ptGuSE` 创建并发布 XY API Basic 网站 `site_L6ohK`。中文：<https://system-design-primer.gitbook.io/xy-api/>；英文：<https://system-design-primer.gitbook.io/xy-api/en/>。管理入口：<https://app.gitbook.com/o/-LReNmlWasTFD0ptGuSE/sites/site_L6ohK>。原生 Git Sync 的状态见本文末尾记录。
 
 ## 推送来源

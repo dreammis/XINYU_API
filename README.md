@@ -1,54 +1,37 @@
-# XY API GitBook 文档
+# XY API 文档站
 
-客户文档由 **GitBook 托管**。本仓库维护通用指南、导入各工程公开接口契约并生成 GitBook 页面。参考站为 <https://docs.stackai.com/workflow-builder/inputs>；侧栏、搜索、主题与移动端布局由 GitBook 提供。
+客户文档由 **Cloudflare Pages** 托管，使用 VitePress + Scalar，提供中英文指南、全文搜索、明暗主题和 API 在线调试。页面布局参考 <https://docs.stackai.com/workflow-builder/inputs>。
 
-线上：[中文文档](https://system-design-primer.gitbook.io/xy-api/) · [English](https://system-design-primer.gitbook.io/xy-api/en/)。源文件：[`gitbook/zh/README.md`](gitbook/zh/README.md)、[`gitbook/en/README.md`](gitbook/en/README.md)。导航：各语言的 `SUMMARY.md`。
+Pages 地址：<https://xyapi-docs.pages.dev/zh/>。自定义域名目标：<https://doc.2yanx.dpdns.org/>。当前部署和域名验证状态见 [cloudflare-setup.md](docs/maintenance/cloudflare-setup.md)。
 
 ## 维护流程
 
-```text
-源工程业务功能
-  → New API 客户接入（内置渠道 / 插件 / 独立入口）
-  → 客户指南 + public-openapi.json + public-docs.json
-  → 本仓库导入、校验、生成 gitbook/
-  → GitBook Git Sync
-  → 客户文档站
-```
+源工程功能 → New API 客户接入 → 公开指南 + OpenAPI + public-docs.json → 本仓库导入、校验与生成 → Cloudflare Pages 自动部署 → 客户文档站。
 
-客户接口契约在对外适配层维护一份，内部 API 文档不能直接发布。一个工程可以登记多个能力；多个渠道若提供相同客户契约，也不必重复创建文档。非模型功能的 `models` 可以为空。
+公开契约描述客户实际调用的入口，在源工程接入目录维护一份。插件、内置渠道和非模型计费功能都能登记。一个工程可以登记多个能力，相同客户协议的多个渠道无需重复文档。
 
-新工程第一次登记 [`sources.json`](sources.json)。后续发布时更新源工程契约，通知文档仓库自动导入，**不用在这里再次填写参数文档**。详见 [`docs/maintenance/public-docs-workflow.md`](docs/maintenance/public-docs-workflow.md)。
+新工程第一次登记 [sources.json](sources.json)，配置一次发布通知。以后只修改并发布源工程公开契约，不用在这里再填接口参数。详见 [多工程发布流程](docs/maintenance/public-docs-workflow.md)。源工程的远端发布文件及跨仓库 Secrets 需完成首次接线；文档仓库 master 到 Pages 已关联自动部署。
 
 ## 本地命令
 
-需要 Node.js 22。
+需要 Node.js 22。首次 npm ci，随后依次运行 npm run docs:generate、npm run docs:check、npm test、npm run build。开发预览用 npm run dev，构建预览用 npm run preview。
 
-```powershell
-npm ci
-npm run build
-npm run docs:check
-npm test
-```
+从本机源工程更新用 npm run docs:sync；从 GitHub 已发布 ref 更新用 npm run docs:sync:remote。私有源工程使用 DOCS_SOURCE_TOKEN。导入后运行生成、校验和构建。
 
-从本机源工程更新：`npm run docs:sync`。从已发布的 GitHub 工程更新：`npm run docs:sync:remote`。导入后再 build/check。私有源工程读取用环境变量 `DOCS_SOURCE_TOKEN`。
-
-默认构建只依赖已导入快照，不需要其他工程和网络；缺失或损坏的快照明确报错。远程导入先把 ref 解析成固定 SHA，再读取同一提交的公开文件。
-
-| 位置 | 维护方式 |
+| 位置 | 内容 |
 | --- | --- |
-| `content/zh`、`content/en` | 手写共用指南 |
-| `content/navigation.json` | 共用指南目录 |
-| `sources.json` | 源工程、公开清单与发布 ref |
-| `catalog/<能力>/` | 只读导入快照，记录源码 SHA 和哈希 |
-| `gitbook/` | 自动生成，交给 GitBook 同步；不要手改 |
-| `gitbook-docs.yaml` | 网站与中英文目录映射 |
-| `scripts/`、`tests/` | 导入、构建、校验与回归测试 |
-| `templates/` | 新工程的清单和更新通知模板 |
+| content/zh、content/en | 共用指南 |
+| sources.json | 源工程公开清单和发布 ref |
+| catalog/ | 只读快照，保留源码 SHA 与哈希 |
+| gitbook/ | 可移植 Markdown/OpenAPI 导出 |
+| site/.vitepress/ | 文档站配置、主题与 Scalar 调试组件 |
+| site/zh、site/en | 构建时自动生成的页面，不手改 |
+| functions/ | 调试转发及自动生成的公开接口允许列表 |
+| scripts/、tests/ | 导入、生成、校验与测试 |
+| templates/ | 新能力公开清单和通知工作流 |
 
-当前文档覆盖图片生成/编辑/SSE、视频任务创建/查询/下载/HEAD、视频 Responses stream/后台创建/查询。公开视频模型为 `cogvideo-*`，视频状态查询不返回内部 `data[0].url`，文件从 `/content` 下载。原有 ElevenLabs TTS 文档已保留，标明其网关响应尚待重新验证的差异。
+当前覆盖图片生成/编辑/SSE，视频创建/状态/下载/HEAD，视频 Responses stream/后台创建/查询，共 8 个接口。原有 ElevenLabs TTS 指南保留，其 New API 客户响应仍需核对。图片和视频参数取自实际适配器契约。
 
-## 首次托管
+在线调试通过本站转发客户自己的 API Key，不保存服务器管理员 Key，也不使用第三方调试代理；生成请求会按账户正常计费。
 
-见 [`docs/maintenance/gitbook-setup.md`](docs/maintenance/gitbook-setup.md)。GitBook XY API 网站已发布；原生 Git Sync 目标为 `dreammis/XINYU_API` 的 `master` 分支，中英文空间分别使用 Project directory `gitbook/zh`、`gitbook/en`。原生账户绑定尚未完成，单次导入已经成功；自动同步状态以该设置文档的发布记录为准。
-
-远端已有的 VitePress 文件保留用于查看旧文档；旧站命令为 `dev:legacy`、`build:legacy`、`start:legacy`。本机尚未推送的 Next.js/Fumadocs 工作没有并入此次发布。
+此前 GitBook 导入记录保留在 [gitbook-setup.md](docs/maintenance/gitbook-setup.md)。旧站命令保留为 dev:legacy、build:legacy、start:legacy；本机未推送的 Next.js/Fumadocs 工作保留，未并入发布仓库。

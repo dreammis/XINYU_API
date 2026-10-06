@@ -1,0 +1,61 @@
+:root {
+  --vp-font-family-base: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+  --vp-font-family-mono: 'Cascadia Code', 'Consolas', monospace;
+  --vp-c-brand-1: #16806b;
+  --vp-c-brand-2: #116c5a;
+  --vp-c-brand-3: #126552;
+  --vp-c-brand-soft: rgba(22, 128, 107, .08);
+  --vp-c-bg: #fefefe;
+  --vp-c-bg-alt: #fafbfa;
+  --vp-c-divider: #e9edeb;
+  --vp-c-text-1: #24322e;
+  --vp-sidebar-width: 264px;
+  --vp-layout-max-width: 1480px;
+}
+.dark {
+  --vp-c-brand-1: #72d3b8;
+  --vp-c-brand-2: #59bfa2;
+  --vp-c-brand-3: #43ac90;
+  --vp-c-bg: #141a18;
+  --vp-c-bg-alt: #181f1c;
+  --vp-c-divider: #2c3732;
+  --vp-c-text-1: #e2eae5;
+}
+.VPNavBarTitle .title { letter-spacing: -.04em; font-size: 21px; font-weight: 650; }
+.VPNavBarTitle .logo { width: 30px; height: 30px; margin-right: 10px; }
+.VPNavBar { background: var(--vp-c-bg) !important; }
+.VPSidebarItem.level-0 { padding-bottom: 20px; }
+.VPSidebarItem.level-0 > .item .text { font-size: 12px; letter-spacing: .055em; color: var(--vp-c-text-2); }
+.VPSidebarItem.level-1 > .item { border-radius: 6px; padding-left: 10px; margin-left: -10px; }
+.VPSidebarItem.is-active > .item { background: var(--vp-c-brand-soft); }
+.vp-doc h1 { font-size: 34px; line-height: 1.35; letter-spacing: -.045em; font-weight: 650; }
+.vp-doc h2 { font-size: 22px; letter-spacing: -.025em; border-top: 0; margin-top: 38px; padding-top: 0; }
+.vp-doc p, .vp-doc li { font-size: 15px; line-height: 1.85; }
+.vp-doc table { width: 100%; font-size: 13px; }
+.vp-doc th { background: var(--vp-c-bg-alt); font-weight: 600; }
+.vp-doc tr:nth-child(2n) { background: transparent; }
+.vp-doc th, .vp-doc td { border-color: var(--vp-c-divider); }
+.xy-doc-link { display: inline-flex; min-width: 190px; padding: 16px 20px; margin: 4px 12px 12px 0; border: 1px solid var(--vp-c-divider); border-radius: 10px; text-decoration: none !important; transition: border-color .15s, background .15s; }
+.xy-doc-link:hover { border-color: var(--vp-c-brand-1); background: var(--vp-c-brand-soft); }
+.VPDoc:has(.api-playground) .content-container { max-width: 100%; }
+.VPDoc:has(.api-playground) .content { max-width: 1100px; }
+.api-playground { border: 1px solid var(--vp-c-divider); border-radius: 12px; overflow: hidden; margin: 20px 0 32px; min-height: 100px; }
+.api-playground .scalar-api-reference {
+  --scalar-font: var(--vp-font-family-base);
+  --scalar-font-code: var(--vp-font-family-mono);
+  --scalar-background-1: var(--vp-c-bg);
+  --scalar-background-2: var(--vp-c-bg-alt);
+  --scalar-color-1: var(--vp-c-text-1);
+  --scalar-color-2: var(--vp-c-text-2);
+  --scalar-color-3: var(--vp-c-text-3);
+  --scalar-color-accent: var(--vp-c-brand-1);
+  --scalar-border-color: var(--vp-c-divider);
+  --scalar-content-padding: 22px;
+}
+.api-playground h1, .api-playground h2, .api-playground h3 { margin: 0; padding: 0; border: 0; letter-spacing: normal; }
+.api-playground ul, .api-playground ol { margin: 0; padding: 0; }
+.api-playground .section-container { padding-top: 24px; padding-bottom: 24px; }
+@media (max-width: 640px) {
+  .vp-doc h1 { font-size: 28px; }
+  .xy-doc-link { display: flex; margin-right: 0; }
+}

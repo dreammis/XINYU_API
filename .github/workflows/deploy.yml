@@ -1,4 +1,4 @@
-name: Validate GitBook docs
+name: Validate documentation site
 
 on:
   push:
@@ -29,3 +29,7 @@ jobs:
         run: npm run docs:check
       - name: Check aggregation behavior
         run: npm test
+      - name: Build production site
+        run: npm run build
+      - name: Compile Pages debug function
+        run: npx wrangler pages functions build --outdir .cache/functions

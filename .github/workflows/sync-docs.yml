@@ -28,12 +28,12 @@ jobs:
         env:
           DOCS_SOURCE_TOKEN: ${{ secrets.DOCS_SOURCE_TOKEN }}
         run: npm run docs:sync:remote
-      - run: npm run build
+      - run: npm run docs:generate
       - run: npm run docs:check
       - run: npm test
-      - name: Commit GitBook content when changed
+      - name: Commit public documentation when changed
         run: |
-          git add catalog gitbook
+          git add catalog gitbook functions/public-endpoints.json
           if git diff --cached --quiet; then exit 0; fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
