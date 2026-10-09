@@ -74,8 +74,34 @@ export function validateRegistry(registry) {
     if (!/^[\w.-]+\/[\w.-]+$/.test(source.repository) || !source.ref || !source.localDirectory) throw new Error(`Incomplete source: ${source.id}`);
     publicPath(source.manifest);
     if (source.category !== undefined && !categories.includes(source.category)) throw new Error(`Invalid source category: ${source.id}`);
+    // 产品分组只能由明确登记提供，不能按名称猜测；一个调用名只能归属一组。
+    if (source.modelGroups !== undefined) {
+      if (!Array.isArray(source.modelGroups) || !source.modelGroups.length) throw new Error(`Invalid model groups: ${source.id}`);
+      const groupIds = new Set();
+      const groupedModels = new Set();
+      for (const group of source.modelGroups) {
+        if (!group || typeof group.id !== 'string' || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(group.id) || groupIds.has(group.id) || locales.some(locale => typeof group.title?.[locale] !== 'string' || !group.title[locale]) || !Array.isArray(group.models) || !group.models.length) throw new Error(`Invalid model group: ${source.id}`);
+        groupIds.add(group.id);
+        for (const model of group.models) {
+          if (typeof model !== 'string' || !model || groupedModels.has(model)) throw new Error(`Duplicate/invalid grouped model: ${source.id}/${model}`);
+          groupedModels.add(model);
+        }
+      }
+    }
     if (source.selectionSections && locales.some((locale) => !Array.isArray(source.selectionSections[locale]) || source.selectionSections[locale].some((heading) => typeof heading !== 'string' || !heading))) throw new Error(`Invalid selection sections: ${source.id}`);
     if (source.modelNotes && (!Array.isArray(source.modelNotes) || source.modelNotes.some(note => !Array.isArray(note.models) || !note.models.length || note.models.some(model => typeof model !== 'string' || !model) || locales.some(locale => typeof note.contains?.[locale] !== 'string' || !note.contains[locale])))) throw new Error(`Invalid model note pointers: ${source.id}`);
     ids.add(source.id);
+  }
+}
+
+// 文档产品分组必须覆盖当前公开契约；源工程交付组名后不能与登记互相冲突。
+export function validateModelGroups(manifest, source) {
+  if (!source.modelGroups) return;
+  if (JSON.stringify(source.modelGroups.flatMap(group => group.models).sort()) !== JSON.stringify([...(manifest.models ?? [])].sort())) throw new Error(`${source.id}: model groups must cover exactly the public model catalog`);
+  for (const group of source.modelGroups) {
+    for (const model of group.models) {
+      const sourceGroup = manifest.modelDetails?.[model]?.group;
+      if (sourceGroup && group.id !== sourceGroup) throw new Error(`${source.id}: model group disagrees with public manifest (${model})`);
+    }
   }
 }

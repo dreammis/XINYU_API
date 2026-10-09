@@ -5,6 +5,23 @@
     {
       "id": "media-image",
       "category": "image",
+      "modelGroups": [
+        {
+          "id": "gemini-banana",
+          "title": { "zh": "Gemini / Banana", "en": "Gemini / Banana" },
+          "models": ["gemini-3.1-flash-lite-image", "gemini-3.1-flash-image", "gemini-3-pro-image"]
+        },
+        {
+          "id": "gpt-image",
+          "title": { "zh": "GPT Image", "en": "GPT Image" },
+          "models": ["gpt-image-2.5-fast", "gpt-image-2.5-pro", "gpt-image-2"]
+        },
+        {
+          "id": "own-image",
+          "title": { "zh": "自有模型", "en": "Own models" },
+          "models": ["image-basic", "image-fast", "image-pro", "image-creative"]
+        }
+      ],
       "selectionSections": {
         "zh": [
           "分辨率与比例",

@@ -111,6 +111,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .model-comparisons a { text-decoration: none; }
 .vp-doc .result-count { color: var(--vp-c-text-2); font-size: 11px; margin: 24px 0 9px; }
 .model-list { border: 1px solid var(--vp-c-divider); border-radius: 9px; overflow: hidden; }
+.model-family { margin-top: 26px; }
+.model-family-heading { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+.vp-doc .model-family-heading h2 { margin: 0; padding: 0; border: 0; font-size: 17px; }
+.model-family-heading > span, .family-count { color: var(--vp-c-text-2); font-size: 11px; font-weight: 400; }
+.family-count { margin-left: 8px; }
+.series-model-family { scroll-margin-top: 100px; }
 .vp-doc .model-row { display: flex; align-items: center; gap: 20px; padding: 17px 20px; color: var(--vp-c-text-1); text-decoration: none; border-bottom: 1px solid var(--vp-c-divider); }
 .model-row:last-child { border-bottom: 0; }
 .model-row:hover { background: var(--vp-c-brand-soft); }

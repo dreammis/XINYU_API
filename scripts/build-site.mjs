@@ -1,7 +1,7 @@
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { methods, publicPath, sha256 } from './docs-contract.mjs';
+import { methods, publicPath, sha256, validateModelGroups, validateRegistry } from './docs-contract.mjs';
 import { modelOperations } from '../site/.vitepress/theme/openapi-content.mjs';
 import { publicApiMarkdown } from './public-api-markdown.mjs';
 
@@ -10,6 +10,7 @@ const book = path.join(root, 'gitbook');
 const site = path.join(root, 'site');
 const files = JSON.parse(await readFile(path.join(book, '.generated.json'), 'utf8'));
 const registry = JSON.parse(await readFile(path.join(root, 'sources.json'), 'utf8'));
+validateRegistry(registry);
 const series = JSON.parse(await readFile(path.join(root, 'content/series.json'), 'utf8'));
 const translations = JSON.parse(await readFile(path.join(root, 'content/openapi-zh.json'), 'utf8'));
 const generated = new Map();
@@ -35,14 +36,27 @@ for (const source of registry.sources) {
     slug: item[method].operationId.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase(),
     title: { zh: item[method]['x-title-zh'] ?? item[method].summary, en: item[method].summary },
   })));
-  const models = (manifest.models ?? []).map((name) => ({
-    name,
-    slug: /^[a-zA-Z0-9._-]+$/.test(name) ? name : `${name.replace(/[^a-zA-Z0-9_-]/g, '-').slice(0, 60)}-${sha256(name).slice(0, 8)}`,
-    title: manifest.modelDetails?.[name]?.title,
-    summary: manifest.modelDetails?.[name]?.summary,
-    group: manifest.modelDetails?.[name]?.group,
-    operations: manifest.modelDetails?.[name]?.operations,
-  }));
+  validateModelGroups(manifest, source);
+  const models = (manifest.models ?? []).map((name) => {
+    const registeredGroup = source.modelGroups?.find(group => group.models.includes(name));
+    const sourceGroup = manifest.modelDetails?.[name]?.group;
+    const group = sourceGroup ?? registeredGroup?.id;
+    return {
+      name,
+      slug: /^[a-zA-Z0-9._-]+$/.test(name) ? name : `${name.replace(/[^a-zA-Z0-9_-]/g, '-').slice(0, 60)}-${sha256(name).slice(0, 8)}`,
+      title: manifest.modelDetails?.[name]?.title,
+      summary: manifest.modelDetails?.[name]?.summary,
+      group,
+      groupTitle: registeredGroup?.title ?? (group ? { zh: group, en: group } : undefined),
+      operations: manifest.modelDetails?.[name]?.operations,
+    };
+  });
+  const grouped = new Map();
+  for (const model of models) {
+    const id = model.group ?? '';
+    if (!grouped.has(id)) grouped.set(id, { id, title: model.groupTitle ?? manifest.title, models: [] });
+    grouped.get(id).models.push(model.name);
+  }
   if (source.modelNotes?.some(note => note.models.some(name => !models.some(model => model.name === name)))) throw new Error(`${source.id}: model note points to an unknown model`);
   const displaySpec = structuredClone(spec);
   // 旧规范缺失的中文说明采用逐条人工翻译；源契约的中文始终优先，下载规范保持原样。
@@ -53,7 +67,7 @@ for (const source of registry.sources) {
   }
   localize(displaySpec);
   contracts[source.id] = displaySpec;
-  capabilities.push({ id: source.id, title: manifest.title, category, version: manifest.version, models, operations });
+  capabilities.push({ id: source.id, title: manifest.title, category, version: manifest.version, models, modelGroups: [...grouped.values()], operations });
 }
 
 // 保留 Markdown 导出和既有 URL，站点接口页只由同一份规范渲染一次。
@@ -115,14 +129,10 @@ for (const locale of ['zh', 'en']) {
         const operation = capability.operations.find(operation => operation.id === item.operation.operationId);
         return { text: `<span class="nav-method ${operation.method}">${operation.method.toUpperCase()}</span>${html(operation.title[locale])}`, link: `${base}/models/${model.slug}/${operation.slug}` };
       }) }));
-      const grouped = new Map();
-      for (let index = 0; index < capability.models.length; index++) {
-        const group = capability.models[index].group;
-        if (!group) items.push(modelItems[index]);
-        else {
-          if (!grouped.has(group)) { const entry = { text: html(group), collapsed: true, items: [] }; grouped.set(group, entry); items.push(entry); }
-          grouped.get(group).items.push(modelItems[index]);
-        }
+      for (const group of capability.modelGroups) {
+        const children = modelItems.filter((item, index) => group.models.includes(capability.models[index].name));
+        if (!group.id) items.push(...children);
+        else items.push({ text: html(group.title[locale]), collapsed: true, items: children });
       }
     }
     apiGroups.push({ text: info.title[locale], collapsed: true, items });
@@ -189,7 +199,7 @@ for (const locale of ['zh', 'en']) {
         publicPages.set(destination, publicApiMarkdown(contracts[capability.id], operation.endpoint, operation.method, locale, model.name));
         links.push(`- [${operation.title[locale]}](/${destination.replace(/\.md$/, '')})`);
       }
-      publicPages.set(modelPath, [`# ${model.name}`, intro, `## ${zh ? '模型能力' : 'Model capabilities'}`, ...facts.map(fact => `- ${fact.label}: ${fact.value}`), notes, `## ${zh ? '适用接口' : 'Supported APIs'}`, ...links].join('\n\n'));
+      publicPages.set(modelPath, [`# ${model.name}`, intro, ...(model.group ? [`${zh ? '模型系列' : 'Model family'}: ${model.groupTitle[locale]}`] : []), `## ${zh ? '模型能力' : 'Model capabilities'}`, ...facts.map(fact => `- ${fact.label}: ${fact.value}`), notes, `## ${zh ? '适用接口' : 'Supported APIs'}`, ...links].join('\n\n'));
       // 最长前缀配置保留当前模型展开，其他模型与系列保持折叠。
       const modelSidebar = structuredClone(active);
       function expand(items) {
@@ -210,7 +220,11 @@ for (const locale of ['zh', 'en']) {
   for (const page of ['faq', 'errors']) sidebar[`/${locale}/${page}`] = [helpGroup];
   const modelGroups = [{ text: zh ? '模型中心' : 'Model center', items: [{ text: zh ? '全部模型' : 'All models', link: `/${locale}/models` }] }];
   for (const capability of capabilities.filter((item) => item.models.length)) {
-    modelGroups.push({ text: series[capability.category].title[locale], collapsed: false, items: capability.models.map((model) => ({ text: html(model.title?.[locale] ?? model.name), link: `/${locale}/models/${capability.id}/${model.slug}` })) });
+    const items = capability.modelGroups.flatMap(group => {
+      const children = capability.models.filter(model => group.models.includes(model.name)).map(model => ({ text: html(model.title?.[locale] ?? model.name), link: `/${locale}/models/${capability.id}/${model.slug}` }));
+      return group.id ? [{ text: html(group.title[locale]), collapsed: true, items: children }] : children;
+    });
+    modelGroups.push({ text: series[capability.category].title[locale], collapsed: false, items });
   }
   sidebar[`/${locale}/models`] = modelGroups;
   // 模型中心的总目录按系列折叠，详情沿用 API 手册中的模型上下文。
