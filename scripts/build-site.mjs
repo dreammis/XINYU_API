@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { methods, publicPath, sha256, validateModelGroups, validateRegistry } from './docs-contract.mjs';
 import { modelOperations } from '../site/.vitepress/theme/openapi-content.mjs';
+import { icons } from '../site/.vitepress/theme/icons.mjs';
 import { publicApiMarkdown } from './public-api-markdown.mjs';
 
 const root = path.resolve(process.env.DOCS_ROOT ?? fileURLToPath(new URL('..', import.meta.url)));
@@ -23,6 +24,11 @@ const publicPages = new Map();
 // Vue 属性与导航 HTML 的文本必须转义；公开调用名可以包含斜线等字符。
 function html(value) {
   return String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
+}
+
+// 导航文本只拼接受控 SVG 与转义文本；图标不会进入客户 Markdown。
+function navLabel(category, text) {
+  return `<span class="nav-label"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[category] ?? icons.other}</svg><span>${html(text)}</span></span>`;
 }
 
 // 从已校验快照生成展示数据；公开规范与代理允许列表不受展示改版影响。
@@ -125,17 +131,17 @@ for (const locale of ['zh', 'en']) {
       items.push({ text: zh ? '使用流程与限制' : 'Usage and limits', link: `/${locale}/guides/${capability.id}` });
       for (const operation of capability.operations) items.push({ text: `<span class="nav-method ${operation.method}">${operation.method.toUpperCase()}</span>${html(operation.title[locale])}`, link: `${base}/${operation.slug}` });
       // 调用名称进入 API 手册；同一规范可按模型生成入口，不复制接口定义。
-      const modelItems = capability.models.map(model => ({ text: html(model.title?.[locale] ?? model.name), link: `/${locale}/models/${capability.id}/${model.slug}`, collapsed: true, items: modelOperations(contracts[capability.id], model.name).filter(item => !model.operations || model.operations.includes(item.operation.operationId)).map(item => {
+      const modelItems = capability.models.map(model => ({ text: navLabel(capability.category, model.title?.[locale] ?? model.name), link: `/${locale}/models/${capability.id}/${model.slug}`, collapsed: true, items: modelOperations(contracts[capability.id], model.name).filter(item => !model.operations || model.operations.includes(item.operation.operationId)).map(item => {
         const operation = capability.operations.find(operation => operation.id === item.operation.operationId);
         return { text: `<span class="nav-method ${operation.method}">${operation.method.toUpperCase()}</span>${html(operation.title[locale])}`, link: `${base}/models/${model.slug}/${operation.slug}` };
       }) }));
       for (const group of capability.modelGroups) {
         const children = modelItems.filter((item, index) => group.models.includes(capability.models[index].name));
         if (!group.id) items.push(...children);
-        else items.push({ text: html(group.title[locale]), collapsed: true, items: children });
+        else items.push({ text: navLabel(capability.category, group.title[locale]), collapsed: true, items: children });
       }
     }
-    apiGroups.push({ text: info.title[locale], collapsed: true, items });
+    apiGroups.push({ text: navLabel(category, info.title[locale]), collapsed: true, items });
   }
   const guideGroup = { text: zh ? '开始使用' : 'Get started', items: [
     { text: zh ? '使用概览' : 'Overview', link: `/${locale}/integration` },
@@ -221,10 +227,10 @@ for (const locale of ['zh', 'en']) {
   const modelGroups = [{ text: zh ? '模型中心' : 'Model center', items: [{ text: zh ? '全部模型' : 'All models', link: `/${locale}/models` }] }];
   for (const capability of capabilities.filter((item) => item.models.length)) {
     const items = capability.modelGroups.flatMap(group => {
-      const children = capability.models.filter(model => group.models.includes(model.name)).map(model => ({ text: html(model.title?.[locale] ?? model.name), link: `/${locale}/models/${capability.id}/${model.slug}` }));
-      return group.id ? [{ text: html(group.title[locale]), collapsed: true, items: children }] : children;
+      const children = capability.models.filter(model => group.models.includes(model.name)).map(model => ({ text: navLabel(capability.category, model.title?.[locale] ?? model.name), link: `/${locale}/models/${capability.id}/${model.slug}` }));
+      return group.id ? [{ text: navLabel(capability.category, group.title[locale]), collapsed: true, items: children }] : children;
     });
-    modelGroups.push({ text: series[capability.category].title[locale], collapsed: false, items });
+    modelGroups.push({ text: navLabel(capability.category, series[capability.category].title[locale]), collapsed: false, items });
   }
   sidebar[`/${locale}/models`] = modelGroups;
   // 模型中心的总目录按系列折叠，详情沿用 API 手册中的模型上下文。
@@ -252,6 +258,7 @@ generated.set('public/llms.txt', '# XY API\n\n> Customer API documentation. Auth
 generated.set('.vitepress/sidebar.json', JSON.stringify(Object.fromEntries(Object.entries(sidebar).sort(([left], [right]) => right.length - left.length)), null, 2) + '\n');
 generated.set('.vitepress/catalog.json', JSON.stringify({ series, capabilities }, null, 2) + '\n');
 generated.set('.vitepress/contracts.json', JSON.stringify(contracts) + '\n');
+generated.set('public-documents.mjs', '// 自动生成的客户文档索引，不包含维护资料。\nexport default ' + JSON.stringify([...publicPages].map(([filename, content]) => ({ path: `/markdown/${filename}`, title: content.match(/^# (.+)/m)?.[1] ?? filename, locale: filename.split('/')[0], content: generated.get(`public/markdown/${filename}`) }))) + ';\n');
 generated.set('public-endpoints.mjs', '// 自动从公开 OpenAPI 生成；不手动修改。\nexport default ' + JSON.stringify(endpoints, null, 2) + ';\n');
 
 // 新模型页和普通 Markdown 链接也在写入前校验。

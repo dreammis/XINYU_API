@@ -1,4 +1,5 @@
 <script setup>
+import UiIcon from './UiIcon.vue';
 import { computed } from 'vue';
 import catalog from '../catalog.json';
 import contracts from '../contracts.json';
@@ -19,7 +20,7 @@ const codes = computed(() => {
 </script>
 <template>
   <div class="model-detail">
-    <dl class="model-facts"><div><dt>{{ locale === 'zh' ? '调用名称' : 'Route name' }}</dt><dd><code>{{ model }}</code></dd></div><div><dt>{{ locale === 'zh' ? '所属系列' : 'Series' }}</dt><dd>{{ catalog.series[capability.category].title[locale] }}<template v-if="detail.group"><br /><a :href="`/${locale}/api-reference/${id}/#models-${detail.group}`">{{ detail.groupTitle[locale] }}</a></template></dd></div><div><dt>{{ locale === 'zh' ? '契约版本' : 'Contract version' }}</dt><dd>{{ capability.version }}</dd></div></dl>
+    <dl class="model-facts"><div><dt>{{ locale === 'zh' ? '调用名称' : 'Route name' }}</dt><dd><code>{{ model }}</code></dd></div><div><dt>{{ locale === 'zh' ? '所属系列' : 'Series' }}</dt><dd><UiIcon :name="capability.category" />{{ catalog.series[capability.category].title[locale] }}<template v-if="detail.group"><br /><a :href="`/${locale}/api-reference/${id}/#models-${detail.group}`">{{ detail.groupTitle[locale] }}</a></template></dd></div><div><dt>{{ locale === 'zh' ? '契约版本' : 'Contract version' }}</dt><dd>{{ capability.version }}</dd></div></dl>
     <h2>{{ locale === 'zh' ? '能力与限制' : 'Capabilities and limits' }}</h2>
     <dl v-if="detail.facts?.[locale]?.length" class="model-limit-facts"><div v-for="fact in detail.facts[locale]" :key="fact.label"><dt>{{ fact.label }}</dt><dd>{{ fact.value }}</dd></div></dl>
     <p class="field-note">{{ locale === 'zh' ? '以下信息摘录自当前公开指南；实际尺寸以产物文件为准。' : 'These facts are extracted from the current public guide. Read actual dimensions from the output file.' }}</p>

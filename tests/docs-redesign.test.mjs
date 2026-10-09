@@ -47,11 +47,14 @@ test('series and model pages preserve public contracts and reject broken selecti
     assert.match(overview, /固定 8 秒/);
     const sidebar = JSON.parse(await readFile(path.join(directory, 'site/.vitepress/sidebar.json'), 'utf8'));
     const active = sidebar['/zh/api-reference/media-video/models/cogvideo-short/'];
-    const video = active.find(group => group.text === '视频系列');
+    const video = active.find(group => group.text.includes('视频系列'));
     assert.equal(video.collapsed, false);
-    assert.equal(video.items.find(item => item.text === 'cogvideo-short').collapsed, false);
-    assert.equal(video.items.find(item => item.text === 'cogvideo-fast').collapsed, true);
-    assert.ok(video.items.find(item => item.text === 'cogvideo-short').items.some(item => item.link.endsWith('/cogvideo-short/create-video')));
+    const family = video.items.find(item => item.text.includes('Video Studio'));
+    assert.equal(family.collapsed, false);
+    assert.match(family.text, /<svg/);
+    assert.equal(family.items.find(item => item.link?.endsWith('/cogvideo-short')).collapsed, false);
+    assert.equal(family.items.find(item => item.link?.endsWith('/cogvideo-fast')).collapsed, true);
+    assert.ok(family.items.find(item => item.link?.endsWith('/cogvideo-short')).items.some(item => item.link.endsWith('/cogvideo-short/create-video')));
     const llms = await readFile(path.join(directory, 'site/public/llms.txt'), 'utf8');
     assert.match(llms, /markdown\/zh\/api-reference\/media-image\/generate-image.md/);
     assert.doesNotMatch(llms, /maintenance|upstream-task|newapi-task|handoff|sources.json/);

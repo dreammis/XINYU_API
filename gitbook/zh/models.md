@@ -14,7 +14,7 @@
 | `image-fast` | 图片 | 自有模型 | [能力与限制](guides/media-image.md) |
 | `image-pro` | 图片 | 自有模型 | [能力与限制](guides/media-image.md) |
 | `image-creative` | 图片 | 自有模型 | [能力与限制](guides/media-image.md) |
-| `cogvideo-fast` | 视频 | — | [能力与限制](guides/media-video.md) |
-| `cogvideo-pro` | 视频 | — | [能力与限制](guides/media-video.md) |
-| `cogvideo-basic` | 视频 | — | [能力与限制](guides/media-video.md) |
-| `cogvideo-short` | 视频 | — | [能力与限制](guides/media-video.md) |
+| `cogvideo-fast` | 视频 | Video Studio | [能力与限制](guides/media-video.md) |
+| `cogvideo-pro` | 视频 | Video Studio | [能力与限制](guides/media-video.md) |
+| `cogvideo-basic` | 视频 | Video Studio | [能力与限制](guides/media-video.md) |
+| `cogvideo-short` | 视频 | Video Studio | [能力与限制](guides/media-video.md) |

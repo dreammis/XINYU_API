@@ -87,6 +87,7 @@
     {
       "id": "media-video",
       "category": "video",
+      "modelGroups": [{ "id": "video-studio", "title": { "zh": "Video Studio", "en": "Video Studio" }, "models": ["cogvideo-fast", "cogvideo-pro", "cogvideo-basic", "cogvideo-short"] }],
       "selectionSections": {
         "zh": [
           "模型与价格"

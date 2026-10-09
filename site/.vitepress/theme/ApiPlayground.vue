@@ -1,4 +1,5 @@
 <script setup>
+import UiIcon from './UiIcon.vue';
 import { computed, onBeforeUnmount, ref, watch } from 'vue';
 import contracts from '../contracts.json';
 import catalog from '../catalog.json';
@@ -43,6 +44,14 @@ const modelEnum = computed(() => (resolveSchema(specification.value, resolveSche
 const container = ref(null);
 const clientLoading = ref(false);
 const error = ref('');
+const endpointStatus = ref('');
+// 使用公开规范的服务器地址，保留路径占位符供客户替换。
+async function copyEndpoint() {
+  try {
+    await navigator.clipboard.writeText(specification.value.servers[0].url.replace(/\/$/, '') + props.endpoint);
+    endpointStatus.value = props.locale === 'zh' ? '接口地址已复制' : 'Endpoint copied';
+  } catch (failure) { endpointStatus.value = `${props.locale === 'zh' ? '复制失败' : 'Copy failed'}: ${failure.message}`; }
+}
 const mobileCodeOpen = ref(false);
 let client;
 let disposed = false;
@@ -119,7 +128,7 @@ onBeforeUnmount(() => { disposed = true; client?.app.unmount(); });
     <nav class="api-section-nav" :aria-label="locale === 'zh' ? '本页章节' : 'On this page'"><a href="#authentication">{{ locale === 'zh' ? '鉴权' : 'Auth' }}</a><a v-if="modelEnum.length" href="#models">{{ locale === 'zh' ? '模型' : 'Model' }}</a><a v-if="parameters.length" href="#parameters">{{ locale === 'zh' ? '路径参数' : 'Parameters' }}</a><a v-if="bodyTypes.length" href="#request-body">{{ locale === 'zh' ? '请求参数' : 'Body' }}</a><a href="#responses">{{ locale === 'zh' ? '响应' : 'Responses' }}</a><a href="#examples" @click="mobileCodeOpen = true">{{ locale === 'zh' ? '示例与调试' : 'Examples' }}</a></nav>
     <div class="api-reference-grid">
       <div class="api-document">
-        <div class="endpoint-line"><span :class="['method-badge', method]">{{ method.toUpperCase() }}</span><code>{{ endpoint }}</code><button class="endpoint-try" :disabled="clientLoading" @click="openClient">{{ locale === 'zh' ? '试一试 ↗' : 'Try it ↗' }}</button></div>
+        <div class="endpoint-line"><span :class="['method-badge', method]">{{ method.toUpperCase() }}</span><code>{{ endpoint }}</code><button class="endpoint-copy" :aria-label="locale === 'zh' ? '复制接口地址' : 'Copy endpoint URL'" @click="copyEndpoint"><UiIcon name="copy" /></button><button class="endpoint-try" :disabled="clientLoading" @click="openClient">{{ locale === 'zh' ? '试一试' : 'Try it' }}<UiIcon name="external" /></button></div><span class="endpoint-status" role="status">{{ endpointStatus }}</span>
         <p v-if="operation['x-description-zh'] || operation.description" class="api-description">{{ locale === 'zh' ? operation['x-description-zh'] ?? operation.description : operation.description }}</p>
         <div class="api-resource-links"><a :href="`/${locale}/api-reference/${id}/`">{{ locale === 'zh' ? '模型选择与限制' : 'Model selection and limits' }} →</a><a :href="`/${locale}/guides/${id}`">{{ locale === 'zh' ? '完整使用流程' : 'Full usage flow' }} →</a></div>
         <h2 id="authentication">{{ locale === 'zh' ? '鉴权' : 'Authentication' }}</h2>

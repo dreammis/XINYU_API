@@ -14,7 +14,7 @@ Public product route names do not guarantee original-provider access or a precis
 | `image-fast` | Images | Own models | [Capabilities and limits](guides/media-image.md) |
 | `image-pro` | Images | Own models | [Capabilities and limits](guides/media-image.md) |
 | `image-creative` | Images | Own models | [Capabilities and limits](guides/media-image.md) |
-| `cogvideo-fast` | Videos | — | [Capabilities and limits](guides/media-video.md) |
-| `cogvideo-pro` | Videos | — | [Capabilities and limits](guides/media-video.md) |
-| `cogvideo-basic` | Videos | — | [Capabilities and limits](guides/media-video.md) |
-| `cogvideo-short` | Videos | — | [Capabilities and limits](guides/media-video.md) |
+| `cogvideo-fast` | Videos | Video Studio | [Capabilities and limits](guides/media-video.md) |
+| `cogvideo-pro` | Videos | Video Studio | [Capabilities and limits](guides/media-video.md) |
+| `cogvideo-basic` | Videos | Video Studio | [Capabilities and limits](guides/media-video.md) |
+| `cogvideo-short` | Videos | Video Studio | [Capabilities and limits](guides/media-video.md) |

@@ -20,3 +20,5 @@ site/.vitepress/cache/
 worker-configuration.d.ts
 site/.vitepress/catalog.json
 site/.vitepress/contracts.json
+
+site/public-documents.mjs

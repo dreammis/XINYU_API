@@ -1,4 +1,5 @@
 <script setup>
+import UiIcon from './UiIcon.vue';
 import { computed, onMounted, onBeforeUnmount, ref, useId, watch } from 'vue';
 import { highlightCode } from './code-highlighter.mjs';
 const props = defineProps({ codes: Object, label: String });
@@ -26,9 +27,9 @@ watch(languages, values => { if (!values.includes(language.value)) language.valu
 onBeforeUnmount(() => { stop?.(); version++; });
 function moveTab(event) {
   const direction = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
-  if (!direction) return;
+  if (!direction && !['Home', 'End'].includes(event.key)) return;
   event.preventDefault();
-  const next = (languages.value.indexOf(language.value) + direction + languages.value.length) % languages.value.length;
+  const next = event.key === 'Home' ? 0 : event.key === 'End' ? languages.value.length - 1 : (languages.value.indexOf(language.value) + direction + languages.value.length) % languages.value.length;
   language.value = languages.value[next];
   event.currentTarget.parentElement.querySelectorAll('[role="tab"]')[next].focus();
 }
@@ -49,7 +50,7 @@ async function copy() {
     <div class="code-toolbar"><div class="code-tabs" role="tablist" :aria-label="label || 'Code language'">
       <button v-for="key in languages" :id="`${id}-${key}`" :key="key" role="tab" :aria-controls="`${id}-panel`" :aria-selected="language === key" :tabindex="language === key ? 0 : -1" @keydown="moveTab" @click="language = key">{{ titles[key] ?? key }}</button>
       </div>
-      <button class="code-copy" :aria-label="copied ? 'Copied / 已复制' : 'Copy / 复制'" @click="copy">{{ copied ? '✓' : '⧉' }}</button>
+      <button class="code-copy" :aria-label="copied ? 'Copied / 已复制' : 'Copy / 复制'" @click="copy"><UiIcon :name="copied ? 'check' : 'copy'" /></button>
     </div>
     <div :id="`${id}-panel`" role="tabpanel" :aria-labelledby="`${id}-${language}`" tabindex="0"><div v-if="highlighted" v-html="highlighted" /><pre v-else><code>{{ code }}</code></pre></div>
     <span class="sr-only" role="status" aria-live="polite">{{ copied ? 'Copied / 已复制' : '' }}</span>
