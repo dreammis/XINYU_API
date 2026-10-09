@@ -9,6 +9,8 @@ out/
 site/zh/
 site/en/
 site/public/openapi/
+site/public/markdown/
+site/public/llms.txt
 site/.generated.json
 site/.vitepress/sidebar.json
 site/.vitepress/dist/

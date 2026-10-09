@@ -5,20 +5,97 @@
     {
       "id": "media-image",
       "category": "image",
-      "selectionSections": { "zh": ["分辨率与比例", "模型名称"], "en": ["Models and fixed quality", "Parameters and output dimensions"] },
+      "selectionSections": {
+        "zh": [
+          "分辨率与比例",
+          "模型名称"
+        ],
+        "en": [
+          "Models and fixed quality",
+          "Parameters and output dimensions"
+        ]
+      },
       "repository": "dreammis/vidu2api",
       "ref": "main",
       "localDirectory": "../vidu2api",
-      "manifest": "integrations/newapi/media-image/public-docs.json"
+      "manifest": "integrations/newapi/media-image/public-docs.json",
+      "modelNotes": [
+        {
+          "models": [
+            "gemini-3.1-flash-lite-image",
+            "gemini-3.1-flash-image",
+            "gemini-3-pro-image",
+            "gpt-image-2.5-fast",
+            "gpt-image-2.5-pro",
+            "gpt-image-2",
+            "image-basic",
+            "image-fast",
+            "image-pro",
+            "image-creative"
+          ],
+          "contains": {
+            "zh": "档位与比例决定输出目标",
+            "en": "Explicit `size`, `resolution`, and `aspect_ratio` must agree."
+          }
+        },
+        {
+          "models": [
+            "gemini-3.1-flash-lite-image",
+            "gemini-3.1-flash-image",
+            "gemini-3-pro-image",
+            "gpt-image-2.5-fast",
+            "gpt-image-2.5-pro",
+            "gpt-image-2",
+            "image-basic"
+          ],
+          "contains": {
+            "zh": "`gemini-3.1-flash-lite-image` 本身只支持",
+            "en": "`resolution` accepts `1k`"
+          }
+        },
+        {
+          "models": [
+            "gpt-image-2.5-fast",
+            "gpt-image-2.5-pro",
+            "gpt-image-2",
+            "image-basic"
+          ],
+          "contains": {
+            "zh": "三个 GPT Image 路由及 `image-basic` 的 `resolution:",
+            "en": "Explicit `size`, `resolution`, and `aspect_ratio` must agree."
+          }
+        }
+      ]
     },
     {
       "id": "media-video",
       "category": "video",
-      "selectionSections": { "zh": ["模型与价格"], "en": ["Model capabilities"] },
+      "selectionSections": {
+        "zh": [
+          "模型与价格"
+        ],
+        "en": [
+          "Model capabilities"
+        ]
+      },
       "repository": "dreammis/vidu2api",
       "ref": "main",
       "localDirectory": "../vidu2api",
-      "manifest": "integrations/newapi/media-video/public-docs.json"
+      "manifest": "integrations/newapi/media-video/public-docs.json",
+      "modelNotes": [
+        {
+          "models": [
+            "cogvideo-fast",
+            "cogvideo-pro",
+            "cogvideo-basic",
+            "cogvideo-short"
+          ],
+          "contains": {
+            "zh": "默认分组每条成功视频价格",
+            "en": "Default-group pricing is USD"
+          }
+        }
+      ]
     }
   ]
 }

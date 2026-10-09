@@ -115,7 +115,7 @@ test('a registered non-model capability gets pages without frontend code changes
   try {
     const registry = JSON.parse(await readFile(path.join(directory, 'sources.json'), 'utf8'));
     const id = 'file-conversion';
-    registry.sources.push({ ...registry.sources[0], id, category: 'tool', selectionSections: undefined });
+    registry.sources.push({ ...registry.sources[0], id, category: 'tool', selectionSections: undefined, modelNotes: undefined });
     await writeFile(path.join(directory, 'sources.json'), JSON.stringify(registry));
     const manifest = { schemaVersion: 1, id, title: { zh: '文件转换', en: 'File conversion' }, version: '1.0.0', models: [], openapi: 'public/openapi.json', guides: { zh: 'public/zh.md', en: 'public/en.md' } };
     const spec = { openapi: '3.1.0', info: { title: 'File conversion fixture', version: '1.0.0' }, servers: [{ url: 'https://example.com' }], security: [{ bearerAuth: [] }], components: { securitySchemes: { bearerAuth: { type: 'http', scheme: 'bearer' } } }, paths: { '/v1/tools/convert': { post: { operationId: 'convertFile', summary: 'Convert a file', 'x-title-zh': '转换文件', responses: { '200': { description: 'Converted output' } } } } } };

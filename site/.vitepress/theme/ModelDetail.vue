@@ -20,9 +20,13 @@ const codes = computed(() => {
 <template>
   <div class="model-detail">
     <dl class="model-facts"><div><dt>{{ locale === 'zh' ? '调用名称' : 'Route name' }}</dt><dd><code>{{ model }}</code></dd></div><div><dt>{{ locale === 'zh' ? '所属系列' : 'Series' }}</dt><dd>{{ catalog.series[capability.category].title[locale] }}</dd></div><div><dt>{{ locale === 'zh' ? '契约版本' : 'Contract version' }}</dt><dd>{{ capability.version }}</dd></div></dl>
+    <h2>{{ locale === 'zh' ? '能力与限制' : 'Capabilities and limits' }}</h2>
+    <dl v-if="detail.facts?.[locale]?.length" class="model-limit-facts"><div v-for="fact in detail.facts[locale]" :key="fact.label"><dt>{{ fact.label }}</dt><dd>{{ fact.value }}</dd></div></dl>
+    <p class="field-note">{{ locale === 'zh' ? '以下信息摘录自当前公开指南；实际尺寸以产物文件为准。' : 'These facts are extracted from the current public guide. Read actual dimensions from the output file.' }}</p>
+    <slot />
     <a class="selection-link" :href="`/${locale}/api-reference/${id}/`"><strong>{{ locale === 'zh' ? '先比较能力与限制' : 'Compare capabilities and limits' }}</strong><span>{{ locale === 'zh' ? '查看同系列模型的尺寸、输入与其他适用限制。' : 'Check dimensions, inputs and other applicable limits for this series.' }}</span><span aria-hidden="true">→</span></a>
     <h2>{{ locale === 'zh' ? '适用接口' : 'Supported APIs' }}</h2>
-    <div class="operation-links"><a v-for="item in operations" :key="item.operation.operationId" :href="`/${locale}/api-reference/${id}/${capability.operations.find(operation => operation.id === item.operation.operationId).slug}`"><span :class="['method-badge', item.method]">{{ item.method.toUpperCase() }}</span><strong>{{ locale === 'zh' ? item.operation['x-title-zh'] ?? item.operation.summary : item.operation.summary }}</strong><code>{{ item.endpoint }}</code><span aria-hidden="true">→</span></a></div>
+    <div class="operation-links"><a v-for="item in operations" :key="item.operation.operationId" :href="`/${locale}/api-reference/${id}/models/${detail.slug}/${capability.operations.find(operation => operation.id === item.operation.operationId).slug}`"><span :class="['method-badge', item.method]">{{ item.method.toUpperCase() }}</span><strong>{{ locale === 'zh' ? item.operation['x-title-zh'] ?? item.operation.summary : item.operation.summary }}</strong><code>{{ item.endpoint }}</code><span aria-hidden="true">→</span></a></div>
     <h2 v-if="codes">{{ locale === 'zh' ? '调用示例' : 'Request example' }}</h2>
     <CodeExample v-if="codes" :codes="codes" />
     <p>{{ locale === 'zh' ? '示例中的 Key 为占位符。详细参数、异步或流式流程和结果获取方式，以接口页和使用指南为准。' : 'The key is a placeholder. Refer to the API and usage guide for parameters, asynchronous or streaming flows and result retrieval.' }}</p>

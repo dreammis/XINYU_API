@@ -93,11 +93,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .home-footer-links { margin: 30px 0 8px; padding-top: 22px; border-top: 1px solid var(--vp-c-divider); }
 .home-footer-links a, .api-resource-links a, .api-next a { text-decoration: none; }
 .code-example { overflow: hidden; border: 1px solid #2c3732; border-radius: 8px; background: #17211d; color: #dbe9e1; }
-.code-tabs { display: flex; padding: 0 12px; border-bottom: 1px solid #ffffff16; gap: 2px; }
+.code-tabs { display: flex; padding: 0 8px; gap: 2px; }
 .code-tabs button { padding: 12px 10px; font-size: 11px; color: #91a398; border-bottom: 2px solid transparent; }
 .code-tabs button[aria-selected='true'] { color: #eef9f2; border-color: #76c8a7; }
-.code-tabs .code-copy { margin-left: auto; font-size: 17px; padding: 6px 8px; color: #a4bbae; }
-.vp-doc .code-example pre { background: transparent; margin: 0; padding: 19px; line-height: 1.7; font-size: 11.5px; overflow: auto; max-height: 480px; }
+.code-toolbar .code-copy { margin-left: auto; font-size: 17px; padding: 6px 8px; color: #a4bbae; }
+.vp-doc .code-example pre { background: transparent; margin: 0; padding: 19px; line-height: 1.7; font-size: 13px; overflow: auto; max-height: 480px; }
 .vp-doc .code-example code { background: transparent; padding: 0; color: inherit; font-size: inherit; white-space: pre; overflow-wrap: normal; }
 .model-search { display: flex; align-items: center; gap: 12px; padding: 10px 15px; margin-top: 26px; border: 1px solid var(--vp-c-divider); border-radius: 8px; background: var(--vp-c-bg-alt); }
 .model-search span { font-size: 24px; line-height: 1; color: var(--vp-c-text-2); }
@@ -161,10 +161,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .field-heading code { font-size: 13px; background: transparent; padding: 0; color: var(--vp-c-text-1); }
 .field-type { font-size: 10px; font-family: var(--vp-font-family-mono); color: var(--vp-c-text-2); }
 .field-required { font-size: 10px; color: #b4543b; }
-.vp-doc .schema-field p { margin: 7px 0 0; font-size: 12px; color: var(--vp-c-text-2); }
+.vp-doc .schema-field p { margin: 7px 0 0; font-size: 14px; color: var(--vp-c-text-2); }
 .field-enum { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 9px; }
 .field-enum code { font-size: 10px; padding: 2px 5px; }
-.vp-doc .field-constraints { font: 10px/1.8 var(--vp-font-family-mono); overflow-wrap: anywhere; }
+.vp-doc .field-constraints { font: 12px/1.8 var(--vp-font-family-mono); overflow-wrap: anywhere; }
 .schema-fields details { margin-top: 10px; font-size: 11px; color: var(--vp-c-text-2); }
 .schema-fields summary { cursor: pointer; }
 .schema-fields details > .schema-fields { margin-top: 12px; padding-left: 14px; border-left: 1px solid var(--vp-c-divider); }
@@ -213,3 +213,41 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 }
 @media (max-width: 480px) { .capability-grid { grid-template-columns: 1fr; } .home-footer-links { gap: 12px 20px; } }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
+
+/* 接口模式、章节入口与源指南模型事实，沿用本站的绿色与细线框。 */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+.doc-toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 22px; }
+.doc-toolbar .doc-trail { margin: 0; flex: 1; min-width: 160px; }
+.doc-trail { flex-wrap: wrap; overflow-wrap: anywhere; }
+.page-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--vp-c-text-2); }
+.page-actions a:hover, .page-actions button:hover { color: var(--vp-c-brand-1); }
+.page-copy-status { flex-basis: 100%; color: var(--vp-c-brand-1); }
+.page-copy-status:empty { display: none; }
+.code-toolbar { display: flex; justify-content: space-between; border-bottom: 1px solid #ffffff16; }
+.code-example .shiki { background: transparent !important; }
+.code-example [role='tabpanel']:focus-visible { outline: 2px solid #75d7b7; outline-offset: -2px; }
+.api-section-nav { display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 10px 0 18px; margin-bottom: 16px; border-bottom: 1px solid var(--vp-c-divider); font-size: 13px; }
+.api-section-nav a { text-decoration: none; }
+.api-playground [id] { scroll-margin-top: 100px; }
+.endpoint-line { flex-wrap: wrap; align-items: center; }
+.endpoint-try { margin-left: auto; color: var(--vp-c-brand-1); font-size: 13px; font-weight: 600; }
+.format-select { font-size: 12px; flex-wrap: wrap; }
+.format-select select { min-width: 0; }
+.mode-select { display: grid; grid-template-columns: auto 1fr; align-items: center; }
+.progress-option { display: flex; gap: 8px; align-items: center; margin: 10px 0 16px; font-size: 13px; }
+.progress-option input { accent-color: var(--vp-c-brand-1); }
+.model-limit-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; border: 1px solid var(--vp-c-divider); border-radius: 8px; padding: 0 20px; margin: 20px 0; }
+.model-limit-facts > div { padding: 16px 0; border-bottom: 1px solid var(--vp-c-divider); }
+.model-limit-facts dt { font-size: 13px; color: var(--vp-c-text-2); }
+.model-limit-facts dd { margin-top: 6px; font-size: 15px; font-weight: 550; }
+.schema-rules { padding: 14px 16px; margin: 14px 0 22px; border-left: 3px solid var(--vp-c-brand-1); background: var(--vp-c-bg-alt); overflow-wrap: anywhere; }
+.schema-rules strong { font-size: 13px; }
+.vp-doc .schema-rules li { font-size: 13px; line-height: 1.9; }
+.schema-rules ul { margin: 8px 0 0; padding-left: 18px; }
+.home-operation-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 16px 0; }
+.vp-doc .home-operation-grid a { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 14px; border: 1px solid var(--vp-c-divider); border-radius: 7px; text-decoration: none; }
+.home-operation-grid a:hover { border-color: var(--vp-c-brand-1); }
+.home-operation-grid strong { font-size: 13px; color: var(--vp-c-text-1); }
+.home-operation-grid code { width: 100%; background: transparent; padding: 0; color: var(--vp-c-text-2); font-size: 12px; }
+.VPSidebarItem.level-2 .text, .VPSidebarItem.level-3 .text { font-size: 12px; overflow-wrap: anywhere; }
+@media (max-width: 767px) { .mode-select { grid-template-columns: 1fr; } .home-operation-grid { grid-template-columns: 1fr; } .model-limit-facts { grid-template-columns: 1fr; } }

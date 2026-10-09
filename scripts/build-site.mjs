@@ -2,6 +2,8 @@ import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { methods, publicPath, sha256 } from './docs-contract.mjs';
+import { modelOperations } from '../site/.vitepress/theme/openapi-content.mjs';
+import { publicApiMarkdown } from './public-api-markdown.mjs';
 
 const root = path.resolve(process.env.DOCS_ROOT ?? fileURLToPath(new URL('..', import.meta.url)));
 const book = path.join(root, 'gitbook');
@@ -15,6 +17,7 @@ const sidebar = {};
 const endpoints = [];
 const contracts = {};
 const capabilities = [];
+const publicPages = new Map();
 
 // Vue 属性与导航 HTML 的文本必须转义；公开调用名可以包含斜线等字符。
 function html(value) {
@@ -40,6 +43,7 @@ for (const source of registry.sources) {
     group: manifest.modelDetails?.[name]?.group,
     operations: manifest.modelDetails?.[name]?.operations,
   }));
+  if (source.modelNotes?.some(note => note.models.some(name => !models.some(model => model.name === name)))) throw new Error(`${source.id}: model note points to an unknown model`);
   const displaySpec = structuredClone(spec);
   // 旧规范缺失的中文说明采用逐条人工翻译；源契约的中文始终优先，下载规范保持原样。
   function localize(value) {
@@ -80,11 +84,13 @@ for (const filename of files) {
   if (interactive) {
     const id = new URL(interactive[1]).pathname.split('/').at(-1).replace(/\.json$/, '');
     const title = content.split('\n').find((line) => line.startsWith('# ')).slice(2);
-    content = `---\naside: false\npageClass: api-page\n---\n\n# ${title}\n\n<ApiPlayground spec="/openapi/${id}.json" endpoint="${interactive[2]}" method="${interactive[3]}" locale="${locale}" />\n`;
+    publicPages.set(filename, publicApiMarkdown(contracts[id], interactive[2], interactive[3], locale));
+    content = `---\naside: false\noutline: false\npageClass: api-page\n---\n\n# ${title}\n\n<ApiPlayground spec="/openapi/${id}.json" endpoint="${interactive[2]}" method="${interactive[3]}" locale="${locale}" />\n`;
   } else {
     content = content.replaceAll(/{% content-ref url="([^"]+)" %}\s*\[[^\]]+\]\([^)]*\)\s*{% endcontent-ref %}/g, (_, href) => `[${href === 'quickstart.md' ? 'Quickstart' : 'Capabilities'}](${href})`);
   }
   if (content.includes('{%')) throw new Error(`Unsupported GitBook block: ${filename}`);
+  if (!interactive) publicPages.set(filename.replace(/(^|\/)README\.md$/, '$1index.md'), content);
   generated.set(filename.replace(/(^|\/)README\.md$/, '$1index.md'), content);
 }
 
@@ -104,6 +110,20 @@ for (const locale of ['zh', 'en']) {
       items.push({ text: matching.length > 1 ? capability.title[locale] : (zh ? '总览与模型选择' : 'Overview and models'), link: `${base}/` });
       items.push({ text: zh ? '使用流程与限制' : 'Usage and limits', link: `/${locale}/guides/${capability.id}` });
       for (const operation of capability.operations) items.push({ text: `<span class="nav-method ${operation.method}">${operation.method.toUpperCase()}</span>${html(operation.title[locale])}`, link: `${base}/${operation.slug}` });
+      // 调用名称进入 API 手册；同一规范可按模型生成入口，不复制接口定义。
+      const modelItems = capability.models.map(model => ({ text: html(model.title?.[locale] ?? model.name), link: `/${locale}/models/${capability.id}/${model.slug}`, collapsed: true, items: modelOperations(contracts[capability.id], model.name).filter(item => !model.operations || model.operations.includes(item.operation.operationId)).map(item => {
+        const operation = capability.operations.find(operation => operation.id === item.operation.operationId);
+        return { text: `<span class="nav-method ${operation.method}">${operation.method.toUpperCase()}</span>${html(operation.title[locale])}`, link: `${base}/models/${model.slug}/${operation.slug}` };
+      }) }));
+      const grouped = new Map();
+      for (let index = 0; index < capability.models.length; index++) {
+        const group = capability.models[index].group;
+        if (!group) items.push(modelItems[index]);
+        else {
+          if (!grouped.has(group)) { const entry = { text: html(group), collapsed: true, items: [] }; grouped.set(group, entry); items.push(entry); }
+          grouped.get(group).items.push(modelItems[index]);
+        }
+      }
     }
     apiGroups.push({ text: info.title[locale], collapsed: true, items });
   }
@@ -119,22 +139,70 @@ for (const locale of ['zh', 'en']) {
   ] };
   sidebar[`/${locale}/`] = [...apiGroups, guideGroup, helpGroup];
   for (const capability of capabilities) {
-    const active = apiGroups.map((group) => ({ ...group, collapsed: group.items.some((item) => item.link.includes(`/${capability.id}`)) ? false : group.collapsed }));
+    const active = apiGroups.map((group) => ({ ...group, collapsed: group.items.some((item) => item.link?.includes(`/${capability.id}`)) ? false : group.collapsed }));
     sidebar[`/${locale}/api-reference/${capability.id}/`] = active;
     sidebar[`/${locale}/guides/${capability.id}`] = active;
     const overview = ['---', 'aside: false', 'pageClass: series-page', '---', '', `# ${series[capability.category].title[locale]}${capabilities.filter((item) => item.category === capability.category).length > 1 ? ` · ${capability.title[locale]}` : ''}`, '', `<SeriesOverview id="${capability.id}" locale="${locale}" />`, ''];
     const source = registry.sources.find((item) => item.id === capability.id);
     const guide = await readFile(path.join(book, locale, 'guides', `${capability.id}.md`), 'utf8');
     // 模型对照直接摘录公开指南的指定章节；章节改名必须显式更新登记。
+    const selection = [];
     for (const heading of source.selectionSections?.[locale] ?? []) {
       const section = guide.split(/(?=^## )/m).find((item) => item.split(/\r?\n/)[0] === `## ${heading}`);
       if (!section) throw new Error(`${capability.id}: missing selection section ${locale}/${heading}`);
       overview.push(section.trim(), '');
+      selection.push(section.trim());
     }
     overview.push(`[${zh ? '完整使用流程、参数与限制 →' : 'Full usage guide and limits →'}](../../guides/${capability.id}.md)`, '');
     generated.set(`${locale}/api-reference/${capability.id}/index.md`, overview.join('\n'));
+    publicPages.set(`${locale}/api-reference/${capability.id}/index.md`, [`# ${series[capability.category].title[locale]}`, ...selection, `[${zh ? '使用指南' : 'Usage guide'}](/${locale}/guides/${capability.id})`, ...capability.operations.map(operation => `- [${operation.title[locale]}](/${locale}/api-reference/${capability.id}/${operation.slug})`)].join('\n\n'));
     for (const model of capability.models) {
-      generated.set(`${locale}/models/${capability.id}/${model.slug}.md`, `---\naside: false\npageClass: model-page\n---\n\n# ${html(model.title?.[locale] ?? model.name)}\n\n${model.summary?.[locale] ?? (zh ? '本站公开调用名称。可用性取决于账户权限与服务状态。' : 'A public product route. Availability depends on account permissions and service status.')}\n\n<ModelDetail id="${capability.id}" model="${html(model.name)}" locale="${locale}" />\n`);
+      // 模型事实直接抽取源指南表格的本模型行；说明段落通过来源指针摘录，改名/缺失立即失败。
+      const facts = [];
+      for (const section of selection) {
+        for (const table of section.matchAll(/(?:^\|.*\|\r?\n){2,}(?:^\|.*\|(?:\r?\n|$))?/gm)) {
+          const rows = table[0].trim().split(/\r?\n/).map(line => line.split('|').slice(1, -1).map(cell => cell.trim().replaceAll('`', '')));
+          const row = rows.slice(2).find(row => row[0] === model.name);
+          if (row) row.slice(1).forEach((value, index) => facts.push({ label: rows[0][index + 1], value }));
+        }
+      }
+      model.facts ??= {};
+      model.facts[locale] = facts;
+      model.notes ??= {};
+      model.notes[locale] = [];
+      for (const note of source.modelNotes ?? []) {
+        if (!note.models.includes(model.name)) continue;
+        const paragraphs = guide.replaceAll('\r\n', '\n').split(/\n\s*\n/).filter(paragraph => paragraph.includes(note.contains[locale]));
+        if (paragraphs.length !== 1) throw new Error(`${capability.id}: model note must match exactly one paragraph ${locale}/${note.contains[locale]}`);
+        if (!model.notes[locale].includes(paragraphs[0])) model.notes[locale].push(paragraphs[0]);
+      }
+      const modelPath = `${locale}/models/${capability.id}/${model.slug}.md`;
+      const intro = model.summary?.[locale] ?? (zh ? '本站公开调用名称。可用性取决于账户权限与服务状态。' : 'A public product route. Availability depends on account permissions and service status.');
+      const notes = model.notes[locale].length ? `\n## ${zh ? '模型说明' : 'Model notes'}\n\n${model.notes[locale].join('\n\n')}\n` : '';
+      generated.set(modelPath, `---\naside: false\npageClass: model-page\n---\n\n# ${html(model.title?.[locale] ?? model.name)}\n\n${intro}\n\n<ModelDetail id="${capability.id}" model="${html(model.name)}" locale="${locale}">\n${notes}\n</ModelDetail>\n`);
+      const links = [];
+      for (const item of modelOperations(contracts[capability.id], model.name).filter(item => !model.operations || model.operations.includes(item.operation.operationId))) {
+        const operation = capability.operations.find(operation => operation.id === item.operation.operationId);
+        const destination = `${locale}/api-reference/${capability.id}/models/${model.slug}/${operation.slug}.md`;
+        generated.set(destination, `---\naside: false\noutline: false\npageClass: api-page\n---\n\n# ${html(operation.title[locale])} · ${html(model.name)}\n\n<ApiPlayground spec="/openapi/${capability.id}.json" endpoint="${operation.endpoint}" method="${operation.method}" model="${html(model.name)}" locale="${locale}" />\n`);
+        publicPages.set(destination, publicApiMarkdown(contracts[capability.id], operation.endpoint, operation.method, locale, model.name));
+        links.push(`- [${operation.title[locale]}](/${destination.replace(/\.md$/, '')})`);
+      }
+      publicPages.set(modelPath, [`# ${model.name}`, intro, `## ${zh ? '模型能力' : 'Model capabilities'}`, ...facts.map(fact => `- ${fact.label}: ${fact.value}`), notes, `## ${zh ? '适用接口' : 'Supported APIs'}`, ...links].join('\n\n'));
+      // 最长前缀配置保留当前模型展开，其他模型与系列保持折叠。
+      const modelSidebar = structuredClone(active);
+      function expand(items) {
+        return items.some(item => {
+          const child = item.items ? expand(item.items) : false;
+          const match = item.link === `/${locale}/models/${capability.id}/${model.slug}` || child;
+          if (match && item.collapsed !== undefined) item.collapsed = false;
+          return match;
+        });
+      }
+      // some 会短路，需遍历所有顶层；展开逻辑只影响当前链路。
+      modelSidebar.forEach(group => { if (expand(group.items) && group.collapsed !== undefined) group.collapsed = false; });
+      sidebar[`/${locale}/api-reference/${capability.id}/models/${model.slug}/`] = modelSidebar;
+      sidebar[`/${locale}/models/${capability.id}/${model.slug}`] = modelSidebar;
     }
   }
   for (const page of ['integration', 'quickstart', 'authentication', 'billing']) sidebar[`/${locale}/${page}`] = [guideGroup, helpGroup];
@@ -144,11 +212,26 @@ for (const locale of ['zh', 'en']) {
     modelGroups.push({ text: series[capability.category].title[locale], collapsed: false, items: capability.models.map((model) => ({ text: html(model.title?.[locale] ?? model.name), link: `/${locale}/models/${capability.id}/${model.slug}` })) });
   }
   sidebar[`/${locale}/models`] = modelGroups;
+  // 模型中心的总目录按系列折叠，详情沿用 API 手册中的模型上下文。
+  modelGroups.slice(1).forEach(group => { group.collapsed = true; });
   generated.set(`${locale}/index.md`, `---\ntitle: ${zh ? 'XY API 开发者文档' : 'XY API Developer documentation'}\naside: false\npageClass: home-page\n---\n\n<DocsHome locale="${locale}" />\n`);
+  publicPages.set(`${locale}/index.md`, [`# XY API · ${zh ? '图像与视频 API' : 'Image and video APIs'}`, zh ? '统一客户入口与计费，支持图片生成、参考图编辑和异步视频任务。' : 'One customer gateway and billing system for image generation, reference editing and asynchronous video tasks.', ...capabilities.flatMap(capability => capability.operations.map(operation => `- [${operation.title[locale]}](/${locale}/api-reference/${capability.id}/${operation.slug})`)), `[${zh ? '快速开始' : 'Quickstart'}](/${locale}/quickstart)`, `[${zh ? '鉴权' : 'Authentication'}](/${locale}/authentication)`].join('\n\n'));
   generated.set(`${locale}/capabilities.md`, `---\naside: false\n---\n\n# ${zh ? '全部系列' : 'All series'}\n\n${zh ? '按任务选择能力。正式接口仅展示已发布的公开契约。' : 'Choose a capability by task. Only published public contracts provide API links.'}\n\n<CapabilityGrid locale="${locale}" :show-pending="true" />\n`);
   const modelLinks = capabilities.flatMap((capability) => capability.models.map((model) => `- [${model.name}](models/${capability.id}/${model.slug}.md)`));
   generated.set(`${locale}/models.md`, `---\naside: false\npageClass: models-page\n---\n\n# ${zh ? '模型中心' : 'Model center'}\n\n${zh ? '按能力筛选公开调用名称，再查看模型差异与调用入口。名称不保证原厂直连或精确模型快照。' : 'Filter public routes by capability, then compare limits and find the API. Names do not guarantee original-provider access or a precise model snapshot.'}\n\n<ModelCatalog locale="${locale}" />\n\n<details class="model-search-index"><summary>${zh ? '全部模型链接' : 'All model links'}</summary>\n\n${modelLinks.join('\n')}\n\n</details>\n`);
 }
+
+// 公开 Markdown 与 llms.txt 只枚举客户页面；内部 SOP、来源路径和交接记录不进入站点。
+for (const [filename, content] of publicPages) {
+  const rewritten = content.replaceAll(/\]\(([^)]+)\)/g, (match, href) => {
+    if (/^[a-z]+:|^\/|^#/i.test(href)) return match;
+    const [target, anchor] = href.split('#');
+    const resolved = path.posix.normalize(path.posix.join(path.posix.dirname(filename), target)).replace(/(^|\/)README\.md$/, '$1index.md');
+    return `](/${resolved.replace(/(?:index)?\.md$/, '')}${anchor ? `#${anchor}` : ''})`;
+  });
+  generated.set(`public/markdown/${filename}`, rewritten);
+}
+generated.set('public/llms.txt', '# XY API\n\n> Customer API documentation. Authenticate with a customer Bearer key at https://openai.2yanx.dpdns.org. Generation is billed. Model route names are site products.\n\n## Documentation\n\n' + [...publicPages].map(([filename, content]) => `- [${content.match(/^# (.+)/m)?.[1] ?? filename}](https://xyapi-docs.pages.dev/markdown/${filename})`).join('\n') + '\n\n## OpenAPI\n\n' + capabilities.map(item => `- [${item.title.en}](https://xyapi-docs.pages.dev/openapi/${item.id}.json)`).join('\n') + '\n');
 
 // VitePress 对同层前缀使用配置顺序，先放较长路径，避免 /zh/ 抢占 /zh/models.md。
 generated.set('.vitepress/sidebar.json', JSON.stringify(Object.fromEntries(Object.entries(sidebar).sort(([left], [right]) => right.length - left.length)), null, 2) + '\n');

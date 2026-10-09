@@ -7,11 +7,12 @@ import ModelDetail from './ModelDetail.vue';
 import SeriesOverview from './SeriesOverview.vue';
 import CapabilityGrid from './CapabilityGrid.vue';
 import DocTrail from './DocTrail.vue';
+import PageActions from './PageActions.vue';
 import './style.css';
 
 export default {
   extends: DefaultTheme,
-  Layout: () => h(DefaultTheme.Layout, null, { 'doc-before': () => h(DocTrail) }),
+  Layout: () => h(DefaultTheme.Layout, null, { 'doc-before': () => h('div', { class: 'doc-toolbar' }, [h(DocTrail), h(PageActions)]) }),
   enhanceApp({ app }) {
     app.component('ApiPlayground', ApiPlayground);
     app.component('DocsHome', DocsHome);

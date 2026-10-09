@@ -75,6 +75,7 @@ export function validateRegistry(registry) {
     publicPath(source.manifest);
     if (source.category !== undefined && !categories.includes(source.category)) throw new Error(`Invalid source category: ${source.id}`);
     if (source.selectionSections && locales.some((locale) => !Array.isArray(source.selectionSections[locale]) || source.selectionSections[locale].some((heading) => typeof heading !== 'string' || !heading))) throw new Error(`Invalid selection sections: ${source.id}`);
+    if (source.modelNotes && (!Array.isArray(source.modelNotes) || source.modelNotes.some(note => !Array.isArray(note.models) || !note.models.length || note.models.some(model => typeof model !== 'string' || !model) || locales.some(locale => typeof note.contains?.[locale] !== 'string' || !note.contains[locale])))) throw new Error(`Invalid model note pointers: ${source.id}`);
     ids.add(source.id);
   }
 }
