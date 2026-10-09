@@ -93,9 +93,9 @@ for (const locale of locales) {
     }
     generated.set(`${locale}/${indexPath}`, index.join('\n') + '\n');
   }
-  summary.push('', `## ${zh ? '接入指南' : 'Integration guides'}`, '');
+  summary.push('', `## ${zh ? '开始使用' : 'Get started'}`, '');
   for (const page of navigation.filter((page) => !['README.md', 'faq.md', 'errors.md'].includes(page.file))) summary.push(`* [${page.title[locale]}](${publicPath(page.file)})`);
-  summary.push('', `## ${zh ? '常见问题' : 'Help'}`, '', `* [${zh ? '常见问题' : 'FAQ'}](faq.md)`, `* [${zh ? '错误与任务恢复' : 'Errors and recovery'}](errors.md)`, '');
+  summary.push('', `## ${zh ? '帮助与排错' : 'Help & troubleshooting'}`, '', `* [${zh ? '常见问题' : 'FAQ'}](faq.md)`, `* [${zh ? '错误与任务恢复' : 'Errors and recovery'}](errors.md)`, '');
   generated.set(`${locale}/SUMMARY.md`, summary.join('\n'));
   generated.set(`${locale}/capabilities.md`, capabilities.join('\n') + '\n');
   generated.set(`${locale}/models.md`, models.join('\n') + '\n');

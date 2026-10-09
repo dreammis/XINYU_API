@@ -39,6 +39,6 @@ async function copyBase() {
       <CodeExample v-if="codes" :codes="codes" />
       <a v-else :href="`/${locale}/api-reference/${first.id}/`">{{ locale === 'zh' ? '查看接口规范与示例 →' : 'Explore the API and examples →' }}</a>
     </div>
-    <div class="home-footer-links"><a :href="`/${locale}/integration`">{{ locale === 'zh' ? '接入指南' : 'Integration guides' }} →</a><a :href="`/${locale}/billing`">{{ locale === 'zh' ? '计费规则' : 'Billing' }} →</a><a :href="`/${locale}/faq`">{{ locale === 'zh' ? '遇到问题？' : 'Need help?' }} →</a></div>
+    <div class="home-footer-links"><a :href="`/${locale}/integration`">{{ locale === 'zh' ? '开始使用' : 'Get started' }} →</a><a :href="`/${locale}/billing`">{{ locale === 'zh' ? '计费规则' : 'Billing' }} →</a><a :href="`/${locale}/faq`">{{ locale === 'zh' ? '遇到问题？' : 'Need help?' }} →</a></div>
   </div>
 </template>

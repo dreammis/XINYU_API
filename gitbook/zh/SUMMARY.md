@@ -24,14 +24,14 @@
 * [POST 视频 stream 与后台调用](api-reference/media-video/create-video-response.md)
 * [GET 查询后台 Response](api-reference/media-video/get-video-response.md)
 
-## 接入指南
+## 开始使用
 
 * [快速开始](quickstart.md)
 * [鉴权](authentication.md)
 * [计费](billing.md)
-* [接入指南](integration.md)
+* [开始使用](integration.md)
 
-## 常见问题
+## 帮助与排错
 
 * [常见问题](faq.md)
 * [错误与任务恢复](errors.md)

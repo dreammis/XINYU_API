@@ -127,17 +127,18 @@ for (const locale of ['zh', 'en']) {
     }
     apiGroups.push({ text: info.title[locale], collapsed: true, items });
   }
-  const guideGroup = { text: zh ? '接入指南' : 'Integration', items: [
-    { text: zh ? '接入概览' : 'Integration overview', link: `/${locale}/integration` },
+  const guideGroup = { text: zh ? '开始使用' : 'Get started', items: [
+    { text: zh ? '使用概览' : 'Overview', link: `/${locale}/integration` },
     { text: zh ? '快速开始' : 'Quickstart', link: `/${locale}/quickstart` },
     { text: zh ? '鉴权与 API Key' : 'Authentication', link: `/${locale}/authentication` },
     { text: zh ? '计费规则' : 'Billing', link: `/${locale}/billing` },
   ] };
-  const helpGroup = { text: zh ? '常见问题' : 'Help', items: [
+  const helpGroup = { text: zh ? '帮助与排错' : 'Help & troubleshooting', items: [
     { text: zh ? '常见问题' : 'FAQ', link: `/${locale}/faq` },
     { text: zh ? '错误与任务恢复' : 'Errors and recovery', link: `/${locale}/errors` },
   ] };
-  sidebar[`/${locale}/`] = [...apiGroups, guideGroup, helpGroup];
+  // 顶部栏目各自使用本栏目目录，API 手册不混入开始使用与排错页面。
+  sidebar[`/${locale}/`] = apiGroups;
   for (const capability of capabilities) {
     const active = apiGroups.map((group) => ({ ...group, collapsed: group.items.some((item) => item.link?.includes(`/${capability.id}`)) ? false : group.collapsed }));
     sidebar[`/${locale}/api-reference/${capability.id}/`] = active;
@@ -205,8 +206,8 @@ for (const locale of ['zh', 'en']) {
       sidebar[`/${locale}/models/${capability.id}/${model.slug}`] = modelSidebar;
     }
   }
-  for (const page of ['integration', 'quickstart', 'authentication', 'billing']) sidebar[`/${locale}/${page}`] = [guideGroup, helpGroup];
-  for (const page of ['faq', 'errors']) sidebar[`/${locale}/${page}`] = [helpGroup, guideGroup];
+  for (const page of ['integration', 'quickstart', 'authentication', 'billing']) sidebar[`/${locale}/${page}`] = [guideGroup];
+  for (const page of ['faq', 'errors']) sidebar[`/${locale}/${page}`] = [helpGroup];
   const modelGroups = [{ text: zh ? '模型中心' : 'Model center', items: [{ text: zh ? '全部模型' : 'All models', link: `/${locale}/models` }] }];
   for (const capability of capabilities.filter((item) => item.models.length)) {
     modelGroups.push({ text: series[capability.category].title[locale], collapsed: false, items: capability.models.map((model) => ({ text: html(model.title?.[locale] ?? model.name), link: `/${locale}/models/${capability.id}/${model.slug}` })) });

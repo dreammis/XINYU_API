@@ -24,14 +24,14 @@
 * [POST Stream or run a video response](api-reference/media-video/create-video-response.md)
 * [GET Get a background video response](api-reference/media-video/get-video-response.md)
 
-## Integration guides
+## Get started
 
 * [Quickstart](quickstart.md)
 * [Authentication](authentication.md)
 * [Billing](billing.md)
-* [Integration guides](integration.md)
+* [Get started](integration.md)
 
-## Help
+## Help & troubleshooting
 
 * [FAQ](faq.md)
 * [Errors and recovery](errors.md)

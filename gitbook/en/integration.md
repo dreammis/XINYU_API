@@ -1,4 +1,4 @@
-# Integration guides
+# Get started
 
 Create a customer key, complete one request, then choose the right flow for your application.
 

@@ -4,6 +4,6 @@
   { "file": "authentication.md", "title": { "zh": "鉴权", "en": "Authentication" } },
   { "file": "billing.md", "title": { "zh": "计费", "en": "Billing" } },
   { "file": "errors.md", "title": { "zh": "错误与任务恢复", "en": "Errors and task recovery" } },
-  { "file": "integration.md", "title": { "zh": "接入指南", "en": "Integration guides" } },
+  { "file": "integration.md", "title": { "zh": "开始使用", "en": "Get started" } },
   { "file": "faq.md", "title": { "zh": "常见问题", "en": "FAQ" } }
 ]
