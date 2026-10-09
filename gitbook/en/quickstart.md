@@ -5,15 +5,15 @@ Create a customer API Key with sufficient credit and model permissions in the [c
 ## Generate an image
 
 ```bash
-curl -N https://openai.2yanx.dpdns.org/v1/images/generations \
+curl https://openai.2yanx.dpdns.org/v1/images/generations \
   -H 'Authorization: Bearer YOUR_API_KEY' \
   -H 'Content-Type: application/json' \
-  -d '{"model":"gpt-image-2","prompt":"A yellow circle on white","stream":true,"delivery":"url"}'
+  -d '{"model":"gpt-image-2","prompt":"A yellow circle on white","response_format":"url"}'
 ```
 
-Wait for `image_url.completed` and download the returned `url`. This is a site-specific URL event requiring custom client handling. HTTP 200 alone does not prove generation succeeded; handle `error` events.
+On success, the JSON response contains the image URL in `data[0].url`. To request Base64 instead, explicitly set `response_format:"b64_json"`.
 
-For SDK-compatible Base64 SSE, omit `delivery`. See the [image guide](guides/media-image.md).
+A normal JSON request waits for generation and may reach a proxy timeout. See the [image guide](guides/media-image.md) for production streaming, heartbeats and completion/error handling. Check the original request and consumption before resubmitting after a timeout.
 
 ## Generate a video
 

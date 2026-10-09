@@ -30,7 +30,8 @@ for (const source of registry.sources) {
   }
   const specPath = `openapi/${manifest.id}.json`;
   generated.set(specPath, JSON.stringify(spec, null, 2) + '\n');
-  bundles.push({ manifest, spec, guides });
+  if (source.category && manifest.category && source.category !== manifest.category) throw new Error(`${source.id}: category disagrees with source registry`);
+  bundles.push({ manifest, spec, guides, category: manifest.category ?? source.category });
 }
 
 for (const locale of locales) {
@@ -41,27 +42,23 @@ for (const locale of locales) {
     generated.set(`${locale}/${file}`, await readFile(path.join(root, 'content', locale, file), 'utf8'));
   }
   generated.set(`${locale}/.gitbook.yaml`, 'root: ./\nstructure:\n  readme: README.md\n  summary: SUMMARY.md\nredirects:\n  guides: README.md\n  guides/getting-started: quickstart.md\n  guides/authentication: authentication.md\n  guides/model-catalog: models.md\n  guides/pricing: billing.md\n  guides/errors: errors.md\n' + (bundles.some(({ manifest }) => manifest.id === 'media-video') ? '  guides/video-generation: guides/media-video.md\n' : ''));
-  const summary = ['# Summary', '', `## ${zh ? '开始使用' : 'Getting started'}`, ''];
-  for (const page of navigation) summary.push(`* [${page.title[locale]}](${publicPath(page.file)})`);
-  summary.push('', `## ${zh ? '能力指南' : 'Capability guides'}`, '', `* [${zh ? '能力目录' : 'Capabilities'}](capabilities.md)`, `* [${zh ? '模型目录' : 'Model catalog'}](models.md)`);
+  const summary = ['# Summary', '', `## ${zh ? 'API 手册' : 'API manual'}`, '', `* [${zh ? '概览' : 'Overview'}](README.md)`, `* [${zh ? '全部系列' : 'All series'}](capabilities.md)`, `* [${zh ? '模型中心' : 'Model center'}](models.md)`];
   const capabilities = [`# ${zh ? '能力目录' : 'Capabilities'}`, '', zh ? '选择所需能力，先阅读调用指南，再查看接口参数。' : 'Choose a capability, read its guide, then explore the endpoint reference.', '', '| ' + (zh ? '能力 | 调用指南 | 接口参考' : 'Capability | Guide | API reference') + ' |', '| --- | --- | --- |'];
   const models = [`# ${zh ? '模型目录' : 'Model catalog'}`, '', zh ? '以下为本站公开调用名称，名称不构成原厂直连或精确模型快照保证。可用性与当前账户的模型权限有关。' : 'Public product route names do not guarantee original-provider access or a precise model snapshot. Availability depends on your account model permissions.', '', '| ' + (zh ? '调用名称 | 能力 | 说明' : 'Route | Capability | Guide') + ' |', '| --- | --- | --- |'];
-  const referenceSummary = [];
   for (const { manifest, spec, guides } of bundles) {
     generated.set(`${locale}/guides/${manifest.id}.md`, guides[locale]);
-    summary.push(`* [${manifest.title[locale]}](guides/${manifest.id}.md)`);
     const operations = Object.entries(spec.paths).flatMap(([endpoint, item]) => methods.filter((method) => item[method]).map((method) => ({ endpoint, method, operation: item[method], parameters: [...(item.parameters ?? []), ...(item[method].parameters ?? [])] })));
     const indexPath = `api-reference/${manifest.id}/README.md`;
     const index = [`# ${manifest.title[locale]} API`, '', `[${zh ? '调用指南' : 'Read the guide'}](../../guides/${manifest.id}.md) · [OpenAPI JSON](${registry.specBaseUrl}/${manifest.id}.json)`, '', '| ' + (zh ? '方法 | 路径 | 说明' : 'Method | Path | Description') + ' |', '| --- | --- | --- |'];
     capabilities.push(`| ${manifest.title[locale]} | [${zh ? '阅读指南' : 'Read guide'}](guides/${manifest.id}.md) | [API](api-reference/${manifest.id}/README.md) |`);
     for (const model of manifest.models ?? []) models.push(`| \`${model}\` | ${manifest.title[locale]} | [${zh ? '能力与限制' : 'Capabilities and limits'}](guides/${manifest.id}.md) |`);
-    referenceSummary.push(`* [${manifest.title[locale]}](${indexPath})`);
+    summary.push('', `## ${manifest.title[locale]}${zh ? '系列' : ' APIs'}`, '', `* [${zh ? '总览与模型选择' : 'Overview and model selection'}](${indexPath})`, `* [${zh ? '使用流程与限制' : 'Usage and limits'}](guides/${manifest.id}.md)`);
     for (const { endpoint, method, operation, parameters } of operations) {
       const slug = operation.operationId.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
       const title = zh ? operation['x-title-zh'] ?? operation.summary : operation.summary;
       const filename = `${slug}.md`;
       index.push(`| ${method.toUpperCase()} | \`${endpoint}\` | [${title}](${filename}) |`);
-      referenceSummary.push(`  * [${title}](api-reference/${manifest.id}/${filename})`);
+      summary.push(`* [${method.toUpperCase()} ${title}](api-reference/${manifest.id}/${filename})`);
       // 规范变更时改变导入地址，让 GitBook 在导入新页面时读取新版参数和示例。
       const specUrl = `${registry.specBaseUrl}/${manifest.id}.json?version=${sha256(JSON.stringify(spec)).slice(0, 16)}`;
       const page = [`# ${title}`, '', `\`${method.toUpperCase()} ${endpoint}\``, '', (zh ? operation['x-description-zh'] : undefined) ?? operation.description ?? '', '', `[${zh ? '调用指南与限制' : 'Guide and limits'}](../../guides/${manifest.id}.md)`, '', `{% openapi src="${specUrl}" path="${endpoint}" method="${method}" %}`, specUrl, '{% endopenapi %}', ''];
@@ -96,7 +93,9 @@ for (const locale of locales) {
     }
     generated.set(`${locale}/${indexPath}`, index.join('\n') + '\n');
   }
-  summary.push('', '## API Reference', '', ...referenceSummary, '');
+  summary.push('', `## ${zh ? '接入指南' : 'Integration guides'}`, '');
+  for (const page of navigation.filter((page) => !['README.md', 'faq.md', 'errors.md'].includes(page.file))) summary.push(`* [${page.title[locale]}](${publicPath(page.file)})`);
+  summary.push('', `## ${zh ? '常见问题' : 'Help'}`, '', `* [${zh ? '常见问题' : 'FAQ'}](faq.md)`, `* [${zh ? '错误与任务恢复' : 'Errors and recovery'}](errors.md)`, '');
   generated.set(`${locale}/SUMMARY.md`, summary.join('\n'));
   generated.set(`${locale}/capabilities.md`, capabilities.join('\n') + '\n');
   generated.set(`${locale}/models.md`, models.join('\n') + '\n');

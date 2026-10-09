@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "XY API Images",
-    "version": "1.1.1",
+    "version": "1.2.0",
     "description": "XY API public gateway contract. Product route names do not imply an original-provider connection."
   },
   "servers": [
@@ -32,7 +32,7 @@
         "description": "Generate one image. Prefer stream=true for long requests. See the image guide for model-specific quality and pixel limits.",
         "responses": {
           "200": {
-            "description": "JSON result, or SSE comment heartbeats then a completion/error event. HTTP 200 alone is not proof of generation success.",
+            "description": "JSON result, or SSE comment heartbeats, optional progress events (progress=true), then a completion/error event. Only a completed event proves delivery.",
             "headers": {
               "X-Image-Request-Id": {
                 "description": "Request ID for support; may differ from the final New API request_id.",
@@ -137,12 +137,18 @@
                 "resolution": "4k",
                 "aspect_ratio": "16:9",
                 "stream": true,
-                "delivery": "url"
+                "delivery": "url",
+                "progress": true
               }
             }
           }
         },
-        "x-description-zh": "生成一张图片。耗时请求建议开启 stream；各模型的质量与实际像素限制见图片指南。"
+        "x-description-zh": "生成一张图片。耗时请求建议开启 stream；各模型的质量与实际像素限制见图片指南。",
+        "x-sse-events": [
+          "#/components/schemas/ImageProgressEvent",
+          "#/components/schemas/ImageCompletedEvent",
+          "#/components/schemas/ImageURLCompletedEvent"
+        ]
       }
     },
     "/v1/images/edits": {
@@ -156,7 +162,7 @@
         "description": "Reference-image editing without masks. JSON image accepts one or more sources. Multipart uses image or repeated image[] files, each at most 20 MiB.",
         "responses": {
           "200": {
-            "description": "JSON result, or SSE comment heartbeats then a completion/error event. HTTP 200 alone is not proof of generation success.",
+            "description": "JSON result, or SSE comment heartbeats, optional progress events (progress=true), then a completion/error event. Only a completed event proves delivery.",
             "headers": {
               "X-Image-Request-Id": {
                 "description": "Request ID for support; may differ from the final New API request_id.",
@@ -260,7 +266,8 @@
                 "prompt": "保持构图，将红色改为蓝色",
                 "image": "https://example.com/reference.png",
                 "stream": true,
-                "partial_images": 0
+                "partial_images": 0,
+                "progress": true
               }
             },
             "multipart/form-data": {
@@ -386,6 +393,14 @@
                       "type": "string",
                       "format": "binary"
                     }
+                  },
+                  "progress": {
+                    "type": "string",
+                    "enum": [
+                      "true",
+                      "false"
+                    ],
+                    "description": "Optional progress observation; true requires stream=true."
                   }
                 },
                 "oneOf": [
@@ -415,7 +430,12 @@
             }
           }
         },
-        "x-description-zh": "基于参考图编辑，不支持遮罩。JSON 使用 image；multipart 使用 image 或重复 image[] 文件字段，单文件最多 20 MiB。"
+        "x-description-zh": "基于参考图编辑，不支持遮罩。JSON 使用 image；multipart 使用 image 或重复 image[] 文件字段，单文件最多 20 MiB。",
+        "x-sse-events": [
+          "#/components/schemas/ImageProgressEvent",
+          "#/components/schemas/ImageCompletedEvent",
+          "#/components/schemas/ImageURLCompletedEvent"
+        ]
       }
     }
   },
@@ -584,6 +604,11 @@
               "description": "HTTP(S) image URL or Base64 image data URL."
             },
             "x-description-zh": "非空参考图 URL / data URL 数组；与单图输入互斥。"
+          },
+          "progress": {
+            "type": "boolean",
+            "default": false,
+            "description": "Site extension: progress events from the same original task. Requires stream=true. Missing source percentage is null."
           }
         },
         "allOf": [
@@ -679,6 +704,29 @@
                     "standard"
                   ],
                   "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "required": [
+                "progress"
+              ],
+              "properties": {
+                "progress": {
+                  "const": true
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "stream"
+              ],
+              "properties": {
+                "stream": {
+                  "const": true,
+                  "type": "boolean"
                 }
               }
             }
@@ -827,6 +875,11 @@
             ],
             "description": "Required reference image(s); JSON accepts URLs or image data URLs.",
             "x-description-zh": "参考图片，JSON 使用 URL / data URL 或其数组；multipart 使用文件。"
+          },
+          "progress": {
+            "type": "boolean",
+            "default": false,
+            "description": "Site extension: progress events from the same original task. Requires stream=true. Missing source percentage is null."
           }
         },
         "allOf": [
@@ -914,6 +967,29 @@
                     "standard"
                   ],
                   "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "required": [
+                "progress"
+              ],
+              "properties": {
+                "progress": {
+                  "const": true
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "stream"
+              ],
+              "properties": {
+                "stream": {
+                  "const": true,
+                  "type": "boolean"
                 }
               }
             }
@@ -1043,6 +1119,59 @@
           },
           "request_id": {
             "type": "string"
+          }
+        }
+      },
+      "ImageProgressEvent": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "type",
+          "stage",
+          "percent",
+          "percent_source",
+          "request_id"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "image_generation.progress",
+              "image_edit.progress"
+            ]
+          },
+          "stage": {
+            "type": "string",
+            "enum": [
+              "queued",
+              "preparing",
+              "generating",
+              "fetching",
+              "uploading",
+              "delivering",
+              "unavailable",
+              "failed"
+            ]
+          },
+          "percent": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Source generation percentage only; null when absent. Not total delivery progress."
+          },
+          "percent_source": {
+            "enum": [
+              "upstream",
+              null
+            ],
+            "description": "upstream only for an explicitly provided source number; otherwise null."
+          },
+          "request_id": {
+            "type": "string",
+            "description": "Same public ID across progress, completion and error when progress is enabled."
           }
         }
       }

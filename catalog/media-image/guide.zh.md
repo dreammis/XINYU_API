@@ -1,6 +1,6 @@
 # Image Studio 图片接口
 
-通过服务入口 `https://openai.2yanx.dpdns.org` 使用图片生成与参考图编辑。客户端使用自己的 API Key。当前图片插件为 1.1.1，支持自有图片 URL 与 Base64 返回。
+通过服务入口 `https://openai.2yanx.dpdns.org` 使用图片生成与参考图编辑。客户端使用自己的 API Key。当前图片契约为 1.2.0，支持自有图片 URL、Base64 与可选生成进度。
 
 ## 分辨率与比例
 
@@ -48,6 +48,7 @@
 | `response_format` | `url` 或 `b64_json`；通过本入口省略时返回 URL，需要 Base64 请显式填写 `b64_json` |
 | `enhance` | JSON 布尔值 `true` / `false`，默认 `true` |
 | `stream` | 省略或 `false` 返回完整 JSON；`true` 返回 SSE 图片完成事件 |
+| `progress` | 本站扩展，布尔值，默认 `false`；`true` 必须与 `stream:true` 同用，增加中间阶段事件 |
 | `partial_images` | 流式请求可省略或填写 `0`；暂不提供中途预览图 |
 | `delivery` | 可填写本站扩展 `url`，仅与 `stream:true` 同用；完成事件只返回自有图片地址，不能同时请求 `b64_json` |
 | `reference_images` | 非空 HTTP(S) 图片 URL 或图片 Base64 data URL 数组 |
@@ -111,6 +112,39 @@ multipart 使用 `image` 或重复的 `image[]` 文件字段，单个文件最�
 ## 流式生图
 
 生成与编辑接口都支持 `stream:true`。等待过程中连接会持续收到心跳，完成后返回 `image_generation.completed` 或 `image_edit.completed` 事件。心跳不是预览图；`partial_images` 仅支持 `0`。
+
+需要展示生成进度时，加上本站扩展 `progress:true`。生成会增加 `image_generation.progress`，编辑会增加 `image_edit.progress`。JSON 和 multipart 均支持；表单布尔值填写 `true`。未开启进度的调用仍只收到心跳和最终事件。
+
+```bash
+curl -N https://openai.2yanx.dpdns.org/v1/images/generations \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  -H 'Content-Type: application/json' \
+  -d '{"model":"gpt-image-2","prompt":"白色背景上的黄色圆形","resolution":"4k","aspect_ratio":"16:9","stream":true,"progress":true,"delivery":"url"}'
+```
+
+```text
+event: image_generation.progress
+data: {"type":"image_generation.progress","stage":"generating","percent":null,"percent_source":null,"request_id":"REQUEST_ID"}
+```
+
+`percent` 只有在源状态明确提供数值时才为 0–100 的数字，且 `percent_source` 为 `upstream`；否则两者均为 `null`。这里表示源生成阶段报告的百分比，并非整个图片下载、上传和交付过程的完成率，也不保证每个模型都会提供数值。服务不估算进度、不生成预览图。
+
+| `stage` | 含义 |
+| --- | --- |
+| `queued` | 请求已接收或生成排队 |
+| `preparing` | 准备生成，包括参考图准备 |
+| `generating` | 图片生成中 |
+| `fetching` | 生成完成，正在读取原图 |
+| `uploading` | 正在写入服务自有图片存储 |
+| `delivering` | 正在准备最终图片响应 |
+| `unavailable` | 暂时无法读取进度；原生成继续，心跳继续 |
+| `failed` | 原生成任务失败；仍需检查随后最终错误事件 |
+
+进度约每秒读取一次，只发送变化；短暂阶段可能不会出现在客户端，不能依赖固定阶段顺序。开启进度时，所有进度、完成和错误事件使用同一 `request_id`。`delivering` 或生成阶段的 `100` 均不代表成功交付，必须等最终完成事件。读取进度失败不会重新提交图片或重复计费。
+
+此进度事件是本站扩展。使用 OpenAI SDK 时，在 `extra_body` 中加入 `"progress": True`，并按 `event.type` 显式处理；客户端界面不会自动展示自定义事件。需要原厂类型严格兼容的客户端可以保持默认关闭。URL 与 Base64 两种最终交付均能开启进度。
+
+部分 SDK 版本会把自定义事件装入已有图片事件类，但仍保留 `type`、`stage`、`percent` 等字段；请判断 `event.type`，不要仅依赖 Python 类名或 `isinstance`。
 
 默认流式完成事件包含 `b64_json` 原图、实际 `size`、`output_format`、时间戳，并附加自有存储 `url` 和用于查单的 `request_id`。仅填写 `response_format:"url"` 时仍保持这个 Base64 事件，保证现有客户端解析方式。
 

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { cp, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { cp, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -56,7 +56,7 @@ test('retiring a capability after updating common links removes its stale pages 
     await writeFile(path.join(directory, 'sources.json'), JSON.stringify(registry));
     // 能力下线时通用指南也要更新；构建不应悄悄删除作者写的正文或修补坏链接。
     for (const locale of ['zh', 'en']) {
-      for (const filename of ['quickstart.md', 'billing.md', 'errors.md']) {
+      for (const filename of (await readdir(path.join(directory, 'content', locale))).filter(name => name.endsWith('.md'))) {
         const file = path.join(directory, 'content', locale, filename);
         const content = await readFile(file, 'utf8');
         await writeFile(file, content.replaceAll(/\[([^\]]+)\]\(guides\/media-video\.md\)/g, '$1'));
@@ -115,7 +115,7 @@ test('a registered non-model capability gets pages without frontend code changes
   try {
     const registry = JSON.parse(await readFile(path.join(directory, 'sources.json'), 'utf8'));
     const id = 'file-conversion';
-    registry.sources.push({ ...registry.sources[0], id });
+    registry.sources.push({ ...registry.sources[0], id, category: 'tool', selectionSections: undefined });
     await writeFile(path.join(directory, 'sources.json'), JSON.stringify(registry));
     const manifest = { schemaVersion: 1, id, title: { zh: '文件转换', en: 'File conversion' }, version: '1.0.0', models: [], openapi: 'public/openapi.json', guides: { zh: 'public/zh.md', en: 'public/en.md' } };
     const spec = { openapi: '3.1.0', info: { title: 'File conversion fixture', version: '1.0.0' }, servers: [{ url: 'https://example.com' }], security: [{ bearerAuth: [] }], components: { securitySchemes: { bearerAuth: { type: 'http', scheme: 'bearer' } } }, paths: { '/v1/tools/convert': { post: { operationId: 'convertFile', summary: 'Convert a file', 'x-title-zh': '转换文件', responses: { '200': { description: 'Converted output' } } } } } };

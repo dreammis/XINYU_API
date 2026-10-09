@@ -3,6 +3,7 @@ import path from 'node:path';
 
 export const locales = ['zh', 'en'];
 export const methods = ['get', 'post', 'put', 'patch', 'delete', 'head', 'options', 'trace'];
+export const categories = ['image', 'video', 'tts', 'music', 'text', 'transcription', 'tool', 'other'];
 
 // 只接受显式登记的相对文件，不能让来源清单读到工程以外的文件。
 export function publicPath(value) {
@@ -47,7 +48,17 @@ export function validateBundle(manifest, spec, guides) {
   }
   visit(spec);
   const declared = manifest.models ?? [];
-  if (!Array.isArray(declared) || new Set(declared).size !== declared.length) throw new Error(`${manifest.id}: duplicate/invalid models`);
+  if (!Array.isArray(declared) || declared.some(model => typeof model !== 'string' || !model || /[\u0000-\u001f]/.test(model)) || new Set(declared).size !== declared.length) throw new Error(`${manifest.id}: duplicate/invalid models`);
+  if (manifest.category !== undefined && !categories.includes(manifest.category)) throw new Error(`${manifest.id}: invalid category`);
+  // 展示信息只能引用已经登记的客户模型和操作，不能凭空增加可调用能力。
+  for (const [model, detail] of Object.entries(manifest.modelDetails ?? {})) {
+    if (!declared.includes(model) || !detail || typeof detail !== 'object') throw new Error(`${manifest.id}: unknown model detail ${model}`);
+    if (detail.group !== undefined && (typeof detail.group !== 'string' || !detail.group)) throw new Error(`${manifest.id}: invalid model group`);
+    for (const field of ['title', 'summary']) {
+      if (detail[field] && locales.some((locale) => typeof detail[field][locale] !== 'string' || !detail[field][locale])) throw new Error(`${manifest.id}: incomplete model ${field}`);
+    }
+    if (detail.operations && (!Array.isArray(detail.operations) || !detail.operations.length || detail.operations.some((id) => !operationIds.has(id)))) throw new Error(`${manifest.id}: unknown model operation`);
+  }
   for (const schema of Object.values(spec.components.schemas ?? {})) {
     const models = schema.properties?.model?.enum;
     if (models && JSON.stringify([...models].sort()) !== JSON.stringify([...declared].sort())) throw new Error(`${manifest.id}: model catalog disagrees with request schema`);
@@ -62,6 +73,8 @@ export function validateRegistry(registry) {
     if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(source.id) || ids.has(source.id)) throw new Error(`Duplicate/invalid source: ${source.id}`);
     if (!/^[\w.-]+\/[\w.-]+$/.test(source.repository) || !source.ref || !source.localDirectory) throw new Error(`Incomplete source: ${source.id}`);
     publicPath(source.manifest);
+    if (source.category !== undefined && !categories.includes(source.category)) throw new Error(`Invalid source category: ${source.id}`);
+    if (source.selectionSections && locales.some((locale) => !Array.isArray(source.selectionSections[locale]) || source.selectionSections[locale].some((heading) => typeof heading !== 'string' || !heading))) throw new Error(`Invalid selection sections: ${source.id}`);
     ids.add(source.id);
   }
 }

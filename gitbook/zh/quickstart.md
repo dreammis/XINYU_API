@@ -5,15 +5,15 @@
 ## 第一次图片调用
 
 ```bash
-curl -N https://openai.2yanx.dpdns.org/v1/images/generations \
+curl https://openai.2yanx.dpdns.org/v1/images/generations \
   -H 'Authorization: Bearer YOUR_API_KEY' \
   -H 'Content-Type: application/json' \
-  -d '{"model":"gpt-image-2","prompt":"白色背景上的黄色圆形，简洁插画","stream":true,"delivery":"url"}'
+  -d '{"model":"gpt-image-2","prompt":"白色背景上的黄色圆形，简洁插画","response_format":"url"}'
 ```
 
-等待期间会收到心跳，成功后收到 `image_url.completed` 事件。从事件的 `url` 下载图片。HTTP 200 本身不代表生图成功；收到 `error` 事件时需要按失败处理。
+成功时返回 JSON，从 `data[0].url` 下载图片。URL 是结果地址；需要 Base64 时显式填写 `response_format:"b64_json"`。
 
-这是本站自定义 URL 事件，需要客户端自行处理。使用常见 SDK 的 Base64 图片 stream 时省略 `delivery`；详见[图片指南](guides/media-image.md)。
+普通 JSON 请求会等待生成完成，长请求可能遇到代理超时。生产接入的流式心跳、完成事件与错误处理见[图片指南](guides/media-image.md)。超时后先核对消费记录与原请求，不要立即重复提交。
 
 ## 第一次视频调用
 

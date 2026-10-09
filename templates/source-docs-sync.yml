@@ -1,16 +1,10 @@
-# 放到源工程的 .github/workflows/public-docs.yml。
-# 成功发布对外适配器后触发；不要把未经上线验收的契约自动声明为已发布。
+# 放到公开契约维护仓库的 .github/workflows/public-docs.yml。
+# 成功发布并验收客户入口后，通过 Run workflow 触发。
+# 普通源码 push 不代表实际适配器已经上线，不默认自动通知。
+# 已有真实部署与验收流水线时，将通知步骤接在其成功之后。
 name: Notify public docs release
 
 on:
-  push:
-    branches: [main, master]
-    paths:
-      - 'integrations/newapi/**/public-docs.json'
-      - 'integrations/newapi/**/public-openapi.json'
-      - 'integrations/newapi/**/public-guide.*.md'
-      - 'integrations/newapi/media-image/README.md'
-      - 'docs/video_studio_api.md'
   workflow_dispatch:
 
 permissions: {}

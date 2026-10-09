@@ -2,6 +2,28 @@
 
 Use your customer API Key at `https://openai.2yanx.dpdns.org`. Send `Authorization: Bearer YOUR_API_KEY`. Long requests should use SSE so the connection receives heartbeats while generation is pending.
 
+Image contract version: **1.2.0**. Add the site extension `progress:true` together with `stream:true` to receive `image_generation.progress` or `image_edit.progress` before completion. Both JSON and multipart support it; form booleans use `true`/`false`. Progress defaults to false, preserving completion-only SDK streams.
+
+```bash
+curl -N https://openai.2yanx.dpdns.org/v1/images/generations \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  -H 'Content-Type: application/json' \
+  -d '{"model":"gpt-image-2","prompt":"A yellow circle on white","resolution":"4k","aspect_ratio":"16:9","stream":true,"progress":true,"delivery":"url"}'
+```
+
+```text
+event: image_generation.progress
+data: {"type":"image_generation.progress","stage":"generating","percent":null,"percent_source":null,"request_id":"REQUEST_ID"}
+```
+
+Stages are `queued` (accepted or queued), `preparing` (including references), `generating`, `fetching` (reading the generated original), `uploading` (owned storage), and `delivering` (preparing the final response). `unavailable` means progress observation is temporarily unavailable; generation and heartbeats continue. `failed` describes a failed generation task; check the final error event.
+
+`percent` is a number from 0 to 100 only when the source explicitly supplies a numeric value, with `percent_source:"upstream"`; otherwise both are null. It describes source generation progress, not total download/upload/delivery progress, and is not guaranteed for every model. No percentages or previews are fabricated. Changes are sampled approximately once per second, so short stages may be skipped. Do not depend on a fixed sequence. With progress enabled, all progress/final/error events share the same public `request_id`. A generation percentage of 100 or a `delivering` stage is not successful delivery: wait for the final completed event.
+
+This is a custom event requiring client handling. With OpenAI Python SDK, add `"progress": True` to `extra_body` and handle `event.type` explicitly; a client UI will not display custom events automatically. Strict original-provider event clients can keep progress disabled. Progress works with URL and Base64 final delivery. Observation failure never resubmits generation or causes another charge.
+
+Some SDK versions construct custom events using an existing image event class while preserving `type`, `stage`, and `percent`. Check `event.type`; do not rely solely on the Python class name or `isinstance`.
+
 ## Generate an image
 
 ```bash

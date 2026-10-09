@@ -1,0 +1,10 @@
+{
+  "image": { "title": { "zh": "图像系列", "en": "Images" }, "description": { "zh": "从文字生成图片，或用参考图编辑与创作。", "en": "Generate images from text, or edit with references." }, "symbol": "image" },
+  "video": { "title": { "zh": "视频系列", "en": "Video" }, "description": { "zh": "创建视频任务，查询进度并下载生成结果。", "en": "Create video tasks, follow progress and download results." }, "symbol": "video" },
+  "tts": { "title": { "zh": "语音 TTS", "en": "Text to speech" }, "description": { "zh": "文字转语音与音色选择。", "en": "Speech synthesis and voice selection." }, "symbol": "audio" },
+  "music": { "title": { "zh": "音乐系列", "en": "Music" }, "description": { "zh": "音乐创作与音频生成。", "en": "Music creation and audio generation." }, "symbol": "music" },
+  "text": { "title": { "zh": "文字大模型", "en": "Language models" }, "description": { "zh": "对话、文本与多模态任务。", "en": "Conversations, text and multimodal tasks." }, "symbol": "text" },
+  "transcription": { "title": { "zh": "音频转写", "en": "Transcription" }, "description": { "zh": "将音频转换为文字。", "en": "Convert audio into text." }, "symbol": "audio" },
+  "tool": { "title": { "zh": "工具服务", "en": "Tools" }, "description": { "zh": "搜索、文件处理与其他服务。", "en": "Search, file processing and other services." }, "symbol": "tool" },
+  "other": { "title": { "zh": "其他能力", "en": "Other capabilities" }, "description": { "zh": "其他已发布的客户接口。", "en": "Other published customer APIs." }, "symbol": "tool" }
+}

@@ -4,6 +4,8 @@
   "sources": [
     {
       "id": "media-image",
+      "category": "image",
+      "selectionSections": { "zh": ["分辨率与比例", "模型名称"], "en": ["Models and fixed quality", "Parameters and output dimensions"] },
       "repository": "dreammis/vidu2api",
       "ref": "main",
       "localDirectory": "../vidu2api",
@@ -11,6 +13,8 @@
     },
     {
       "id": "media-video",
+      "category": "video",
+      "selectionSections": { "zh": ["模型与价格"], "en": ["Model capabilities"] },
       "repository": "dreammis/vidu2api",
       "ref": "main",
       "localDirectory": "../vidu2api",

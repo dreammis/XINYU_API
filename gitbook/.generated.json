@@ -17,8 +17,10 @@
   "en/capabilities.md",
   "en/elevenlabs-tts.md",
   "en/errors.md",
+  "en/faq.md",
   "en/guides/media-image.md",
   "en/guides/media-video.md",
+  "en/integration.md",
   "en/models.md",
   "en/quickstart.md",
   "openapi/media-image.json",
@@ -41,8 +43,10 @@
   "zh/capabilities.md",
   "zh/elevenlabs-tts.md",
   "zh/errors.md",
+  "zh/faq.md",
   "zh/guides/media-image.md",
   "zh/guides/media-video.md",
+  "zh/integration.md",
   "zh/models.md",
   "zh/quickstart.md"
 ]

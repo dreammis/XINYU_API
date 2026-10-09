@@ -6,8 +6,8 @@ Generate one image. Prefer stream=true for long requests. See the image guide fo
 
 [Guide and limits](../../guides/media-image.md)
 
-{% openapi src="https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-image.json?version=279c9438570f1271" path="/v1/images/generations" method="post" %}
-https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-image.json?version=279c9438570f1271
+{% openapi src="https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-image.json?version=a7ea7864e5d7baea" path="/v1/images/generations" method="post" %}
+https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-image.json?version=a7ea7864e5d7baea
 {% endopenapi %}
 
 ## application/json
@@ -28,6 +28,7 @@ https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/medi
 | `delivery` | string | no | "url" | Site extension: stream=true only, incompatible with response_format=b64_json. Emits image_url.completed. |
 | `image_url` | string | no | — | HTTP(S) image URL or Base64 image data URL. |
 | `reference_images` | array | no | — |  |
+| `progress` | boolean | no | false | Site extension: progress events from the same original task. Requires stream=true. Missing source percentage is null. |
 
 ### Example request
 
@@ -38,7 +39,8 @@ https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/medi
   "resolution": "4k",
   "aspect_ratio": "16:9",
   "stream": true,
-  "delivery": "url"
+  "delivery": "url",
+  "progress": true
 }
 ```
 
@@ -46,7 +48,7 @@ https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/medi
 
 | Status | Description |
 | --- | --- |
-| 200 | JSON result, or SSE comment heartbeats then a completion/error event. HTTP 200 alone is not proof of generation success. |
+| 200 | JSON result, or SSE comment heartbeats, optional progress events (progress=true), then a completion/error event. Only a completed event proves delivery. |
 | 400 | Unsupported or conflicting parameters. |
 | 401 | Missing or invalid customer API Key. |
 | 413 | Request exceeds upload limits. |

@@ -3,6 +3,7 @@
   "id": "your-capability",
   "title": { "zh": "你的能力", "en": "Your capability" },
   "version": "1.0.0",
+  "category": "tool",
   "models": [],
   "openapi": "integrations/newapi/your-capability/public-openapi.json",
   "guides": {

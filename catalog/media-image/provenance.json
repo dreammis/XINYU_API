@@ -1,16 +1,12 @@
 {
   "repository": "dreammis/vidu2api",
-  "revision": "c66fb5e475e16130fe4615244bc34aeadbbcfc1b",
+  "revision": "c3277c83bc408ef12cd01834ca1c7b1913324131",
   "ref": "main",
-  "workingTreeChanges": [
-    "?? integrations/newapi/media-image/public-docs.json",
-    "?? integrations/newapi/media-image/public-guide.en.md",
-    "?? integrations/newapi/media-image/public-openapi.json"
-  ],
+  "workingTreeChanges": [],
   "hashes": {
-    "public-docs.json": "bf609adc8ec48dde9e1daeffe90d7fe648e80acaeec0991b67f0a8c950620eb9",
-    "openapi.json": "6693d963982a5926e61bb05bf73f857a7d310d6173d62171d378aaa75a7e4103",
-    "guide.zh.md": "9a40ca3b972ff16151ee5cdca0af8a93a3667402b00e2ac6584e7f59813b6a16",
-    "guide.en.md": "ed25adc6f447b03cd283148a674769aec1248e3bd7bf807bf549eb2fdbcc9a75"
+    "public-docs.json": "d22f92797698a44dba85a0db21cf8083fd23fe3c983578c45d5137bfca26b520",
+    "openapi.json": "90951bbc80bda1c1a425e0287ef688c51918f30b24133135222226b68c202c58",
+    "guide.zh.md": "6fad4926d2bd2698facedff217184a49eb8c00e75520e6461340f4b3d4ad726b",
+    "guide.en.md": "e315e626447f132ede7c5ad5655ecb59cacc21b548936a256a54e883f3be1778"
   }
 }

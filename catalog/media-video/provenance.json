@@ -1,6 +1,6 @@
 {
   "repository": "dreammis/vidu2api",
-  "revision": "c66fb5e475e16130fe4615244bc34aeadbbcfc1b",
+  "revision": "c3277c83bc408ef12cd01834ca1c7b1913324131",
   "ref": "main",
   "workingTreeChanges": [
     "?? integrations/newapi/media-video/public-docs.json",
