@@ -57,4 +57,18 @@ Pages 自定义域名已关联，当前状态为 pending，verification_data.err
 
 Cloudflare 构建环境自带的 Wrangler 3.114.17 不支持 JSON import attributes，调试允许列表因此生成普通 ES 模块 `site/public-endpoints.mjs`。不要改回 `import ... with { type: 'json' }`，否则 Pages Functions 编译会失败。
 
+## 系列导航与模型中心改版验收（2026-10-10）
+
+- 改版实现提交：`4c914272873149ce0ee3b52b15a99aab87c96ffe`。仅从独立文档发布工作区推送生产分支，主目录既有 Next/Fumadocs 历史及其他未提交工作保留。
+- GitHub master 推送触发生产部署 `3041e150-6787-43cc-9236-f42f5c5993e2`；Cloudflare API 确认 deploy stage 为 success，完成时间 `2026-10-09T16:46:07.240495Z`（北京时间 2026-10-10）。
+- 顶部按 API 手册、模型中心、接入指南和常见问题组织，左侧按真实能力系列展开。新增系列总览、源指南选型章节、模型搜索与分类筛选，以及 14 个公开调用名称的中英文详情入口（图像 10 个、视频 4 个）。这些来自已导入契约，不代表本轮重新验收 14 个模型的生成服务。
+- 接口参数、约束、响应和三种语言代码从一份公开规范展示，调试客户端点击后加载。移动端折叠代码与调试区域。未发布的 TTS、音乐、文字、转写等系列明确显示状态，不生成假接口入口。
+- 发布工作区 `npm run build`、`npm run docs:check`、`npm test`（13/13）及 `wrangler pages functions build` 通过，暂存契约文件的 SHA-256 与 provenance 逐项一致。
+- 本地浏览器验证了系列与模型独立目录、视频筛选、模型搜索、全文搜索、中英文路径切换、接口模板和 390px 移动端布局；未发现页面横向溢出或控制台错误。模型示例只保留必填字段，避免把其他模型的 4K 或时长参数搬到 Lite、short 模型。
+- 生产中英文首页、模型中心、图像与视频系列页均返回 200。生产浏览器已加载新首页与模型目录；原始图片、视频 OpenAPI 下载分别与导入快照 SHA-256 `90951bbc80bda1c1a425e0287ef688c51918f30b24133135222226b68c202c58`、`c36cb22f52816e1a3bc59afbd748bab73cb490d0b93a95af90c108983a925116` 一致。
+- 本地 Scalar 请求客户端和生产 `/api-proxy` 均使用虚构无效 Key 查询视频任务，收到 New API 的真实 401 JSON；生产响应带 `Cache-Control: no-store`。未使用真实客户凭证，未发起付费生成调用。
+- 页面和规范使用当前导入的图片 1.2.0、视频 1.0.0；本轮没有手改客户请求协议。图片来源 revision 为 `c3277c83bc408ef12cd01834ca1c7b1913324131`，无未提交公开文件变化；视频快照如实保留源公开文件的 untracked 状态。源到文档的完整远端自动同步仍按 public-docs-workflow.md 中的条件接线。
+- 新能力交付字段与选型章节约定已写入 model-catalog-contract.md，配套上游、New API 接入和文档工程任务说明已更新。
+- 本日重新核对自定义域名：`doc.2yanx.dpdns.org` 仍为 pending，Cloudflare 返回 `CNAME record not set`，DNS 查询为名称不存在。当前正式访问地址仍是 `https://xyapi-docs.pages.dev/zh/`。
+
 官方资料：[Git 集成](https://developers.cloudflare.com/pages/configuration/git-integration/)、[自定义域名](https://developers.cloudflare.com/pages/configuration/custom-domains/)、[Pages Functions](https://developers.cloudflare.com/pages/functions/)。
