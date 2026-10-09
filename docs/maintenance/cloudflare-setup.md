@@ -72,3 +72,16 @@ Cloudflare 构建环境自带的 Wrangler 3.114.17 不支持 JSON import attribu
 - 本日重新核对自定义域名：`doc.2yanx.dpdns.org` 仍为 pending，Cloudflare 返回 `CNAME record not set`，DNS 查询为名称不存在。当前正式访问地址仍是 `https://xyapi-docs.pages.dev/zh/`。
 
 官方资料：[Git 集成](https://developers.cloudflare.com/pages/configuration/git-integration/)、[自定义域名](https://developers.cloudflare.com/pages/configuration/custom-domains/)、[Pages Functions](https://developers.cloudflare.com/pages/functions/)。
+
+## APIMart 对照改进上线（2026-10-10）
+
+- 实现提交：`e254a91abca9cb0a7aad5a8e3d1ce7b09ae25e99`。从独立文档工作区推送 master，主目录原有 Next/Fumadocs 历史与未提交工作保留；本次文档改动同步回主目录。
+- Git 集成生产部署：`6327afd8-203f-4069-9954-b2cc0b64911d`；Cloudflare API 确认 deploy/success，对应上述提交，完成时间 `2026-10-09T17:52:33.495645Z`（北京时间 2026-10-10）。[GitHub 文档检查](https://github.com/dreammis/XINYU_API/actions/runs/37969137589) 同样 success。
+- API 手册按系列和产品调用名称显示适用操作，当前模型展开；模型能力与说明从源公开指南摘录。模式选择同步请求、成功响应类型与对应示例；Scalar 初始化保留当前模型及模式。通用 schema 仍只有一份。
+- 首页有八个真实操作的直接入口。新增高亮代码、可读条件说明、稳定章节锚点、地址旁调试、URL 筛选状态、公开 Markdown 和 llms.txt；客户 Key 仍仅在内存工作区，调试仍使用本站 /api-proxy。
+- 本地构建、docs:check、14/14 测试与 Pages Functions 编译通过。新增回归覆盖模式配对、Responses 条件必填 input、模型限制、导航上下文、说明段落失配失败，以及公共导出排除内部文档。
+- 本地浏览器验证 JSON/URL SSE、缺失样例提示、Lite + stream:true 的调试初始化、Short 限制、模型到操作、任务词搜索、刷新筛选、复制本页、中英文及 390px 手机布局。手机示例区域锚点始终存在，展开后稳定跳转，无页面横向溢出。未发起付费生成。
+- 生产浏览器实际加载 GPT Image 的模型接口页，确认 URL SSE 请求与 image_url.completed 响应配对；实际加载 Short 模型页，确认仅文生、固定 8 秒、720×1280 及图像输入限制。生产截图保存在主目录 .cache/apimart-alignment。
+- 中英文首页、模型和模型操作入口、llms.txt、Markdown 导出均返回 HTTP 200。公开 Markdown 共 128 页，导出内容不含维护 SOP/交接文件。线上两份 OpenAPI SHA-256 仍分别为 `90951bbc80bda1c1a425e0287ef688c51918f30b24133135222226b68c202c58`、`c36cb22f52816e1a3bc59afbd748bab73cb490d0b93a95af90c108983a925116`，与源快照逐字节一致。
+- 本轮重查自定义域名仍为 pending / CNAME record not set；当前正式入口仍为 https://xyapi-docs.pages.dev/zh/。
+- 内容边界：部分 Base64 SSE、Responses、multipart 配套完整样例未由公开契约交付，页面明确标注；产品分组待源工程确认。后续按原契约交付流程补充，不能由文档工程捏造业务事实。
