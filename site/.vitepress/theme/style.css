@@ -316,3 +316,5 @@ button, a, summary { touch-action: manipulation; }
 .VPNavBarMenuLink[href='https://openai.2yanx.dpdns.org']:hover { opacity: .85; }
 .VPNavBarSearch .DocSearch-Button { border: 1px solid var(--vp-c-divider); border-radius: 8px; }
 @media (max-width: 767px) { .page-action-menu { left: 0; right: auto; } }
+/* 手机操作固定单独一行，避免短面包屑让菜单从屏幕右侧起算。 */
+@media (max-width: 767px) { .doc-toolbar .doc-trail { flex-basis: 100%; min-width: 0; } .doc-toolbar .page-actions { flex-basis: 100%; } }
