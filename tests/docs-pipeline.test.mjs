@@ -10,6 +10,36 @@ import { publicPath, sha256, validateBundle, validateRegistry } from '../scripts
 const root = fileURLToPath(new URL('..', import.meta.url));
 const buildScript = path.join(root, 'scripts/build-docs.mjs');
 
+
+// 模拟 Windows 入库和 Linux 还原，覆盖音色 JSON 及音频的跨平台发布字节。
+test('manifest assets survive Git text conversion and a Linux-style checkout byte for byte', async () => {
+  const directory = await mkdtemp(path.join(os.tmpdir(), 'xyapi-git-assets-'));
+  try {
+    await cp(path.join(root, '.gitattributes'), path.join(directory, '.gitattributes'));
+    execFileSync('git', ['init', '-q', directory]);
+    execFileSync('git', ['config', 'core.autocrlf', 'true'], { cwd: directory });
+    const assets = {
+      'projects/fixture/newapi/media-tts/public-assets/voices.json': Buffer.from('{\r\n  "voices": []\r\n}\r\n'),
+      'catalog/fixture/assets/voices.json': Buffer.from('{\r\n  "voices": []\r\n}\r\n'),
+      'gitbook/assets/fixture/voices.json': Buffer.from('{\r\n  "voices": []\r\n}\r\n'),
+      'catalog/fixture/assets/samples/voice.mp3': Buffer.from([255, 251, 144, 0, 13, 10, 255]),
+      'gitbook/assets/fixture/samples/voice.mp3': Buffer.from([255, 251, 144, 0, 13, 10, 255]),
+    };
+    for (const [name, bytes] of Object.entries(assets)) {
+      await mkdir(path.dirname(path.join(directory, name)), { recursive: true });
+      await writeFile(path.join(directory, name), bytes);
+    }
+    execFileSync('git', ['add', '.'], { cwd: directory });
+    for (const [name, bytes] of Object.entries(assets)) {
+      assert.deepEqual(execFileSync('git', ['show', `:${name}`], { cwd: directory }), bytes, `staged bytes: ${name}`);
+      await rm(path.join(directory, name));
+    }
+    execFileSync('git', ['config', 'core.autocrlf', 'false'], { cwd: directory });
+    execFileSync('git', ['checkout-index', '--force', '--all'], { cwd: directory });
+    for (const [name, bytes] of Object.entries(assets)) assert.deepEqual(await readFile(path.join(directory, name)), bytes, `checkout bytes: ${name}`);
+  } finally { await rm(directory, { recursive: true, force: true }); }
+});
+
 // 使用独立临时目录，验证真实导入快照到 GitBook 输出的行为。
 async function fixture() {
   const directory = await mkdtemp(path.join(os.tmpdir(), 'xyapi-docs-'));
