@@ -6,3 +6,8 @@ sources.json text eol=lf
 
 # MP3 是二进制，不能沿用快照/导出目录的文本换行转换。
 *.mp3 -text
+
+# 清单资产逐字节导入并校验哈希；JSON 目录也不能在 checkout 时改写。
+catalog/*/assets/** -text
+gitbook/assets/** -text
+projects/*/newapi/*/public-assets/** -text
