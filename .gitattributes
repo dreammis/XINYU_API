@@ -3,3 +3,6 @@ catalog/** text eol=lf
 content/** text eol=lf
 gitbook/** text eol=lf
 sources.json text eol=lf
+
+# MP3 是二进制，不能沿用快照/导出目录的文本换行转换。
+*.mp3 -text
