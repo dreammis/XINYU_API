@@ -8,11 +8,15 @@ const root = path.resolve(process.env.DOCS_ROOT ?? fileURLToPath(new URL('..', i
 const remote = process.argv.includes('--remote');
 const registry = JSON.parse(await readFile(path.join(root, 'sources.json'), 'utf8'));
 validateRegistry(registry);
+const sourceIndex = process.argv.indexOf('--source');
+const selectedSource = sourceIndex >= 0 ? process.argv[sourceIndex + 1] : undefined;
+if (sourceIndex >= 0 && !registry.sources.some(source => source.id === selectedSource)) throw new Error(`Unknown source: ${selectedSource}`);
 const prepared = [];
 const revisions = new Map();
 
 // 先读取并校验全部来源；任何工程缺文件时中止，不能把旧快照当成更新成功。
 for (const source of registry.sources) {
+  if (selectedSource && source.id !== selectedSource) continue;
   const directory = path.resolve(root, source.localDirectory);
   let revision;
   if (remote) {
@@ -26,13 +30,13 @@ for (const source of registry.sources) {
   } else {
     revision = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: directory, encoding: 'utf8' }).trim();
   }
-  async function sourceFile(filename) {
+  async function sourceFile(filename, binary = false) {
     publicPath(filename);
-    if (!remote) return readFile(path.join(directory, filename), 'utf8');
+    if (!remote) return readFile(path.join(directory, filename), binary ? undefined : 'utf8');
     const url = `https://api.github.com/repos/${source.repository}/contents/${filename.split('/').map(encodeURIComponent).join('/')}?ref=${revision}`;
     const response = await fetch(url, { headers: githubHeaders('application/vnd.github.raw+json') });
     if (!response.ok) throw new Error(`${source.id}: ${filename} unavailable (${response.status})`);
-    return response.text();
+    return binary ? Buffer.from(await response.arrayBuffer()) : response.text();
   }
   const manifestText = await sourceFile(source.manifest);
   const manifest = JSON.parse(manifestText);
@@ -44,7 +48,8 @@ for (const source of registry.sources) {
   validateBundle(manifest, spec, guides);
   const files = { 'public-docs.json': JSON.stringify(manifest, null, 2) + '\n', 'openapi.json': JSON.stringify(spec, null, 2) + '\n' };
   for (const locale of locales) files[`guide.${locale}.md`] = guides[locale];
-  const selectedFiles = [source.manifest, manifest.openapi, ...Object.values(manifest.guides)];
+  for (const [name, filename] of Object.entries(manifest.assets ?? {})) files[`assets/${name}`] = await sourceFile(filename, true);
+  const selectedFiles = [source.manifest, manifest.openapi, ...Object.values(manifest.guides), ...Object.values(manifest.assets ?? {})];
   const localChanges = remote ? [] : execFileSync('git', ['status', '--porcelain', '--', ...selectedFiles], { cwd: directory, encoding: 'utf8' }).trim().split('\n').filter(Boolean);
   files['provenance.json'] = JSON.stringify({ repository: source.repository, revision, ref: source.ref, workingTreeChanges: localChanges, hashes: Object.fromEntries(Object.entries(files).map(([name, content]) => [name, sha256(content)])) }, null, 2) + '\n';
   prepared.push({ id: source.id, files });
@@ -52,7 +57,10 @@ for (const source of registry.sources) {
 for (const bundle of prepared) {
   const destination = path.join(root, 'catalog', bundle.id);
   await mkdir(destination, { recursive: true });
-  for (const [name, content] of Object.entries(bundle.files)) await writeFile(path.join(destination, name), content);
+  for (const [name, content] of Object.entries(bundle.files)) {
+    await mkdir(path.dirname(path.join(destination, name)), { recursive: true });
+    await writeFile(path.join(destination, name), content);
+  }
   console.log(`Imported ${bundle.id} (${remote ? 'released commit' : 'local working tree'})`);
 }
 

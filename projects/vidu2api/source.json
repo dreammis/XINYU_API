@@ -1,0 +1,14 @@
+{
+  "sourceId": "vidu2api",
+  "repository": "dreammis/vidu2api",
+  "localDirectory": "G:/workspace/vidu2api",
+  "capabilities": [
+    {
+      "id": "media-tts",
+      "pluginKey": "media-tts",
+      "publicManifest": "projects/vidu2api/newapi/media-tts/public-docs.json"
+    }
+  ],
+  "note": "内部来源资料；实际部署与源码版本见 releases。",
+  "sourceRevision": "8d707c6594c7e2804d33f473382842a62a2a29f8"
+}

@@ -12,6 +12,31 @@ export default [
   },
   {
     "origin": "https://openai.2yanx.dpdns.org",
+    "path": "/tts/v1/tasks",
+    "method": "POST"
+  },
+  {
+    "origin": "https://openai.2yanx.dpdns.org",
+    "path": "/tts/v1/tasks/{task_id}",
+    "method": "GET"
+  },
+  {
+    "origin": "https://openai.2yanx.dpdns.org",
+    "path": "/v1/tasks/{task_id}/artifacts",
+    "method": "GET"
+  },
+  {
+    "origin": "https://openai.2yanx.dpdns.org",
+    "path": "/v1/tasks/{task_id}/artifacts/{artifact_key}/content",
+    "method": "GET"
+  },
+  {
+    "origin": "https://openai.2yanx.dpdns.org",
+    "path": "/v1/tasks/{task_id}/artifacts/{artifact_key}/content",
+    "method": "HEAD"
+  },
+  {
+    "origin": "https://openai.2yanx.dpdns.org",
     "path": "/v1/videos",
     "method": "POST"
   },

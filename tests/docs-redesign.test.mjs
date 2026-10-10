@@ -19,8 +19,8 @@ test('series and model pages preserve public contracts and reject broken selecti
     run('build-docs.mjs');
     run('build-site.mjs');
     const data = JSON.parse(await readFile(path.join(directory, 'site/.vitepress/catalog.json'), 'utf8'));
-    assert.equal(data.capabilities.reduce((count, item) => count + item.models.length, 0), 14);
-    assert.deepEqual(data.capabilities.map(item => item.category), ['image', 'video']);
+    assert.equal(data.capabilities.reduce((count, item) => count + item.models.length, 0), 15);
+    assert.deepEqual(data.capabilities.map(item => item.category), ['image', 'video', 'tts']);
     const short = data.capabilities[1].models.find(model => model.name === 'cogvideo-short');
     assert.ok(short.facts.zh.some(fact => fact.value === '固定 8 秒'));
     assert.equal(short.facts.zh.find(fact => fact.label === '单图生').value, '不支持');
@@ -140,6 +140,12 @@ test('code examples retain SSE handling, multipart uploads, authenticated downlo
   const head = requestCode({ spec: video, endpoint: '/v1/videos/{video_id}/content', method: 'head' });
   assert.doesNotMatch(head.curl, /-o result/);
   assert.match(head.javascript, /response.headers/);
+  const audio = JSON.parse(await readFile(path.join(root, 'catalog/media-tts/openapi.json'), 'utf8'));
+  const audioDownload = requestCode({spec: audio, endpoint:'/v1/tasks/{task_id}/artifacts/{artifact_key}/content', method:'get'});
+  assert.match(audioDownload.curl, /-o result.mp3/);
+  assert.match(audioDownload.python, /iter_content/);
+  assert.match(audioDownload.javascript, /arrayBuffer/);
+  assert.doesNotMatch(audioDownload.javascript, /response.json/);
   // multipart 的契约未提供完整 example；用公开指南的文件字段检查上传代码，不能捏造并发布示例。
   const upload = requestCode({ spec: image, endpoint: '/v1/images/edits', method: 'post', mediaType: 'multipart/form-data', example: { model: 'gpt-image-2', prompt: 'Edit this reference', image: '@reference.png' } });
   assert.match(upload.curl, /-F/);

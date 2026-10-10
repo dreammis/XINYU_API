@@ -73,7 +73,9 @@ export function requestCode({ spec, endpoint, method, mediaType, example }) {
   const multipart = mediaType === 'multipart/form-data';
   const operation = spec.paths[endpoint][method];
   const bodySchema = resolveSchema(spec, operation.requestBody?.content?.[mediaType]?.schema);
-  const binary = method !== 'head' && Object.keys(operation.responses?.['200']?.content ?? {}).some((type) => type.startsWith('video/') || type === 'application/octet-stream');
+  const binaryType = Object.keys(operation.responses?.['200']?.content ?? {}).find((type) => type.startsWith('audio/') || type.startsWith('video/') || type === 'application/octet-stream');
+  const binary = method !== 'head' && Boolean(binaryType);
+  const filename = binaryType?.startsWith('audio/') ? 'result.mp3' : 'result.mp4';
   const stream = example?.stream === true || (multipart && example?.stream === 'true');
   const json = JSON.stringify(example, null, 2);
   const quote = (value) => `'${String(value).replaceAll("'", "'\\''")}'`;
@@ -110,9 +112,9 @@ export function requestCode({ spec, endpoint, method, mediaType, example }) {
   javascript.push(`const response = await fetch(${JSON.stringify(url)}, {`, `  method: '${method.toUpperCase()}',`, `  headers: { Authorization: 'Bearer YOUR_API_KEY'${hasBody && !multipart ? `, 'Content-Type': '${mediaType}'` : ''} },`, ...(hasBody ? [`  body: ${multipart ? 'form' : 'JSON.stringify(payload)'},`] : []), '});', 'if (!response.ok) throw new Error(`HTTP ${response.status}`);');
   python.push('response.raise_for_status()');
   if (binary) {
-    curl.push('  -o result.mp4');
-    python.push('with open("result.mp4", "wb") as file:', '    for chunk in response.iter_content(65536):', '        file.write(chunk)');
-    javascript.push("await (await import('node:fs/promises')).writeFile('result.mp4', new Uint8Array(await response.arrayBuffer()));");
+    curl.push(`  -o ${filename}`);
+    python.push(`with open("${filename}", "wb") as file:`, '    for chunk in response.iter_content(65536):', '        file.write(chunk)');
+    javascript.push(`await (await import('node:fs/promises')).writeFile('${filename}', new Uint8Array(await response.arrayBuffer()));`);
   } else if (stream) {
     python.push('for line in response.iter_lines(decode_unicode=True):', '    if line:', '        print(line)');
     javascript.push('for await (const chunk of response.body) {', '  process.stdout.write(Buffer.from(chunk));', '}');

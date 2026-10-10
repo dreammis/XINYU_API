@@ -24,8 +24,8 @@ async function copyBase() {
 <template>
   <div class="docs-home">
     <div class="home-eyebrow"><span /> {{ locale === 'zh' ? 'XY API · 开发者文档' : 'XY API · Developer docs' }}</div>
-    <h1>{{ locale === 'zh' ? '图像与视频 API，统一调用。' : 'Image and video APIs. One gateway.' }}</h1>
-    <p class="home-lead">{{ locale === 'zh' ? '生成图片、用参考图编辑，或创建视频任务。统一客户 Key 与计费，按模型能力选择接口，拿到可下载的结果。' : 'Generate images, edit with references, or create video tasks. One customer key and billing system, with model-specific APIs and downloadable results.' }}</p>
+    <h1>{{ locale === 'zh' ? '图像、视频与语音 API，统一调用。' : 'Image, video and speech APIs. One gateway.' }}</h1>
+    <p class="home-lead">{{ locale === 'zh' ? '生成图片、用参考图编辑，或创建视频与语音任务。统一客户 Key 与计费，按模型能力选择接口，拿到可下载的结果。' : 'Generate images, edit with references, or create video and speech tasks. One customer key and billing system, with model-specific APIs and downloadable results.' }}</p>
     <div class="home-actions"><a class="primary-link" :href="`/${locale}/quickstart`">{{ locale === 'zh' ? '开始第一次调用' : 'Make your first request' }} →</a><a class="secondary-link" href="https://openai.2yanx.dpdns.org" target="_blank" rel="noreferrer">{{ locale === 'zh' ? '获取 API Key' : 'Get an API key' }} ↗</a></div>
     <div class="base-url"><span>{{ locale === 'zh' ? '服务地址' : 'Base URL' }}</span><code>{{ baseUrl }}</code><button @click="copyBase">{{ copied ? (locale === 'zh' ? '已复制' : 'Copied') : (locale === 'zh' ? '复制' : 'Copy') }}</button></div>
     <span class="sr-only" role="status" aria-live="polite">{{ copied ? (locale === 'zh' ? '服务地址已复制' : 'Base URL copied') : '' }}</span>

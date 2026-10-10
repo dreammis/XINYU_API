@@ -24,6 +24,16 @@
 * [POST Stream or run a video response](api-reference/media-video/create-video-response.md)
 * [GET Get a background video response](api-reference/media-video/get-video-response.md)
 
+## Text to speech APIs
+
+* [Overview and model selection](api-reference/media-tts/README.md)
+* [Usage and limits](guides/media-tts.md)
+* [POST Create a speech task](api-reference/media-tts/create-speech.md)
+* [GET Get speech task status](api-reference/media-tts/get-speech.md)
+* [GET List generated audio artifacts](api-reference/media-tts/list-speech-artifacts.md)
+* [GET Download audio](api-reference/media-tts/download-speech.md)
+* [HEAD Get audio headers](api-reference/media-tts/head-speech.md)
+
 ## Get started
 
 * [Quickstart](quickstart.md)

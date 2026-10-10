@@ -1,6 +1,7 @@
 import DefaultTheme from 'vitepress/theme';
 import { h } from 'vue';
 import ApiPlayground from './ApiPlayground.vue';
+import VoiceBrowser from './VoiceBrowser.vue';
 import DocsHome from './DocsHome.vue';
 import ModelCatalog from './ModelCatalog.vue';
 import ModelDetail from './ModelDetail.vue';
@@ -15,6 +16,7 @@ export default {
   Layout: () => h(DefaultTheme.Layout, null, { 'doc-before': () => h('div', { class: 'doc-toolbar' }, [h(DocTrail), h(PageActions)]) }),
   enhanceApp({ app }) {
     app.component('ApiPlayground', ApiPlayground);
+    app.component('VoiceBrowser', VoiceBrowser);
     app.component('DocsHome', DocsHome);
     app.component('ModelCatalog', ModelCatalog);
     app.component('ModelDetail', ModelDetail);

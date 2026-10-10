@@ -8,18 +8,40 @@
       "modelGroups": [
         {
           "id": "gemini-banana",
-          "title": { "zh": "Gemini / Banana", "en": "Gemini / Banana" },
-          "models": ["gemini-3.1-flash-lite-image", "gemini-3.1-flash-image", "gemini-3-pro-image"]
+          "title": {
+            "zh": "Gemini / Banana",
+            "en": "Gemini / Banana"
+          },
+          "models": [
+            "gemini-3.1-flash-lite-image",
+            "gemini-3.1-flash-image",
+            "gemini-3-pro-image"
+          ]
         },
         {
           "id": "gpt-image",
-          "title": { "zh": "GPT Image", "en": "GPT Image" },
-          "models": ["gpt-image-2.5-fast", "gpt-image-2.5-pro", "gpt-image-2"]
+          "title": {
+            "zh": "GPT Image",
+            "en": "GPT Image"
+          },
+          "models": [
+            "gpt-image-2.5-fast",
+            "gpt-image-2.5-pro",
+            "gpt-image-2"
+          ]
         },
         {
           "id": "own-image",
-          "title": { "zh": "自有模型", "en": "Own models" },
-          "models": ["image-basic", "image-fast", "image-pro", "image-creative"]
+          "title": {
+            "zh": "自有模型",
+            "en": "Own models"
+          },
+          "models": [
+            "image-basic",
+            "image-fast",
+            "image-pro",
+            "image-creative"
+          ]
         }
       ],
       "selectionSections": {
@@ -87,7 +109,21 @@
     {
       "id": "media-video",
       "category": "video",
-      "modelGroups": [{ "id": "video-studio", "title": { "zh": "Video Studio", "en": "Video Studio" }, "models": ["cogvideo-fast", "cogvideo-pro", "cogvideo-basic", "cogvideo-short"] }],
+      "modelGroups": [
+        {
+          "id": "video-studio",
+          "title": {
+            "zh": "Video Studio",
+            "en": "Video Studio"
+          },
+          "models": [
+            "cogvideo-fast",
+            "cogvideo-pro",
+            "cogvideo-basic",
+            "cogvideo-short"
+          ]
+        }
+      ],
       "selectionSections": {
         "zh": [
           "模型与价格"
@@ -114,6 +150,34 @@
           }
         }
       ]
+    },
+    {
+      "id": "media-tts",
+      "category": "tts",
+      "modelGroups": [
+        {
+          "id": "vox",
+          "title": {
+            "zh": "Vox",
+            "en": "Vox"
+          },
+          "models": [
+            "vox-1"
+          ]
+        }
+      ],
+      "selectionSections": {
+        "zh": [
+          "模型与价格"
+        ],
+        "en": [
+          "Model and pricing"
+        ]
+      },
+      "repository": "dreammis/XINYU_API",
+      "ref": "master",
+      "localDirectory": ".",
+      "manifest": "projects/vidu2api/newapi/media-tts/public-docs.json"
     }
   ]
 }

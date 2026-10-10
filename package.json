@@ -12,7 +12,7 @@
     "docs:sync": "node scripts/sync-docs.mjs",
     "docs:sync:remote": "node scripts/sync-docs.mjs --remote",
     "docs:check": "node scripts/build-docs.mjs --check && node scripts/validate-openapi.mjs",
-    "test": "node --test tests/*.test.mjs",
+    "test": "node --test tests/*.test.mjs projects/*/newapi/*/*.test.mjs",
     "dev:legacy": "vitepress dev docs",
     "build:legacy": "vitepress build docs",
     "start:legacy": "vitepress preview docs"

@@ -18,3 +18,4 @@
 | `cogvideo-pro` | 视频 | Video Studio | [能力与限制](guides/media-video.md) |
 | `cogvideo-basic` | 视频 | Video Studio | [能力与限制](guides/media-video.md) |
 | `cogvideo-short` | 视频 | Video Studio | [能力与限制](guides/media-video.md) |
+| `vox-1` | 语音合成 | Vox | [能力与限制](guides/media-tts.md) |

@@ -27,10 +27,15 @@ for (const source of registry.sources) {
     if (!provenance.hashes?.[name]) throw new Error(`${source.id}: missing provenance hash (${name})`);
   }
   for (const [name, hash] of Object.entries(provenance.hashes)) {
-    if (sha256(await readFile(path.join(directory, publicPath(name)), 'utf8')) !== hash) throw new Error(`${source.id}: snapshot changed without import (${name})`);
+    if (sha256(await readFile(path.join(directory, publicPath(name)))) !== hash) throw new Error(`${source.id}: snapshot changed without import (${name})`);
   }
   const specPath = `openapi/${manifest.id}.json`;
   generated.set(specPath, JSON.stringify(spec, null, 2) + '\n');
+  for (const name of Object.keys(manifest.assets ?? {})) {
+    const snapshot = `assets/${publicPath(name)}`;
+    if (!provenance.hashes?.[snapshot]) throw new Error(`${source.id}: missing asset hash ${name}`);
+    generated.set(`assets/${manifest.id}/${name}`, await readFile(path.join(directory, snapshot)));
+  }
   if (source.category && manifest.category && source.category !== manifest.category) throw new Error(`${source.id}: category disagrees with source registry`);
   bundles.push({ manifest, spec, guides, source, category: manifest.category ?? source.category });
 }
@@ -124,8 +129,8 @@ const differing = [];
 for (const [name, content] of generated) {
   publicPath(name);
   let current;
-  try { current = await readFile(path.join(output, name), 'utf8'); } catch (error) { if (error.code !== 'ENOENT') throw error; }
-  if (current !== content) differing.push(name);
+  try { current = await readFile(path.join(output, name)); } catch (error) { if (error.code !== 'ENOENT') throw error; }
+  if (current === undefined || sha256(current) !== sha256(content)) differing.push(name);
 }
 if (check) {
   if (outdated.length || differing.length || JSON.stringify(previous) !== JSON.stringify([...generated.keys()].sort())) throw new Error(`GitBook output needs rebuild: ${[...outdated, ...differing].join(', ')}`);

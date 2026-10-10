@@ -79,6 +79,10 @@ for (const source of registry.sources) {
 // 保留 Markdown 导出和既有 URL，站点接口页只由同一份规范渲染一次。
 for (const filename of files) {
   publicPath(filename);
+  if (filename.startsWith('assets/')) {
+    generated.set(`public/${filename}`, await readFile(path.join(book, filename)));
+    continue;
+  }
   const original = await readFile(path.join(book, filename), 'utf8');
   if (filename.startsWith('openapi/')) {
     generated.set(`public/${filename}`, original);
@@ -236,7 +240,7 @@ for (const locale of ['zh', 'en']) {
   // 模型中心的总目录按系列折叠，详情沿用 API 手册中的模型上下文。
   modelGroups.slice(1).forEach(group => { group.collapsed = true; });
   generated.set(`${locale}/index.md`, `---\ntitle: ${zh ? 'XY API 开发者文档' : 'XY API Developer documentation'}\naside: false\npageClass: home-page\n---\n\n<DocsHome locale="${locale}" />\n`);
-  publicPages.set(`${locale}/index.md`, [`# XY API · ${zh ? '图像与视频 API' : 'Image and video APIs'}`, zh ? '统一客户入口与计费，支持图片生成、参考图编辑和异步视频任务。' : 'One customer gateway and billing system for image generation, reference editing and asynchronous video tasks.', ...capabilities.flatMap(capability => capability.operations.map(operation => `- [${operation.title[locale]}](/${locale}/api-reference/${capability.id}/${operation.slug})`)), `[${zh ? '快速开始' : 'Quickstart'}](/${locale}/quickstart)`, `[${zh ? '鉴权' : 'Authentication'}](/${locale}/authentication)`].join('\n\n'));
+  publicPages.set(`${locale}/index.md`, [`# XY API · ${zh ? '图像、视频与语音 API' : 'Image, video and speech APIs'}`, zh ? '统一客户入口与计费，支持图片生成、参考图编辑、异步视频和语音任务。' : 'One customer gateway and billing system for image generation, reference editing, asynchronous video and speech tasks.', ...capabilities.flatMap(capability => capability.operations.map(operation => `- [${operation.title[locale]}](/${locale}/api-reference/${capability.id}/${operation.slug})`)), `[${zh ? '快速开始' : 'Quickstart'}](/${locale}/quickstart)`, `[${zh ? '鉴权' : 'Authentication'}](/${locale}/authentication)`].join('\n\n'));
   generated.set(`${locale}/capabilities.md`, `---\naside: false\n---\n\n# ${zh ? '全部系列' : 'All series'}\n\n${zh ? '按任务选择能力。正式接口仅展示已发布的公开契约。' : 'Choose a capability by task. Only published public contracts provide API links.'}\n\n<CapabilityGrid locale="${locale}" :show-pending="true" />\n`);
   const modelLinks = capabilities.flatMap((capability) => capability.models.map((model) => `- [${model.name}](models/${capability.id}/${model.slug}.md)`));
   generated.set(`${locale}/models.md`, `---\naside: false\npageClass: models-page\n---\n\n# ${zh ? '模型中心' : 'Model center'}\n\n${zh ? '按能力筛选公开调用名称，再查看模型差异与调用入口。名称不保证原厂直连或精确模型快照。' : 'Filter public routes by capability, then compare limits and find the API. Names do not guarantee original-provider access or a precise model snapshot.'}\n\n<ModelCatalog locale="${locale}" />\n\n<details class="model-search-index"><summary>${zh ? '全部模型链接' : 'All model links'}</summary>\n\n${modelLinks.join('\n')}\n\n</details>\n`);

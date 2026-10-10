@@ -6,3 +6,4 @@ Choose a capability, read its guide, then explore the endpoint reference.
 | --- | --- | --- |
 | Images | [Read guide](guides/media-image.md) | [API](api-reference/media-image/README.md) |
 | Videos | [Read guide](guides/media-video.md) | [API](api-reference/media-video/README.md) |
+| Text to speech | [Read guide](guides/media-tts.md) | [API](api-reference/media-tts/README.md) |

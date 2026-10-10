@@ -22,3 +22,6 @@ site/.vitepress/catalog.json
 site/.vitepress/contracts.json
 
 site/public-documents.mjs
+
+site/public/assets/
+.local/

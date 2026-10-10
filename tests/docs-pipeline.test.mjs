@@ -23,6 +23,32 @@ function build(directory, check = false) {
   return execFileSync(process.execPath, [buildScript, ...(check ? ['--check'] : [])], { env: { ...process.env, DOCS_ROOT: directory }, encoding: 'utf8', stdio: 'pipe' });
 }
 
+test('binary public assets retain exact bytes and fail on hash or path drift', async () => {
+  const directory = await fixture();
+  try {
+    const destination = path.join(directory, 'catalog/media-image');
+    const manifest = JSON.parse(await readFile(path.join(destination, 'public-docs.json'), 'utf8'));
+    const spec = JSON.parse(await readFile(path.join(destination, 'openapi.json'), 'utf8'));
+    const guides = {zh: await readFile(path.join(destination, 'guide.zh.md'), 'utf8'), en: await readFile(path.join(destination, 'guide.en.md'), 'utf8')};
+    for (const assets of [{'../secret.mp3': 'public/audio.mp3'}, {'sample.mp3':'../secret.mp3'}, {'sample.mp3':'private/source.py'}, ['public/audio.mp3']]) assert.throws(() => validateBundle({...manifest, assets}, spec, guides));
+    manifest.assets = {'sample.mp3':'public/sample.mp3'};
+    const binary = Buffer.from([255,251,144,0,128,254,0,10]);
+    const manifestBytes = JSON.stringify(manifest, null, 2) + '\n';
+    await mkdir(path.join(destination, 'assets'), {recursive:true});
+    await writeFile(path.join(destination, 'assets/sample.mp3'), binary);
+    await writeFile(path.join(destination, 'public-docs.json'), manifestBytes);
+    const provenance = JSON.parse(await readFile(path.join(destination, 'provenance.json'), 'utf8'));
+    provenance.hashes['public-docs.json'] = sha256(manifestBytes);
+    provenance.hashes['assets/sample.mp3'] = sha256(binary);
+    await writeFile(path.join(destination, 'provenance.json'), JSON.stringify(provenance));
+    build(directory);
+    assert.deepEqual(await readFile(path.join(directory, 'gitbook/assets/media-image/sample.mp3')), binary);
+    build(directory, true);
+    await writeFile(path.join(destination, 'assets/sample.mp3'), Buffer.from([255,251,144,1]));
+    assert.throws(() => build(directory), /snapshot changed without import/);
+  } finally { await rm(directory, {recursive:true, force:true}); }
+});
+
 test('publishes current models, status/download split, SSE and deterministic output', async () => {
   const directory = await fixture();
   try {
@@ -149,9 +175,10 @@ test('remote import pins one repository revision and does not overwrite snapshot
   const directory = await fixture();
   try {
     const fixtureFiles = {};
+    const registry = JSON.parse(await readFile(path.join(directory, 'sources.json'), 'utf8'));
     for (const id of ['media-image', 'media-video']) {
       const manifest = JSON.parse(await readFile(path.join(directory, `catalog/${id}/public-docs.json`), 'utf8'));
-      fixtureFiles[`integrations/newapi/${id}/public-docs.json`] = JSON.stringify(manifest);
+      fixtureFiles[registry.sources.find(source => source.id === id).manifest] = JSON.stringify(manifest);
       fixtureFiles[manifest.openapi] = await readFile(path.join(directory, `catalog/${id}/openapi.json`), 'utf8');
       for (const locale of ['zh', 'en']) fixtureFiles[manifest.guides[locale]] = await readFile(path.join(directory, `catalog/${id}/guide.${locale}.md`), 'utf8');
     }

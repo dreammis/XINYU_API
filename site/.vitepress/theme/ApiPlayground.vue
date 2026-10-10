@@ -4,6 +4,7 @@ import { computed, onBeforeUnmount, ref, watch } from 'vue';
 import contracts from '../contracts.json';
 import catalog from '../catalog.json';
 import CodeExample from './CodeExample.vue';
+import VoiceBrowser from './VoiceBrowser.vue';
 import SchemaFields from './SchemaFields.vue';
 import { useRouter } from 'vitepress';
 import { operationExamples, requestCode, resolveSchema, responseExampleFor } from './openapi-content.mjs';
@@ -21,8 +22,12 @@ const selectedModel = computed(() => props.model ?? (modelEnum.value.includes(bo
 const modes = computed(() => operationExamples(specification.value, operation.value, mediaType.value, selectedModel.value));
 const mode = ref('json');
 const progress = ref(false);
+const selectedVoice = ref('');
 const activeMode = computed(() => modes.value.find(item => item.id === mode.value) ?? modes.value[0]);
-const example = computed(() => progress.value && activeMode.value.example?.stream ? { ...activeMode.value.example, progress: true } : activeMode.value.example);
+const example = computed(() => {
+  const value = progress.value && activeMode.value.example?.stream ? { ...activeMode.value.example, progress: true } : activeMode.value.example;
+  return selectedVoice.value && id.value === 'media-tts' ? {...value, voice: selectedVoice.value} : value;
+});
 const codes = computed(() => requestCode({ spec: specification.value, endpoint: props.endpoint, method: props.method, mediaType: mediaType.value, example: example.value }));
 const parameters = computed(() => {
   const item = specification.value.paths[props.endpoint];
@@ -56,7 +61,7 @@ const mobileCodeOpen = ref(false);
 let client;
 let disposed = false;
 let revision = 0;
-watch([mediaType, mode, progress, selectedModel, operation], () => { revision++; client?.app.unmount(); client = undefined; error.value = ''; });
+watch([mediaType, mode, progress, selectedModel, selectedVoice, operation], () => { revision++; client?.app.unmount(); client = undefined; error.value = ''; });
 watch(mediaType, () => { mode.value = 'json'; progress.value = false; });
 watch(operation, () => { mediaType.value = bodyTypes.value[0] ?? 'application/json'; mode.value = 'json'; progress.value = false; status.value = statuses.value.find(value => /^2/.test(value)) ?? statuses.value[0]; });
 
@@ -134,6 +139,7 @@ onBeforeUnmount(() => { disposed = true; client?.app.unmount(); });
         <h2 id="authentication">{{ locale === 'zh' ? '鉴权' : 'Authentication' }}</h2>
         <p>{{ locale === 'zh' ? '使用客户 API Key。' : 'Use a customer API Key.' }} <a :href="`/${locale}/authentication`">{{ locale === 'zh' ? '获取与配置' : 'Setup' }} →</a></p>
         <div class="auth-example"><code>Authorization: Bearer YOUR_API_KEY</code></div>
+        <VoiceBrowser v-if="id === 'media-tts' && method === 'post'" :locale="locale" :model="selectedModel" @select="selectedVoice = $event.id" />
         <template v-if="modelEnum.length"><h2 id="models">{{ locale === 'zh' ? '选择模型' : 'Choose a model' }}</h2><label class="format-select">{{ locale === 'zh' ? '调用名称' : 'Route name' }}<select :aria-label="locale === 'zh' ? '调用名称' : 'Route name'" :value="selectedModel" @change="selectModel"><option v-for="name in modelEnum" :key="name">{{ name }}</option></select></label><a :href="`/${locale}/models/${id}/${capability.models.find(model => model.name === selectedModel).slug}`">{{ locale === 'zh' ? '查看该模型的能力与限制 →' : 'Model capabilities and limits →' }}</a></template>
         <template v-if="parameters.length"><h2 id="parameters">{{ locale === 'zh' ? '路径、查询与请求头' : 'Path, query and header parameters' }}</h2><div v-for="parameter in parameters" :key="`${parameter.in}/${parameter.name}`" class="schema-field"><div class="field-heading"><code>{{ parameter.name }}</code><span class="field-type">{{ parameter.in }} · {{ parameter.schema?.type }}</span><span v-if="parameter.required" class="field-required">{{ locale === 'zh' ? '必填' : 'required' }}</span></div><p>{{ locale === 'zh' ? parameter['x-description-zh'] ?? parameter.description : parameter.description }}</p><div v-if="parameter.schema?.enum" class="field-enum"><code v-for="value in parameter.schema.enum" :key="value">{{ value }}</code></div></div></template>
         <template v-if="bodyTypes.length"><h2 id="request-body">{{ locale === 'zh' ? '请求参数' : 'Request body' }}</h2><label class="format-select">Content-Type <select aria-label="Content-Type" v-model="mediaType"><option v-for="type in bodyTypes" :key="type">{{ type }}</option></select></label><p v-if="resolveSchema(specification, body.schema).description">{{ locale === 'zh' ? resolveSchema(specification, body.schema)['x-description-zh'] ?? resolveSchema(specification, body.schema).description : resolveSchema(specification, body.schema).description }}</p><SchemaFields :spec="specification" :schema="body.schema" :locale="locale" /></template>

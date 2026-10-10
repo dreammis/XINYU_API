@@ -27,6 +27,12 @@ export function validateBundle(manifest, spec, guides) {
     publicPath(manifest.guides[locale]);
   }
   publicPath(manifest.openapi);
+  // 音色目录与试听只导入显式列出的公开资源，内部映射和证据永不随目录发布。
+  if (manifest.assets !== undefined && (!manifest.assets || typeof manifest.assets !== 'object' || Array.isArray(manifest.assets))) throw new Error(`${manifest.id}: assets must be a path mapping`);
+  for (const [name, source] of Object.entries(manifest.assets ?? {})) {
+    publicPath(name); publicPath(source);
+    if (!/\.(json|mp3)$/.test(name) || path.posix.extname(name) !== path.posix.extname(source)) throw new Error(`${manifest.id}: unsupported public asset ${name}`);
+  }
   const operationIds = new Set();
   for (const [endpoint, item] of Object.entries(spec.paths)) {
     if (!endpoint.startsWith('/')) throw new Error(`Invalid endpoint: ${endpoint}`);

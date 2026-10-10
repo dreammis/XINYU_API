@@ -1,0 +1,784 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "XY API Speech",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://openai.2yanx.dpdns.org"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Speech"
+    }
+  ],
+  "paths": {
+    "/tts/v1/tasks": {
+      "post": {
+        "tags": [
+          "Speech"
+        ],
+        "operationId": "createSpeech",
+        "summary": "Create a speech task",
+        "x-title-zh": "创建语音任务",
+        "description": "One task produces one MP3. Fixed billing per successful generation, regardless of text length within the limit. Failed tasks refund the reservation. Save the returned ID before polling.",
+        "x-description-zh": "一次请求生成一份 MP3。默认分组每次成功生成约 ¥0.10（USD 0.01369863，换算汇率 7.3）；限制内字数不增倍。失败退还预扣。先保存任务 ID，再查询。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSpeech"
+              },
+              "example": {
+                "model": "vox-1",
+                "text": "你好，欢迎使用我们的语音服务。",
+                "voice": "vx_dbd27c4a9332",
+                "parameters": {
+                  "speed": 1,
+                  "pitch": 0,
+                  "volume": 0,
+                  "emotion": "neutral",
+                  "enhance": true
+                },
+                "output": {
+                  "format": "mp3"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SpeechTask"
+                },
+                "example": {
+                  "id": "task_EXAMPLE",
+                  "model": "vox-1",
+                  "status": "queued"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tts/v1/tasks/{task_id}": {
+      "parameters": [
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "Public task/artifact identifier."
+        }
+      ],
+      "get": {
+        "tags": [
+          "Speech"
+        ],
+        "operationId": "getSpeech",
+        "summary": "Get speech task status",
+        "x-title-zh": "查询语音任务",
+        "description": "Poll every 3–5 seconds. Terminal states are succeeded and failed. Querying does not create another generation charge.",
+        "responses": {
+          "200": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SpeechTask"
+                },
+                "example": {
+                  "id": "task_EXAMPLE",
+                  "model": "vox-1",
+                  "status": "succeeded",
+                  "audio": {
+                    "format": "mp3",
+                    "mime_type": "audio/mpeg",
+                    "artifacts": "/v1/tasks/task_EXAMPLE/artifacts"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/tasks/{task_id}/artifacts": {
+      "parameters": [
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "Public task/artifact identifier."
+        }
+      ],
+      "get": {
+        "tags": [
+          "Speech"
+        ],
+        "operationId": "listSpeechArtifacts",
+        "summary": "List generated audio artifacts",
+        "x-title-zh": "获取音频产物地址",
+        "description": "Call after succeeded. Use returned content URLs without substituting an upstream address.",
+        "responses": {
+          "200": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Artifacts"
+                },
+                "example": {
+                  "task_id": "task_EXAMPLE",
+                  "artifacts": [
+                    {
+                      "key": "audio",
+                      "type": "audio",
+                      "mime_type": "audio/mpeg",
+                      "content_url": "https://openai.2yanx.dpdns.org/v1/tasks/task_EXAMPLE/artifacts/audio/content"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/tasks/{task_id}/artifacts/{artifact_key}/content": {
+      "parameters": [
+        {
+          "name": "task_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "Public task/artifact identifier."
+        },
+        {
+          "name": "artifact_key",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "description": "Public task/artifact identifier."
+        }
+      ],
+      "get": {
+        "tags": [
+          "Speech"
+        ],
+        "operationId": "downloadSpeech",
+        "summary": "Download audio",
+        "x-title-zh": "下载音频",
+        "description": "Use the task owner customer key. The audio artifact key is audio. Supports byte Range. Downloading an existing audio does not create a new generation charge.",
+        "parameters": [
+          {
+            "name": "Range",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "bytes=0-1023"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "MP3 audio.",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "audio/mpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "206": {
+            "description": "Partial audio bytes.",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "audio/mpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "416": {
+            "description": "Requested byte range is invalid."
+          },
+          "400": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Speech"
+        ],
+        "operationId": "headSpeech",
+        "summary": "Get audio headers",
+        "x-title-zh": "查询音频文件头",
+        "description": "Use the task owner customer key. The audio artifact key is audio. Supports byte Range. Downloading an existing audio does not create a new generation charge.",
+        "parameters": [
+          {
+            "name": "Range",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "bytes=0-1023"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "MP3 audio.",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "206": {
+            "description": "Partial audio bytes.",
+            "headers": {
+              "Accept-Ranges": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "Content-Range": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "416": {
+            "description": "Requested byte range is invalid."
+          },
+          "400": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "CreateSpeech": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "model",
+          "text",
+          "voice"
+        ],
+        "properties": {
+          "model": {
+            "type": "string",
+            "enum": [
+              "vox-1"
+            ]
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 5000,
+            "description": "Plain text, up to 5000 weighted character units: U+4E00–U+9FFF Han characters count twice, other Unicode code points once. No truncation or splitting. Emotion markup is not interpreted.",
+            "x-description-zh": "普通文本，最多 5000 个加权字符单位：U+4E00–U+9FFF 汉字计 2，其余 Unicode 字符计 1。不截断、不拆单；文本内情绪标签不解析，请使用 emotion 参数。"
+          },
+          "voice": {
+            "type": "string",
+            "pattern": "^vx_[a-f0-9]{12}$",
+            "description": "A voice ID from /assets/media-tts/voices.json on the documentation site. Voices belong to their listed models.",
+            "x-description-zh": "从文档音色库选择音色 ID；音色只能用于目录中标明的模型。"
+          },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "speed": {
+                "type": "number",
+                "minimum": 0.5,
+                "maximum": 2,
+                "default": 1,
+                "description": "Speaking speed multiplier."
+              },
+              "pitch": {
+                "type": "integer",
+                "minimum": -12,
+                "maximum": 12,
+                "default": 0,
+                "description": "Pitch control."
+              },
+              "volume": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10,
+                "default": 0,
+                "description": "Volume control: 0 retains baseline volume; values up to 10 increase it. Zero is not mute.",
+                "x-description-zh": "音量控制，0 为基础音量，最高 10；0 不是静音。"
+              },
+              "emotion": {
+                "type": "string",
+                "enum": [
+                  "",
+                  "happy",
+                  "sad",
+                  "angry",
+                  "fearful",
+                  "disgusted",
+                  "surprised",
+                  "neutral"
+                ],
+                "default": "",
+                "description": "Emotion applied to the entire text. Perceived effect varies with voice and text."
+              },
+              "enhance": {
+                "type": "boolean",
+                "default": true,
+                "description": "Enable speech enhancement. Set false for an unenhanced request."
+              }
+            }
+          },
+          "output": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "format": {
+                "type": "string",
+                "enum": [
+                  "mp3"
+                ],
+                "default": "mp3"
+              }
+            }
+          }
+        }
+      },
+      "SpeechTask": {
+        "type": "object",
+        "required": [
+          "id",
+          "model",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string",
+            "const": "vox-1"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "queued",
+              "running",
+              "succeeded",
+              "failed"
+            ]
+          },
+          "audio": {
+            "type": "object",
+            "properties": {
+              "format": {
+                "type": "string",
+                "const": "mp3"
+              },
+              "mime_type": {
+                "type": "string",
+                "const": "audio/mpeg"
+              },
+              "artifacts": {
+                "type": "string",
+                "description": "Authenticated artifact-list endpoint."
+              }
+            }
+          },
+          "error": {
+            "$ref": "#/components/schemas/ErrorDetail"
+          }
+        }
+      },
+      "ErrorDetail": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorDetail"
+          }
+        }
+      },
+      "Artifacts": {
+        "type": "object",
+        "required": [
+          "task_id",
+          "artifacts"
+        ],
+        "properties": {
+          "task_id": {
+            "type": "string"
+          },
+          "artifacts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "key",
+                "type",
+                "mime_type",
+                "content_url"
+              ],
+              "properties": {
+                "key": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "audio"
+                  ]
+                },
+                "mime_type": {
+                  "type": "string",
+                  "enum": [
+                    "audio/mpeg"
+                  ]
+                },
+                "content_url": {
+                  "type": "string",
+                  "description": "Use this URL to retrieve the audio. Access parameters on share URLs act as credentials."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

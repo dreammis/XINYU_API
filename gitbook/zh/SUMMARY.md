@@ -24,6 +24,16 @@
 * [POST 视频 stream 与后台调用](api-reference/media-video/create-video-response.md)
 * [GET 查询后台 Response](api-reference/media-video/get-video-response.md)
 
+## 语音合成系列
+
+* [总览与模型选择](api-reference/media-tts/README.md)
+* [使用流程与限制](guides/media-tts.md)
+* [POST 创建语音任务](api-reference/media-tts/create-speech.md)
+* [GET 查询语音任务](api-reference/media-tts/get-speech.md)
+* [GET 获取音频产物地址](api-reference/media-tts/list-speech-artifacts.md)
+* [GET 下载音频](api-reference/media-tts/download-speech.md)
+* [HEAD 查询音频文件头](api-reference/media-tts/head-speech.md)
+
 ## 开始使用
 
 * [快速开始](quickstart.md)

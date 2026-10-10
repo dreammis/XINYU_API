@@ -18,3 +18,4 @@ Public product route names do not guarantee original-provider access or a precis
 | `cogvideo-pro` | Videos | Video Studio | [Capabilities and limits](guides/media-video.md) |
 | `cogvideo-basic` | Videos | Video Studio | [Capabilities and limits](guides/media-video.md) |
 | `cogvideo-short` | Videos | Video Studio | [Capabilities and limits](guides/media-video.md) |
+| `vox-1` | Text to speech | Vox | [Capabilities and limits](guides/media-tts.md) |

@@ -6,3 +6,4 @@
 | --- | --- | --- |
 | 图片 | [阅读指南](guides/media-image.md) | [API](api-reference/media-image/README.md) |
 | 视频 | [阅读指南](guides/media-video.md) | [API](api-reference/media-video/README.md) |
+| 语音合成 | [阅读指南](guides/media-tts.md) | [API](api-reference/media-tts/README.md) |
