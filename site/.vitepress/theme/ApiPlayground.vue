@@ -6,11 +6,12 @@ import catalog from '../catalog.json';
 import CodeExample from './CodeExample.vue';
 import VoiceBrowser from './VoiceBrowser.vue';
 import SchemaFields from './SchemaFields.vue';
-import { useRouter } from 'vitepress';
+import { useData, useRouter } from 'vitepress';
 import { operationExamples, requestCode, resolveSchema, responseExampleFor } from './openapi-content.mjs';
 
 const props = defineProps({ spec: String, endpoint: String, method: String, locale: String, model: String });
 const router = useRouter();
+const { isDark } = useData();
 const id = computed(() => props.spec.split('/').at(-1).replace(/\.json$/, ''));
 const specification = computed(() => contracts[id.value]);
 const operation = computed(() => specification.value.paths[props.endpoint][props.method]);
@@ -105,6 +106,12 @@ async function openClient() {
         delete selectedBody.examples;
         // Scalar 也从当前模式初始化；不能带入规范里另一个模型的 4K 或时长示例。
         const schema = resolveSchema(spec, selectedBody.schema);
+        // 缺少完整示例时不让 Scalar 自动造值；上传表单显式禁用可选项，避免互斥图片输入和流式参数同时启用。
+        if (example.value === undefined) {
+          selectedBody.example = mediaType.value === 'multipart/form-data'
+            ? Object.keys(schema.properties ?? {}).map(name => ({ name, value: name === 'model' ? selectedModel.value : '', isDisabled: !(schema.required ?? []).includes(name) }))
+            : {};
+        }
         delete schema.example;
         for (const [name, property] of Object.entries(schema.properties ?? {})) {
           delete property.example;
@@ -170,6 +177,7 @@ onBeforeUnmount(() => { disposed = true; client?.app.unmount(); });
         </div>
       </aside>
     </div>
-    <div ref="container" class="api-modal-host" />
+    <!-- 弹窗脱离正文排版；外层提供 Scalar 工具样式作用域与当前主题，避免透明背景和层级失效。 -->
+    <Teleport to="body"><div ref="container" class="api-modal-host scalar-app" :class="isDark ? 'dark-mode' : 'light-mode'" /></Teleport>
   </div>
 </template>
