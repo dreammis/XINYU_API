@@ -31,6 +31,19 @@ function navLabel(category, text) {
   return `<span class="nav-label"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[category] ?? icons.other}</svg><span>${html(text)}</span></span>`;
 }
 
+// 递归展开当前页面所在链路；任务下载下的 HEAD 与模型分组使用同一规则。
+function expandNavigation(items, link) {
+  let matched = false;
+  for (const item of items) {
+    const child = item.items ? expandNavigation(item.items, link) : false;
+    if (item.link === link || child) {
+      if (item.collapsed !== undefined) item.collapsed = false;
+      matched = true;
+    }
+  }
+  return matched;
+}
+
 // 从已校验快照生成展示数据；公开规范与代理允许列表不受展示改版影响。
 for (const source of registry.sources) {
   const manifest = JSON.parse(await readFile(path.join(root, 'catalog', source.id, 'public-docs.json'), 'utf8'));
@@ -73,7 +86,8 @@ for (const source of registry.sources) {
   }
   localize(displaySpec);
   contracts[source.id] = displaySpec;
-  capabilities.push({ id: source.id, title: manifest.title, category, version: manifest.version, models, modelGroups: [...grouped.values()], operations });
+  const modelOperationIds = new Set(models.flatMap(model => modelOperations(displaySpec, model.name).filter(item => !model.operations || model.operations.includes(item.operation.operationId)).map(item => item.operation.operationId)));
+  capabilities.push({ id: source.id, title: manifest.title, category, version: manifest.version, models, modelGroups: [...grouped.values()], operations, sharedOperations: operations.filter(operation => !modelOperationIds.has(operation.id)) });
 }
 
 // 保留 Markdown 导出和既有 URL，站点接口页只由同一份规范渲染一次。
@@ -109,7 +123,7 @@ for (const filename of files) {
     const id = new URL(interactive[1]).pathname.split('/').at(-1).replace(/\.json$/, '');
     const title = content.split('\n').find((line) => line.startsWith('# ')).slice(2);
     publicPages.set(filename, publicApiMarkdown(contracts[id], interactive[2], interactive[3], locale));
-    content = `---\naside: false\noutline: false\npageClass: api-page\n---\n\n# ${title}\n\n<ApiPlayground spec="/openapi/${id}.json" endpoint="${interactive[2]}" method="${interactive[3]}" locale="${locale}" />\n`;
+    content = `---\naside: false\noutline: false\nprev: false\nnext: false\npageClass: api-page\n---\n\n# ${title}\n\n<ApiPlayground spec="/openapi/${id}.json" endpoint="${interactive[2]}" method="${interactive[3]}" locale="${locale}" />\n`;
   } else {
     content = content.replaceAll(/{% content-ref url="([^"]+)" %}\s*\[[^\]]+\]\([^)]*\)\s*{% endcontent-ref %}/g, (_, href) => `[${href === 'quickstart.md' ? 'Quickstart' : 'Capabilities'}](${href})`);
   }
@@ -122,37 +136,48 @@ for (const locale of ['zh', 'en']) {
   const zh = locale === 'zh';
   const apiGroups = [{ text: zh ? 'API 手册' : 'API manual', items: [
     { text: zh ? '概览' : 'Overview', link: `/${locale}/` },
-    { text: zh ? '全部系列' : 'All series', link: `/${locale}/capabilities` },
     { text: zh ? '模型中心' : 'Model center', link: `/${locale}/models` },
   ] }];
+  const taskGroups = [];
   for (const [category, info] of Object.entries(series)) {
     const matching = capabilities.filter((capability) => capability.category === category);
     if (!matching.length) continue;
     const items = [];
     for (const capability of matching) {
       const base = `/${locale}/api-reference/${capability.id}`;
-      items.push({ text: matching.length > 1 ? capability.title[locale] : (zh ? '总览与模型选择' : 'Overview and models'), link: `${base}/` });
-      items.push({ text: zh ? '使用流程与限制' : 'Usage and limits', link: `/${locale}/guides/${capability.id}` });
-      for (const operation of capability.operations) items.push({ text: `<span class="nav-method ${operation.method}">${operation.method.toUpperCase()}</span>${html(operation.title[locale])}`, link: `${base}/${operation.slug}` });
-      // 调用名称进入 API 手册；同一规范可按模型生成入口，不复制接口定义。
+      // 模型调用只在模型下展示；不带模型的共享操作集中到任务与结果。
       const modelItems = capability.models.map(model => ({ text: navLabel(capability.category, model.title?.[locale] ?? model.name), link: `/${locale}/models/${capability.id}/${model.slug}`, collapsed: true, items: modelOperations(contracts[capability.id], model.name).filter(item => !model.operations || model.operations.includes(item.operation.operationId)).map(item => {
         const operation = capability.operations.find(operation => operation.id === item.operation.operationId);
         return { text: `<span class="nav-method ${operation.method}">${operation.method.toUpperCase()}</span>${html(operation.title[locale])}`, link: `${base}/models/${model.slug}/${operation.slug}` };
       }) }));
       for (const group of capability.modelGroups) {
         const children = modelItems.filter((item, index) => group.models.includes(capability.models[index].name));
-        if (!group.id) items.push(...children);
+        if (!group.id || children.length === 1) items.push(...children);
         else items.push({ text: navLabel(capability.category, group.title[locale]), collapsed: true, items: children });
       }
+      const shared = capability.sharedOperations;
+      const sharedItems = shared.filter(operation => operation.method !== 'head' || !shared.some(item => item.method === 'get' && item.endpoint === operation.endpoint)).map(operation => {
+        const item = { text: `<span class="nav-method ${operation.method}">${operation.method.toUpperCase()}</span>${html(operation.title[locale])}`, link: `${base}/${operation.slug}` };
+        const head = shared.find(candidate => candidate.method === 'head' && candidate.endpoint === operation.endpoint);
+        if (operation.method === 'get' && head) {
+          item.collapsed = true;
+          item.items = [{ text: `<span class="nav-method head">HEAD</span>${html(head.title[locale])}`, link: `${base}/${head.slug}` }];
+        }
+        return item;
+      });
+      if (!capability.models.length) items.push(...sharedItems);
+      else if (sharedItems.length) taskGroups.push({ text: capability.title[locale], collapsed: true, items: sharedItems });
     }
     apiGroups.push({ text: navLabel(category, info.title[locale]), collapsed: true, items });
   }
+  if (taskGroups.length) apiGroups.push({ text: zh ? '任务与结果' : 'Tasks and results', collapsed: true, items: taskGroups });
   const guideGroup = { text: zh ? '开始使用' : 'Get started', items: [
     { text: zh ? '使用概览' : 'Overview', link: `/${locale}/integration` },
     { text: zh ? '快速开始' : 'Quickstart', link: `/${locale}/quickstart` },
     { text: zh ? '鉴权与 API Key' : 'Authentication', link: `/${locale}/authentication` },
     { text: zh ? '计费规则' : 'Billing', link: `/${locale}/billing` },
   ] };
+  const usageGroup = { text: zh ? '使用流程与限制' : 'Usage and limits', items: capabilities.map(capability => ({ text: capability.title[locale], link: `/${locale}/guides/${capability.id}` })) };
   const helpGroup = { text: zh ? '帮助与排错' : 'Help & troubleshooting', items: [
     { text: zh ? '常见问题' : 'FAQ', link: `/${locale}/faq` },
     { text: zh ? '错误与任务恢复' : 'Errors and recovery', link: `/${locale}/errors` },
@@ -160,9 +185,16 @@ for (const locale of ['zh', 'en']) {
   // 顶部栏目各自使用本栏目目录，API 手册不混入开始使用与排错页面。
   sidebar[`/${locale}/`] = apiGroups;
   for (const capability of capabilities) {
-    const active = apiGroups.map((group) => ({ ...group, collapsed: group.items.some((item) => item.link?.includes(`/${capability.id}`)) ? false : group.collapsed }));
+    const active = structuredClone(apiGroups);
+    active.find(group => group.text === navLabel(capability.category, series[capability.category].title[locale])).collapsed = false;
     sidebar[`/${locale}/api-reference/${capability.id}/`] = active;
-    sidebar[`/${locale}/guides/${capability.id}`] = active;
+    sidebar[`/${locale}/guides/${capability.id}`] = [guideGroup, usageGroup];
+    for (const operation of capability.operations) {
+      const link = `/${locale}/api-reference/${capability.id}/${operation.slug}`;
+      const operationSidebar = structuredClone(apiGroups);
+      if (!expandNavigation(operationSidebar, link)) operationSidebar.find(group => group.text === navLabel(capability.category, series[capability.category].title[locale])).collapsed = false;
+      sidebar[link] = operationSidebar;
+    }
     const overview = ['---', 'aside: false', 'pageClass: series-page', '---', '', `# ${series[capability.category].title[locale]}${capabilities.filter((item) => item.category === capability.category).length > 1 ? ` · ${capability.title[locale]}` : ''}`, '', `<SeriesOverview id="${capability.id}" locale="${locale}" />`, ''];
     const source = registry.sources.find((item) => item.id === capability.id);
     const guide = await readFile(path.join(book, locale, 'guides', `${capability.id}.md`), 'utf8');
@@ -205,34 +237,25 @@ for (const locale of ['zh', 'en']) {
       for (const item of modelOperations(contracts[capability.id], model.name).filter(item => !model.operations || model.operations.includes(item.operation.operationId))) {
         const operation = capability.operations.find(operation => operation.id === item.operation.operationId);
         const destination = `${locale}/api-reference/${capability.id}/models/${model.slug}/${operation.slug}.md`;
-        generated.set(destination, `---\naside: false\noutline: false\npageClass: api-page\n---\n\n# ${html(operation.title[locale])} · ${html(model.name)}\n\n<ApiPlayground spec="/openapi/${capability.id}.json" endpoint="${operation.endpoint}" method="${operation.method}" model="${html(model.name)}" locale="${locale}" />\n`);
+        generated.set(destination, `---\naside: false\noutline: false\nprev: false\nnext: false\npageClass: api-page\n---\n\n# ${html(operation.title[locale])} · ${html(model.name)}\n\n<ApiPlayground spec="/openapi/${capability.id}.json" endpoint="${operation.endpoint}" method="${operation.method}" model="${html(model.name)}" locale="${locale}" />\n`);
         publicPages.set(destination, publicApiMarkdown(contracts[capability.id], operation.endpoint, operation.method, locale, model.name));
         links.push(`- [${operation.title[locale]}](/${destination.replace(/\.md$/, '')})`);
       }
       publicPages.set(modelPath, [`# ${model.name}`, intro, ...(model.group ? [`${zh ? '模型系列' : 'Model family'}: ${model.groupTitle[locale]}`] : []), `## ${zh ? '模型能力' : 'Model capabilities'}`, ...facts.map(fact => `- ${fact.label}: ${fact.value}`), notes, `## ${zh ? '适用接口' : 'Supported APIs'}`, ...links].join('\n\n'));
       // 最长前缀配置保留当前模型展开，其他模型与系列保持折叠。
-      const modelSidebar = structuredClone(active);
-      function expand(items) {
-        return items.some(item => {
-          const child = item.items ? expand(item.items) : false;
-          const match = item.link === `/${locale}/models/${capability.id}/${model.slug}` || child;
-          if (match && item.collapsed !== undefined) item.collapsed = false;
-          return match;
-        });
-      }
-      // some 会短路，需遍历所有顶层；展开逻辑只影响当前链路。
-      modelSidebar.forEach(group => { if (expand(group.items) && group.collapsed !== undefined) group.collapsed = false; });
+      const modelSidebar = structuredClone(apiGroups);
+      expandNavigation(modelSidebar, `/${locale}/models/${capability.id}/${model.slug}`);
       sidebar[`/${locale}/api-reference/${capability.id}/models/${model.slug}/`] = modelSidebar;
       sidebar[`/${locale}/models/${capability.id}/${model.slug}`] = modelSidebar;
     }
   }
-  for (const page of ['integration', 'quickstart', 'authentication', 'billing']) sidebar[`/${locale}/${page}`] = [guideGroup];
+  for (const page of ['integration', 'quickstart', 'authentication', 'billing']) sidebar[`/${locale}/${page}`] = [guideGroup, usageGroup];
   for (const page of ['faq', 'errors']) sidebar[`/${locale}/${page}`] = [helpGroup];
   const modelGroups = [{ text: zh ? '模型中心' : 'Model center', items: [{ text: zh ? '全部模型' : 'All models', link: `/${locale}/models` }] }];
   for (const capability of capabilities.filter((item) => item.models.length)) {
     const items = capability.modelGroups.flatMap(group => {
       const children = capability.models.filter(model => group.models.includes(model.name)).map(model => ({ text: navLabel(capability.category, model.title?.[locale] ?? model.name), link: `/${locale}/models/${capability.id}/${model.slug}` }));
-      return group.id ? [{ text: navLabel(capability.category, group.title[locale]), collapsed: true, items: children }] : children;
+      return group.id && children.length > 1 ? [{ text: navLabel(capability.category, group.title[locale]), collapsed: true, items: children }] : children;
     });
     modelGroups.push({ text: navLabel(capability.category, series[capability.category].title[locale]), collapsed: false, items });
   }

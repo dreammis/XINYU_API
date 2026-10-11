@@ -15,6 +15,8 @@ const id = computed(() => props.spec.split('/').at(-1).replace(/\.json$/, ''));
 const specification = computed(() => contracts[id.value]);
 const operation = computed(() => specification.value.paths[props.endpoint][props.method]);
 const capability = computed(() => catalog.capabilities.find(item => item.id === id.value));
+// 共享任务操作来自生成器的契约分类；下载页额外提供同一文件的 HEAD 检查入口。
+const relatedOperations = computed(() => capability.value.sharedOperations.filter(item => item.id !== operation.value.operationId && (item.method !== 'head' || item.endpoint === props.endpoint)));
 const bodyTypes = computed(() => Object.keys(operation.value.requestBody?.content ?? {}));
 const mediaType = ref(bodyTypes.value[0] ?? 'application/json');
 const body = computed(() => operation.value.requestBody?.content?.[mediaType.value]);
@@ -148,7 +150,8 @@ onBeforeUnmount(() => { disposed = true; client?.app.unmount(); });
         <p>{{ locale === 'zh' ? response['x-description-zh'] ?? response.description : response.description }}</p>
         <template v-if="response.headers"><h3>{{ locale === 'zh' ? '响应头' : 'Response headers' }}</h3><div v-for="(header, name) in response.headers" :key="name" class="schema-field"><div class="field-heading"><code>{{ name }}</code><span class="field-type">{{ header.schema?.type }}</span></div><p>{{ locale === 'zh' ? header['x-description-zh'] ?? header.description : header.description }}</p></div></template>
         <template v-if="responseTypes.length"><p class="format-select">Content-Type <code>{{ responseType }}</code></p><SchemaFields v-if="responseBody?.schema" :spec="specification" :schema="responseBody.schema" :locale="locale" /></template>
-        <div class="api-next"><a :href="`/${locale}/billing`">{{ locale === 'zh' ? '计费与退款规则' : 'Billing and refunds' }} →</a><a :href="`/${locale}/errors`">{{ locale === 'zh' ? '错误与任务恢复' : 'Errors and recovery' }} →</a></div>
+        <template v-if="relatedOperations.length"><h3>{{ locale === 'zh' ? '任务查询与结果获取' : 'Task status and results' }}</h3><div class="api-resource-links"><a v-for="item in relatedOperations" :key="item.id" :href="`/${locale}/api-reference/${id}/${item.slug}`">{{ item.title[locale] }} →</a></div></template>
+        <div class="api-next"><a :href="`/${locale}/guides/${id}`">{{ locale === 'zh' ? '完整使用流程与限制' : 'Full usage guide and limits' }} →</a><a :href="`/${locale}/billing`">{{ locale === 'zh' ? '计费与退款规则' : 'Billing and refunds' }} →</a><a :href="`/${locale}/errors`">{{ locale === 'zh' ? '错误与任务恢复' : 'Errors and recovery' }} →</a></div>
       </div>
       <aside id="examples" class="api-code-panel" :class="{ 'mobile-expanded': mobileCodeOpen }" :aria-label="locale === 'zh' ? '调用示例与调试' : 'Examples and playground'">
         <button class="mobile-panel-toggle" :aria-expanded="mobileCodeOpen" @click="mobileCodeOpen = !mobileCodeOpen">{{ locale === 'zh' ? '调用示例与在线调试' : 'Examples and playground' }} <span>{{ mobileCodeOpen ? '−' : '+' }}</span></button>

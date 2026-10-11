@@ -38,11 +38,13 @@ test('series and model pages preserve public contracts and reject broken selecti
         assert.ok(modelOperations(JSON.parse(await readFile(path.join(directory, `catalog/${capability.id}/openapi.json`), 'utf8')), model.name).length);
         const endpoint = await readFile(path.join(directory, `site/zh/api-reference/${capability.id}/models/${model.slug}/${capability.operations[0].slug}.md`), 'utf8');
         assert.match(endpoint, new RegExp(`model="${model.name.replaceAll('.', '\\.') }"`));
+        assert.match(endpoint, /prev: false\nnext: false/);
       }
     }
     const page = await readFile(path.join(directory, 'site/zh/api-reference/media-image/generate-image.md'), 'utf8');
     assert.equal((page.match(/ApiPlayground/g) ?? []).length, 1);
     assert.doesNotMatch(page, /\| 参数|## 响应|{% openapi/);
+    assert.match(page, /prev: false\nnext: false/);
     const overview = await readFile(path.join(directory, 'site/zh/api-reference/media-video/index.md'), 'utf8');
     assert.match(overview, /固定 8 秒/);
     const sidebar = JSON.parse(await readFile(path.join(directory, 'site/.vitepress/sidebar.json'), 'utf8'));
@@ -55,6 +57,48 @@ test('series and model pages preserve public contracts and reject broken selecti
     assert.equal(family.items.find(item => item.link?.endsWith('/cogvideo-short')).collapsed, false);
     assert.equal(family.items.find(item => item.link?.endsWith('/cogvideo-fast')).collapsed, true);
     assert.ok(family.items.find(item => item.link?.endsWith('/cogvideo-short')).items.some(item => item.link.endsWith('/cogvideo-short/create-video')));
+    // 两种语言都只在模型下显示创建入口，共享操作出现一次，HEAD 属于下载链路。
+    const flatten = items => items.flatMap(item => [item, ...flatten(item.items ?? [])]);
+    for (const locale of ['zh', 'en']) {
+      const navigation = sidebar[`/${locale}/`];
+      const entries = flatten(navigation);
+      for (const capability of data.capabilities) {
+        const base = `/${locale}/api-reference/${capability.id}`;
+        for (const operation of capability.operations) {
+          const shared = capability.sharedOperations.some(item => item.id === operation.id);
+          assert.equal(entries.filter(item => item.link === `${base}/${operation.slug}`).length, shared ? 1 : 0);
+          // 目录去重后旧通用地址仍可访问。
+          assert.match(await readFile(path.join(directory, `site/${locale}/api-reference/${capability.id}/${operation.slug}.md`), 'utf8'), /ApiPlayground/);
+        }
+      }
+      for (const entry of entries.filter(item => item.link)) {
+        const filename = entry.link.endsWith('/') ? `${entry.link}index.md` : `${entry.link}.md`;
+        await readFile(path.join(directory, 'site', filename.slice(1)), 'utf8');
+      }
+      const tts = navigation.find(item => item.text.includes(locale === 'zh' ? '语音 TTS' : 'Text to speech'));
+      assert.equal(tts.items.length, 1);
+      assert.equal(tts.items[0].link, `/${locale}/models/media-tts/vox-1`);
+      assert.equal(tts.items[0].items[0].link, `/${locale}/api-reference/media-tts/models/vox-1/create-speech`);
+      const modelCenter = sidebar[`/${locale}/models`].find(item => item.text === tts.text);
+      assert.equal(modelCenter.items[0].link, tts.items[0].link);
+      const creation = sidebar[`/${locale}/api-reference/media-tts/models/vox-1/`];
+      assert.equal(creation.find(item => item.text === tts.text).collapsed, false);
+      assert.equal(creation.find(item => item.text === tts.text).items[0].collapsed, false);
+      const downloadLink = `/${locale}/api-reference/media-tts/download-speech`;
+      const headLink = `/${locale}/api-reference/media-tts/head-speech`;
+      const download = entries.find(item => item.link === downloadLink);
+      assert.equal(download.items[0].link, headLink);
+      const headNavigation = sidebar[headLink];
+      const tasks = headNavigation.find(item => item.text === (locale === 'zh' ? '任务与结果' : 'Tasks and results'));
+      assert.equal(tasks.collapsed, false);
+      assert.equal(tasks.items.find(item => flatten([item]).some(child => child.link === headLink)).collapsed, false);
+      assert.equal(flatten(headNavigation).find(item => item.link === downloadLink).collapsed, false);
+      assert.ok(flatten(sidebar[`/${locale}/guides/media-tts`]).some(item => item.link === `/${locale}/guides/media-tts`));
+      assert.doesNotMatch(JSON.stringify(navigation), new RegExp(`/${locale}/guides/`));
+    }
+    const playground = await readFile(path.join(root, 'site/.vitepress/theme/ApiPlayground.vue'), 'utf8');
+    assert.match(playground, /capability.value.sharedOperations/);
+    assert.match(playground, /VoiceBrowser/);
     const llms = await readFile(path.join(directory, 'site/public/llms.txt'), 'utf8');
     assert.match(llms, /markdown\/zh\/api-reference\/media-image\/generate-image.md/);
     assert.doesNotMatch(llms, /maintenance|upstream-task|newapi-task|handoff|sources.json/);
