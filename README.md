@@ -1,6 +1,6 @@
 # XY API 文档站
 
-客户文档由 **Cloudflare Pages** 托管，使用 VitePress + Scalar，提供中英文指南、全文搜索、明暗主题和 API 在线调试。页面布局参考 <https://docs.stackai.com/workflow-builder/inputs>。
+客户文档由 **Cloudflare Pages** 托管，使用 VitePress + Vue + JSON Forms，提供中英文指南、全文搜索、明暗主题和 API 在线调试。页面布局参考 <https://docs.stackai.com/workflow-builder/inputs>。
 
 Pages 地址：<https://xyapi-docs.pages.dev/zh/>。自定义域名目标：<https://doc.2yanx.dpdns.org/>。当前部署和域名验证状态见 [cloudflare-setup.md](docs/maintenance/cloudflare-setup.md)。
 
@@ -24,13 +24,13 @@ Pages 地址：<https://xyapi-docs.pages.dev/zh/>。自定义域名目标：<htt
 | sources.json | 源工程公开清单和发布 ref |
 | catalog/ | 只读快照，保留源码 SHA 与哈希 |
 | gitbook/ | 可移植 Markdown/OpenAPI 导出 |
-| site/.vitepress/ | 文档站配置、主题与 Scalar 调试组件 |
+| site/.vitepress/ | 文档站配置、主题、JSON Forms 表单与本站调试面板 |
 | site/zh、site/en | 构建时自动生成的页面，不手改 |
 | functions/ | 调试转发及自动生成的公开接口允许列表 |
 | scripts/、tests/ | 导入、生成、校验与测试 |
 | templates/ | 新能力公开清单和通知工作流 |
 
-当前覆盖图片生成/编辑/SSE，视频创建/状态/下载/HEAD，视频 Responses stream/后台创建/查询，共 8 个接口。原有 ElevenLabs TTS 指南保留，其 New API 客户响应仍需核对。图片和视频参数取自实际适配器契约。
+当前公开契约覆盖图片生成/编辑/SSE、视频创建/状态/下载/HEAD、视频 Responses stream/后台创建/查询，以及 Vox 1 语音创建/查询/产物列表/下载/HEAD，共 13 个 HTTP 操作。TTS 提供音色试听；参数与限制来自已导入的客户契约。
 
 在线调试通过本站转发客户自己的 API Key，不保存服务器管理员 Key，也不使用第三方调试代理；生成请求会按账户正常计费。
 

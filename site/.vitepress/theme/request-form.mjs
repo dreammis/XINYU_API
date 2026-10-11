@@ -1,6 +1,7 @@
 import Ajv from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 import { resolveSchema } from './openapi-content.mjs';
+import { parameterDescription, schemaConstraints, schemaRules } from './schema-presentation.mjs';
 
 // JSON Forms 使用完整的契约校验；不自动填可选默认值，避免悄悄开启增强、流式或互斥输入。
 export function createRequestValidator() {
@@ -31,6 +32,12 @@ export function requestFormDefinition({ spec, endpoint, method, mediaType, model
     }
     for (const key of ['items', 'additionalProperties', 'if', 'then', 'else', 'not', 'contains']) if (schema[key] && typeof schema[key] === 'object') schema[key] = schemaFor(schema[key], next);
     for (const key of ['allOf', 'oneOf', 'anyOf', 'prefixItems']) if (schema[key]) schema[key] = schema[key].map(value => schemaFor(value, next));
+    // 开源组合控件默认显示 oneOf-0；改用规范中的类型/标题和约束，避免客户猜选项含义。
+    for (const branch of schema.oneOf ?? []) {
+      if (branch.title || !branch.type) continue;
+      const types = zh ? { integer: '整数', number: '数字', string: '字符串', array: '数组', object: '对象', boolean: '布尔值' } : {};
+      branch.title = [types[branch.type] ?? branch.type, ...schemaConstraints(branch, locale)].join(' · ');
+    }
     return schema;
   }
   const properties = {};
@@ -39,12 +46,7 @@ export function requestFormDefinition({ spec, endpoint, method, mediaType, model
   for (const parameter of combined.values()) {
     if (!['path', 'query', 'header'].includes(parameter.in)) throw new Error(`Unsupported parameter location: ${parameter.in}`);
     const group = properties[parameter.in] ??= { type: 'object', properties: {}, required: [], additionalProperties: false };
-    // 来源未提供字段业务说明时，仍解释它的真实传输位置；不猜测 ID 业务含义。
-    const locationHint = parameter.in === 'path'
-      ? (zh ? `填写后替换接口地址中的 {${parameter.name}}。` : `Replaces {${parameter.name}} in the endpoint URL.`)
-      : parameter.in === 'query' ? (zh ? '填写后作为查询参数附加到请求地址。' : 'Added as a query parameter to the request URL.')
-      : (zh ? '填写后作为请求头发送。' : 'Sent as an HTTP request header.');
-    group.properties[parameter.name] = { ...schemaFor(parameter.schema), description: [zh ? parameter['x-description-zh'] ?? parameter.description : parameter.description, locationHint].filter(Boolean).join('\n') };
+    group.properties[parameter.name] = { ...schemaFor(parameter.schema), description: parameterDescription(parameter, locale) };
     if (parameter.required) group.required.push(parameter.name);
   }
   const content = operation.requestBody?.content?.[mediaType];
@@ -59,18 +61,20 @@ export function requestFormDefinition({ spec, endpoint, method, mediaType, model
   const pointer = name => name.replaceAll('~', '~0').replaceAll('/', '~1');
   function layout(schema, scope) {
     if (!schema.properties) return [{ type: 'Control', scope, label: false }];
-    return Object.entries(schema.properties).map(([name, field]) => {
+    const rules = schemaRules(schema, locale);
+    const notes = [schema.description, ...(rules.length ? [zh ? '组合与模型限制' : 'Input and model rules', ...rules] : []), ...(schema.additionalProperties === false ? [zh ? '不接受未列出的字段。' : 'Additional properties are not allowed.'] : [])].filter(Boolean);
+    return [...(notes.length ? [{ type: 'Label', text: notes.join('\n'), options: { styles: { label: { root: 'request-schema-notes' } } } }] : []), ...Object.entries(schema.properties).map(([name, field]) => {
       const fieldScope = `${scope}/properties/${pointer(name)}`;
       const type = field['x-api-file'] ? (zh ? '文件' : 'file') : field.type ?? (field.oneOf ? 'oneOf' : 'object');
-      const labels = zh ? { minimum: '最小值', maximum: '最大值', minLength: '最少字符', maxLength: '最多字符', minItems: '最少条数', maxItems: '最多条数', default: '默认', pattern: '格式规则', enum: '可选值', const: '固定值' } : {};
-      const hints = Object.entries(field).filter(([key]) => ['minimum', 'maximum', 'minLength', 'maxLength', 'minItems', 'maxItems', 'default', 'pattern', 'enum', 'const'].includes(key)).map(([key, value]) => `${labels[key] ?? key}: ${JSON.stringify(value)}`);
+      const hints = schemaConstraints(field, locale);
+      if (field.enum) hints.push(`${zh ? '可选值' : 'Allowed values'}: ${JSON.stringify(field.enum)}`);
       const description = [field.description, ...hints].filter(Boolean).join('\n');
       const controls = field.properties && !field['x-api-file']
         ? [{ type: 'Group', label: `${name} · ${type}`, elements: layout(field, fieldScope) }]
-        : [{ type: 'Control', scope: fieldScope, label: `${name} · ${type}`, options: { multi: name === 'text' || name === 'prompt', ...(field.type === 'integer' ? { step: 1 } : {}), showUnfocusedDescription: false, apiFile: Boolean(field['x-api-file'] || field.items?.['x-api-file']), apiFileArray: Boolean(field.items?.['x-api-file']), readonly: field.readOnly || (name === 'model' && Boolean(model)) } }];
+        : [{ type: 'Control', scope: fieldScope, label: `${name} · ${type}`, options: { locale, multi: name === 'text' || name === 'prompt', ...(field.type === 'integer' ? { step: 1 } : {}), showUnfocusedDescription: false, apiFile: Boolean(field['x-api-file'] || field.items?.['x-api-file']), apiFileArray: Boolean(field.items?.['x-api-file']), readonly: field.readOnly || (name === 'model' && Boolean(model)) } }];
       // 说明独立于输入组件，校验错误出现时也保留；数组和对象同样显示说明与约束。
       return { type: 'VerticalLayout', options: { styles: { verticalLayout: { root: 'request-field' } } }, elements: [...controls, ...(description ? [{ type: 'Label', text: description }] : [])] };
-    });
+    })];
   }
   return {
     schema: { type: 'object', properties, required: Object.entries(properties).filter(([name, value]) => name === 'body' ? operation.requestBody.required : value.required?.length).map(([name]) => name), additionalProperties: false },

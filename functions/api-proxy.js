@@ -36,7 +36,8 @@ export async function onRequest({ request }) {
     });
     if (upstream.status >= 300 && upstream.status < 400) return Response.json({ error: 'The API returned a redirect. Use your own client to follow it.' }, { status: 502 });
     const responseHeaders = new Headers({ 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
-    for (const name of ['Content-Type', 'Content-Encoding', 'Content-Disposition', 'Content-Length', 'Content-Range', 'Accept-Ranges', 'X-Request-Id']) {
+    // 图片契约的查单 ID 与网关 request_id 不同，调试响应必须保留，便于客户定位任务。
+    for (const name of ['Content-Type', 'Content-Encoding', 'Content-Disposition', 'Content-Length', 'Content-Range', 'Accept-Ranges', 'X-Request-Id', 'X-Image-Request-Id']) {
       const value = upstream.headers.get(name);
       if (value) responseHeaders.set(name, value);
     }

@@ -4,6 +4,7 @@ import { execFileSync } from 'node:child_process';
 import test from 'node:test';
 import { buildPlaygroundRequest, createRequestValidator, requestFormData, requestFormDefinition } from '../site/.vitepress/theme/request-form.mjs';
 import { operationExamples, resolveSchema, requestCode } from '../site/.vitepress/theme/openapi-content.mjs';
+import { parameterDescription, schemaConstraints, schemaRules } from '../site/.vitepress/theme/schema-presentation.mjs';
 const contracts = Object.fromEntries(await Promise.all(['media-image', 'media-video', 'media-tts'].map(async id => [id, JSON.parse(await readFile(new URL(`../catalog/${id}/openapi.json`, import.meta.url), 'utf8'))])));
 const ajv = createRequestValidator();
 const speech = { spec: contracts['media-tts'], endpoint: '/tts/v1/tasks', method: 'post', mediaType: 'application/json', model: 'vox-1', locale: 'zh' };
@@ -88,4 +89,39 @@ test('path, query and Range values match preview and HEAD never sends a body', (
   const codes = requestCode({ ...input, parameters: data, requestUrl: request.url });
   for (const code of Object.values(codes)) { assert.ok(code.includes(request.url)); assert.ok(code.includes('bytes=0-99')); assert.ok(!code.includes('fictional-test-key')); }
   assert.equal(buildPlaygroundRequest({ ...input, method: 'head', data, apiKey: 'test' }).init.body, undefined);
+});
+
+// 同一份组合规则既用于正文，也在调试输入前展示；仍由原始 schema 拒绝冲突请求。
+test('forms explain file alternatives and conditional model limits before submission', () => {
+  const image = contracts['media-image'];
+  const upload = { spec: image, endpoint: '/v1/images/edits', method: 'post', mediaType: 'multipart/form-data', model: 'gpt-image-2', locale: 'zh' };
+  const definition = requestFormDefinition(upload);
+  const rules = schemaRules(resolveSchema(image, image.paths[upload.endpoint].post.requestBody.content[upload.mediaType].schema), 'zh');
+  assert.ok(rules.some(line => line.includes('image') && line.includes('image[]')));
+  for (const rule of rules) assert.ok(JSON.stringify(definition.uischema).includes(rule));
+  for (const locale of ['zh', 'en']) {
+    const video = contracts['media-video'];
+    const input = { spec: video, endpoint: '/v1/videos', method: 'post', mediaType: 'application/json', model: 'cogvideo-short', locale };
+    const form = requestFormDefinition(input);
+    const schema = resolveSchema(video, video.paths[input.endpoint].post.requestBody.content[input.mediaType].schema);
+    for (const rule of schemaRules(schema, locale)) assert.ok(JSON.stringify(form.uischema).includes(rule.replaceAll('"', '\\"')));
+    assert.match(JSON.stringify(form.uischema), /720x1280/);
+    assert.equal(form.schema.properties.body.properties.seconds.oneOf[0].title.startsWith(locale === 'zh' ? '整数' : 'integer'), true);
+    assert.equal(form.schema.properties.body.properties.seconds.oneOf[1].title.startsWith(locale === 'zh' ? '字符串' : 'string'), true);
+    const validate = ajv.compile(form.schema);
+    assert.equal(validate({ body: { model: 'cogvideo-short', prompt: 'Test', seconds: 5 } }), false);
+    assert.equal(validate({ body: { model: 'cogvideo-short', prompt: 'Test', seconds: 8 } }), true);
+  }
+});
+
+test('shared hints preserve strict boundaries and source-free parameter transport explanations', () => {
+  const schema = { type: 'number', exclusiveMinimum: 0, exclusiveMaximum: 2, default: 0, format: 'double' };
+  assert.deepEqual(schemaConstraints(schema, 'zh'), ['大于: 0', '小于: 2', '默认: 0', '格式: "double"']);
+  assert.equal(schemaConstraints({ default: false }, 'en')[0], 'Default: false');
+  assert.match(parameterDescription({ name: 'response_id', in: 'path' }, 'zh'), /\{response_id\}/);
+  assert.match(parameterDescription({ name: 'Range', in: 'header' }, 'en'), /HTTP request header/);
+  const spec = { servers: [{ url: 'https://example.com' }], paths: { '/test': { get: { parameters: [{ name: 'offset', in: 'query', schema }], responses: {} } } } };
+  const form = requestFormDefinition({ spec, endpoint: '/test', method: 'get', locale: 'zh' });
+  assert.ok(JSON.stringify(form.uischema).includes('大于: 0'));
+  assert.ok(JSON.stringify(form.uischema).includes('小于: 2'));
 });

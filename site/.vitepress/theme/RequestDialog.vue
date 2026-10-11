@@ -7,6 +7,7 @@ import CodeExample from './CodeExample.vue';
 import RequestFileField from './RequestFileField.vue';
 import RequestBooleanField from './RequestBooleanField.vue';
 import RequestValueField from './RequestValueField.vue';
+import RequestUnionField from './RequestUnionField.vue';
 import UiIcon from './UiIcon.vue';
 import { requestCode } from './openapi-content.mjs';
 import { buildPlaygroundRequest, createRequestValidator, requestFormData, requestFormDefinition } from './request-form.mjs';
@@ -35,6 +36,7 @@ const ajv = createRequestValidator();
 const renderers = Object.freeze([...vanillaRenderers,
   { tester: rankWith(10, (uischema, schema, context) => uiTypeIs('Control')(uischema, schema, context) && uischema.options?.apiFile), renderer: RequestFileField },
   { tester: rankWith(10, isBooleanControl), renderer: RequestBooleanField },
+  { tester: rankWith(10, and(uiTypeIs('Control'), schemaMatches(schema => schema.oneOf?.length > 0 && schema.oneOf.every(branch => ['string', 'number', 'integer'].includes(branch.type))))), renderer: RequestUnionField },
   { tester: rankWith(10, and(uiTypeIs('Control'), schemaMatches(schema => ['string', 'number', 'integer'].includes(schema.type) && !schema.enum && !schema.oneOf && schema.format !== 'binary'))), renderer: RequestValueField },
 ]);
 const definition = computed(() => requestFormDefinition(props));
@@ -83,6 +85,15 @@ function editJson(value) {
     data.value = { ...data.value, body: parsed };
     rawError.value = '';
   } catch { rawError.value = zh.value ? '请求体不是有效的 JSON，请修改后再发送。' : 'The request body is not valid JSON.'; }
+}
+
+// 离开无效 JSON 时恢复当前有效表单，避免重新进入编辑器仍显示无效草稿却发送旧值。
+function switchEditor(value) {
+  if (value === 'form') {
+    draft.value = JSON.stringify(data.value.body ?? {}, null, 2);
+    rawError.value = '';
+  }
+  editor.value = value;
 }
 
 async function show() {
@@ -177,7 +188,7 @@ defineExpose({ open: show });
           <section class="request-input-panel" :class="{ 'mobile-hidden': activePanel !== 'request' }" :aria-label="zh ? '请求参数' : 'Request parameters'">
             <p v-if="description" class="request-operation-description">{{ description }}</p>
             <fieldset class="request-auth"><legend>{{ zh ? '鉴权' : 'Authorization' }}</legend><label for="request-api-key">API Key <span class="request-required">{{ zh ? '必填' : 'required' }}</span></label><div class="request-key-input"><input id="request-api-key" v-model="key" :type="showKey ? 'text' : 'password'" autocomplete="off" spellcheck="false" placeholder="sk-…" /><button type="button" :aria-pressed="showKey" @click="showKey = !showKey">{{ showKey ? (zh ? '隐藏' : 'Hide') : (zh ? '显示' : 'Show') }}</button></div><p>{{ zh ? '填写自己的 API Key，自动添加 Bearer。仅在本页内存中保留。' : 'Enter your API key. Bearer is added automatically. Kept only in page memory.' }}</p></fieldset>
-            <div v-if="hasBody && mediaType === 'application/json'" class="request-editor-tabs"><button :aria-pressed="editor === 'form'" @click="editor = 'form'; rawError = ''">{{ zh ? '参数表单' : 'Form' }}</button><button :aria-pressed="editor === 'json'" @click="editor = 'json'">JSON</button></div>
+            <div v-if="hasBody && mediaType === 'application/json'" class="request-editor-tabs"><button :aria-pressed="editor === 'form'" @click="switchEditor('form')">{{ zh ? '参数表单' : 'Form' }}</button><button :aria-pressed="editor === 'json'" @click="switchEditor('json')">JSON</button></div>
             <JsonForms v-show="editor === 'form'" class="request-schema-form" :data="data" :schema="definition.schema" :uischema="definition.uischema" :renderers="renderers" :ajv="ajv" :config="{ showUnfocusedDescription: true, locale }" :validation-mode="validationMode" @change="changeForm" />
             <div v-if="editor === 'json'" class="request-json-editor"><label for="request-json">{{ zh ? '请求体 · JSON' : 'Request body · JSON' }}</label><textarea id="request-json" :value="draft" spellcheck="false" @input="editJson($event.target.value)" /><p v-if="rawError" role="alert">{{ rawError }}</p><p>{{ zh ? '编辑 JSON 后，可切回参数表单查看各项说明。' : 'Switch back to the form to see parameter descriptions.' }}</p></div>
             <p v-if="error" class="request-error" role="alert">{{ error }}</p>

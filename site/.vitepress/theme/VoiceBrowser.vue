@@ -7,6 +7,7 @@ const search = ref('');
 const language = ref('zh');
 const selected = ref('');
 const playing = ref('');
+const previewVoice = ref('');
 const error = ref('');
 const limit = ref(8);
 const audio = ref(null);
@@ -24,12 +25,16 @@ onMounted(async () => {
 });
 onBeforeUnmount(() => audio.value?.pause());
 async function play(voice) {
-  if (playing.value === voice.id && !audio.value.paused) {audio.value.pause(); playing.value = ''; return;}
+  if (previewVoice.value === voice.id && !audio.value.paused) {audio.value.pause(); return;}
   audio.value.pause();
-  audio.value.src = voice.preview_url;
-  playing.value = voice.id;
+  // 同一音色暂停后继续播放；按钮状态以播放器真实事件为准，控制条暂停也会同步。
+  if (previewVoice.value !== voice.id) audio.value.src = voice.preview_url;
+  previewVoice.value = voice.id;
   error.value = '';
-  try {await audio.value.play();} catch {playing.value = ''; error.value = zh.value ? '此试听暂时无法播放。' : 'This sample cannot be played right now.';}
+  try {await audio.value.play();} catch (failure) {
+    if (failure.name === 'AbortError') return; // 换音色或暂停会中断上一段尚未完成的播放请求。
+    playing.value = ''; error.value = zh.value ? '此试听暂时无法播放。' : 'This sample cannot be played right now.';
+  }
 }
 function select(voice) {
   selected.value = voice.id;
@@ -42,7 +47,7 @@ function select(voice) {
     <div class="voice-heading"><div><span class="voice-eyebrow">VOX / {{ zh ? '音色库' : 'VOICE LIBRARY' }}</span><h2>{{ zh ? '先听，再选择你的声音' : 'Listen. Find your voice.' }}</h2></div><span class="voice-free">{{ zh ? '样本试听免费 · 无需 Key' : 'Free samples · No API key' }}</span></div>
     <p class="voice-intro">{{ zh ? '选择音色后，请求示例与调试参数同步更新。输入自己的文本生成音频，按正常规则收费。' : 'Choose a voice to update the request example and playground. Synthesizing your own text uses normal generation billing.' }}</p>
     <div class="voice-filters"><label>{{ zh ? '语言' : 'Language' }}<select v-model="language"><option value="">{{ zh ? '全部语言' : 'All languages' }}</option><option v-for="value in languages" :key="value" :value="value">{{ value }}</option></select></label><label class="voice-search">{{ zh ? '搜索音色' : 'Search voices' }}<input v-model="search" type="search" :placeholder="zh ? '名称、描述或音色 ID' : 'Name, description or voice ID'" /></label><span class="voice-count">{{ filtered.length }} {{ zh ? '个音色' : 'voices' }}</span></div>
-    <audio ref="audio" v-show="playing" controls preload="none" class="voice-player" @ended="playing = ''" @error="playing = ''; error = zh ? '此试听暂时无法播放。' : 'This sample cannot be played right now.'" />
+    <audio ref="audio" v-show="previewVoice" controls preload="none" class="voice-player" @play="playing = previewVoice" @pause="playing = ''" @ended="playing = ''" @error="playing = ''; error = zh ? '此试听暂时无法播放。' : 'This sample cannot be played right now.'" />
     <p v-if="error" role="alert">{{ error }}</p>
     <div class="voice-grid"><article v-for="voice in filtered.slice(0, limit)" :key="voice.id" :class="['voice-card', {selected: selected === voice.id}]">
       <div class="voice-card-top"><span class="voice-language">{{ voice.language }}</span><button :disabled="!voice.preview_url" :aria-label="`${playing === voice.id ? (zh ? '暂停' : 'Pause') : (zh ? '试听' : 'Play')} ${voice.name}`" @click="play(voice)">{{ !voice.preview_url ? (zh ? '暂无试听' : 'No sample') : playing === voice.id ? (zh ? '暂停' : 'Pause') : (zh ? '试听 ▶' : 'Play ▶') }}</button></div>

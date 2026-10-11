@@ -198,7 +198,7 @@ npm test
 
 ## 当前工程的实际状态（2026-10-09）
 
-- 文档站为 Cloudflare Pages + VitePress + Scalar，来源登记目前是 `vidu2api` 的 `media-image`、`media-video`；其他工程不会因为存在于 `G:/workspace` 就自动收录。
+- 文档站为 Cloudflare Pages + VitePress + Vue + JSON Forms，来源登记目前是 `vidu2api` 的 `media-image`、`media-video`、`media-tts`；其他工程不会因为存在于 `G:/workspace` 就自动收录。
 - 文档仓库 → Cloudflare 自动部署在 2026-10-06 已实际成功验证；本 SOP 不把历史部署检查当成今天的新检查。
 - 本机图片快照已记录已提交的来源 `c3277c8`，图片公开文件与插件已在 `vidu2api` 的 `origin/main` 树中。
 - 视频清单、英文指南、规范及源工程通知 workflow 仍是本机未跟踪文件，在本次核对的 `origin/main` 树中不存在；全部来源远端导入尚未完成接线。

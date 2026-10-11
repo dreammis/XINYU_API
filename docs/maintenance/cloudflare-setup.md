@@ -120,3 +120,11 @@ Cloudflare 构建环境自带的 Wrangler 3.114.17 不支持 JSON import attribu
 - 发布实现提交：`5b498d4e0685365ce9fbee97f7531b979917e914`。Git 集成生产部署 `7fb91d0a-9d1e-47ef-82ec-a86ed6ff8bf0` 的 deploy stage 为 success，完成时间 `2026-10-11T05:52:20.983342Z`；[GitHub 检查](https://github.com/dreammis/XINYU_API/actions/runs/38116085763) 为 completed/success。
 - 生产浏览器实际打开 Vox 1 调试弹窗，确认 text/voice 和 speed/pitch/volume/emotion/enhance/output.format 的参数说明、类型、范围、枚举及默认值可见。填入 pitch=0 后右侧代码立即出现对应参数；没有发送生成请求。线上截图为主目录 `.local/projects/vidu2api/playground-fix/forms-production.png`。
 - 生产接口页和 app/theme 脚本返回 HTTP 200；语音 OpenAPI 下载 SHA-256 为 `1f9bf40db81ce7398d8fb16881faa633794536299eee8396e3cb8e330c213a92`，与本次导入契约一致。生产浏览器工具原先的 30 秒超时通过单独绑定页面、截图及 60 秒操作上限完成核对，没有用本地截图替代线上验收。
+
+## 公共交互与说明覆盖检查（2026-10-11）
+
+- 扩大检查发现：正文参数/响应头遗漏范围和示例，表单缺少发送前的组合规则，标量 oneOf 显示默认分支名，无效 JSON 草稿切换后仍可能显示旧文本；音色卡片没有跟随原生播放器暂停事件。现统一约束展示，显示文件互斥与条件限制，整数/字符串使用明确的类型选项并保留实际值类型，恢复有效 JSON 草稿，试听暂停/续播跟随实际播放器。
+- 图片公开契约声明 `X-Image-Request-Id` 用于查单，原代理转发列表遗漏它。已保留该响应头并加入流式代理回归；不扩大代理目的地或传递 Cookie。README 和现行发布 SOP 更新为 JSON Forms、13 个 HTTP 操作及 Vox 1；旧 GitBook 迁移方案明确标记历史状态。
+- 构建、docs:check、31 项测试及 Pages Functions 编译通过；后续控件修改又运行对应表单与代理测试。浏览器实测文件互斥说明/不自动预填可选字段、视频整数 8 与字符串 "8" 的代码区别、切换类型省略旧值、无效 JSON 恢复、下载 Range 示例、中英文类型名称，以及播放器控制条暂停后的按钮状态与同一音色续播。仅播放免费本地样本，没有发送生成请求。
+- 公共字段/组合规则实现在 `site/.vitepress/theme/schema-presentation.mjs`，正文与表单均引用，避免升级时两边失配。主目录的较新 A/B/C 规范与未提交工作保留，本次组件、测试与针对性 README/模板改动已同步。
+- 最终构建的真实浏览器覆盖 84 个中英文接口页、22 个上传变体，结果为主目录 `.local/projects/vidu2api/playground-fix/audit-results.json`、`audit-uploads.json`。390×844 iframe 内容视口中弹窗宽度与 scrollWidth 均为 390，请求/响应切换通过；截图 `audit-mobile.png`。preview 对启动后新增静态测试文件返回 404，重启后正常，仅为本地测试服务的文件索引行为。

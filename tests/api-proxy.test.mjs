@@ -25,12 +25,13 @@ test('forwards customer auth and streams SSE without sending cookies or bufferin
     assert.equal(options.headers.get('Cookie'), null);
     assert.equal(options.redirect, 'manual');
     assert.equal(await new Response(options.body).text(), '{"prompt":"test"}');
-    return new Response(stream, { headers: { 'Content-Type': 'text/event-stream', 'Set-Cookie': 'private=1' } });
+    return new Response(stream, { headers: { 'Content-Type': 'text/event-stream', 'X-Image-Request-Id': 'image-request-test', 'Set-Cookie': 'private=1' } });
   });
   const response = await onRequest({ request: new Request(proxyUrl(`${endpoint}/v1/images/generations`), { method: 'POST', headers: { Origin: site, Authorization: 'Bearer test-only', 'Content-Type': 'application/json', Cookie: 'session=secret' }, body: '{"prompt":"test"}' }) });
   assert.equal(response.body, stream);
   assert.equal(response.headers.get('Content-Type'), 'text/event-stream');
   assert.equal(response.headers.get('Cache-Control'), 'no-store');
+  assert.equal(response.headers.get('X-Image-Request-Id'), 'image-request-test');
   assert.equal(response.headers.get('Set-Cookie'), null);
   assert.match(await response.text(), /processing/);
 });

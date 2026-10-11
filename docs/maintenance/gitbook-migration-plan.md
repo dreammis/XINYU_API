@@ -1,5 +1,7 @@
 # GitBook migration and public contract aggregation
 
+> 历史方案：当前生产站使用 Cloudflare Pages + VitePress/Vue，调试使用 JSON Forms 和本站请求面板。此处保留迁移过程，不作为当前实施指令；维护入口见 [cloudflare-setup.md](cloudflare-setup.md)。
+
 用户已选择真正的 GitBook 托管，通过 Git 仓库同步。当前文档仓库为 `dreammis/XINYU_API`，本地目录为 `G:/workspace/xyapi_doc`；原消息中的 `G:/workspace/xyapi/_doc` 不存在。
 
 ## 实施范围
