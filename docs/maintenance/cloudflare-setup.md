@@ -95,3 +95,13 @@ Cloudflare 构建环境自带的 Wrangler 3.114.17 不支持 JSON import attribu
 - 中英文首页、模型和模型操作入口、llms.txt、Markdown 导出均返回 HTTP 200。公开 Markdown 共 128 页，导出内容不含维护 SOP/交接文件。线上两份 OpenAPI SHA-256 仍分别为 `90951bbc80bda1c1a425e0287ef688c51918f30b24133135222226b68c202c58`、`c36cb22f52816e1a3bc59afbd748bab73cb490d0b93a95af90c108983a925116`，与源快照逐字节一致。
 - 本轮重查自定义域名仍为 pending / CNAME record not set；当前正式入口仍为 https://xyapi-docs.pages.dev/zh/。
 - 内容边界：部分 Base64 SSE、Responses、multipart 配套完整样例未由公开契约交付，页面明确标注；产品分组待源工程确认。后续按原契约交付流程补充，不能由文档工程捏造业务事实。
+
+## 在线调试弹窗修复验收（2026-10-11）
+
+- 实现提交：`fd3de15109411e45b0c1ee5c3485d52e3083fd93`。Git 集成生产部署 `ff4e00fe-fc35-4769-9756-8517f8afbbc5` 已完成；[GitHub 检查](https://github.com/dreammis/XINYU_API/actions/runs/38109606130) 为 completed/success。生产页面已返回新构建资源，浏览器实际点击 Vox 1 的“试一试”验收通过。
+- 根因：Scalar 弹窗原来挂在 `.vp-doc` 正文内，缺少 `.scalar-app` 祖先样式作用域和浅色／深色主题。故障时根节点 position 为 static、z-index 无效，背景透明；样式文件实际已加载。公共组件改用 Teleport 挂到 body，并显式提供样式作用域和响应式主题。生产实测 position=relative、z-index=10000、背景 rgb(255,255,255)，弹窗位于正文外。
+- 扩大检查发现 multipart 缺少完整示例时，Scalar 从 schema 自动生成并启用所有参数，包括互斥的 image / image[]、stream=true 和 delivery=url。调试初始化现在仅预填当前模型，必填字段保留空值供填写，可选字段显式禁用；文件选择控件保留。公开契约、示例快照及请求代理未修改。
+- 本地真实浏览器覆盖中英文 84 个接口页面的两个调试入口、当前路径与模型初始化、关闭行为；22 个中英文上传页面另做可选参数禁用回归。另验证音色选择同步到请求、关闭后重新打开不重复挂载、创建页切换 GET 查询无生成请求体、三种图像交付模式、深色模式与 390×844 手机视口。代理使用虚构无效 Key 查询任务，收到 New API 401 且响应 no-store；没有发起付费生成。
+- `npm run build`、`npm run docs:check`、`npm test`（25/25）和 `wrangler pages functions build --outdir .cache/functions` 全部通过。主目录其他未提交工作保留，仅同步本次组件、浏览器检查及维护记录。
+- 截图与本轮结果保存在主目录 `.local/projects/vidu2api/playground-fix/`：`production.jpg`、`mobile.jpg`、`results.json`（84 页）、`uploads.json`（22 页）。
+- 后续修改公共调试组件或升级 Scalar 时，必须在构建页面实际打开弹窗。通过浏览器工具执行 `tests/playground-browser.mjs` 的 `inspectClientLayout`，将 DOM 结果交给 `assertClientLayout`；上传格式没有完整示例时再执行 `assertUnseededUpload`。这些检查读取真实样式和已启用字段，不发送请求；不能用构建成功替代浏览器验收。VitePress preview 在重建后需要重启，再核对页面的 app 资源版本，避免检查旧构建。
