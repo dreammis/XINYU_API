@@ -116,3 +116,7 @@ Cloudflare 构建环境自带的 Wrangler 3.114.17 不支持 JSON import attribu
 - 后续表单升级必须执行 tests/playground-browser.mjs 的真实 DOM 检查，并额外用本地夹具测试 image[] 文件选择和实时输入；仅调用请求序列化函数的单元测试不能覆盖 Vue 控件的路径和事件更新差异。
 
 - 深色背景及焦点关闭检查通过；手机通过本地 390×844 iframe 内容视口验收，弹窗恰好覆盖该视口且没有横向溢出，请求／响应标签正常切换。浏览器的 viewport 覆盖接口本轮没有改变实际 innerWidth，因此没有把它的调用成功当作手机验收依据。截图 forms-dark.png、forms-mobile.png。
+
+- 发布实现提交：`5b498d4e0685365ce9fbee97f7531b979917e914`。Git 集成生产部署 `7fb91d0a-9d1e-47ef-82ec-a86ed6ff8bf0` 的 deploy stage 为 success，完成时间 `2026-10-11T05:52:20.983342Z`；[GitHub 检查](https://github.com/dreammis/XINYU_API/actions/runs/38116085763) 为 completed/success。
+- 生产浏览器实际打开 Vox 1 调试弹窗，确认 text/voice 和 speed/pitch/volume/emotion/enhance/output.format 的参数说明、类型、范围、枚举及默认值可见。填入 pitch=0 后右侧代码立即出现对应参数；没有发送生成请求。线上截图为主目录 `.local/projects/vidu2api/playground-fix/forms-production.png`。
+- 生产接口页和 app/theme 脚本返回 HTTP 200；语音 OpenAPI 下载 SHA-256 为 `1f9bf40db81ce7398d8fb16881faa633794536299eee8396e3cb8e330c213a92`，与本次导入契约一致。生产浏览器工具原先的 30 秒超时通过单独绑定页面、截图及 60 秒操作上限完成核对，没有用本地截图替代线上验收。
