@@ -1,5 +1,15 @@
 # Cloudflare Pages 托管
 
+## 模型导航去重验收（2026-10-11）
+
+- 实现提交 `bbca891`：系列侧栏只展示模型及适用操作；共享查询、产物和下载放入“任务与结果”，同文件 HEAD 位于 GET 下载下。API 手册与模型中心自动展开单模型产品分组，Vox 1 不再经过 Vox 层；使用流程归入“开始使用”。
+- 接口正文添加同能力的任务查询、结果获取及使用指南链接，关闭跨能力的自动上一篇/下一篇；旧页面地址与公开契约保留。
+- 本地 `npm run build`、`npm run docs:check`、25/25 测试及 Pages Functions 编译通过；回归覆盖中英文目录去重、全部导航目标、旧页面保留、当前模型与 HEAD 链路展开。浏览器验证本地创建到查询的跳转、英文下载和 390px 手机目录。
+- Git 集成生产部署 `1a0e30a1-676f-4618-9552-f102af639dbb` 对应 `bbca891`；Wrangler 列表显示部署完成，生产 HTTP 200 内容包含新的任务链接且不含单模型 Vox 面包屑。[GitHub Linux 检查](https://github.com/dreammis/XINYU_API/actions/runs/38107826994) completed/success。
+- 生产浏览器确认语音 TTS → Vox 1 → 创建语音任务、新增任务与结果及正文查询/下载链接。后续展开目录和截图遇到浏览器控制超时；不将未完成的截图或后续交互列为已验收。
+- 线上图片、视频、语音 OpenAPI 均返回 200，与发布工作区文件逐字节一致，SHA-256 分别为 `90951bbc80bda1c1a425e0287ef688c51918f30b24133135222226b68c202c58`、`c36cb22f52816e1a3bc59afbd748bab73cb490d0b93a95af90c108983a925116`、`c72ec25d12d0dd4ac9c605446b6eb3df595e0db8fe13f30704626aa863a2ba2b`。
+- 本次只从独立发布工作区提交和推送，六个任务文件核对原始内容后同步回主目录，保留主目录的其他历史前端工作。
+
 最终采用自建 VitePress + Vue 文档主题 + Scalar 请求客户端，部署至 Cloudflare Pages。GitBook 自定义域名需要付费，用户已选择 Cloudflare；此前 GitBook 导入保留作历史记录。
 
 ## 项目设置
