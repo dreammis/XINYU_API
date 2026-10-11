@@ -1,11 +1,13 @@
 {
   "repository": "dreammis/XINYU_API",
-  "revision": "08ce6a031455386f7b1d6d6c2e8761d2eb44ca39",
+  "revision": "a6dff313c8212b52a26afa8492139dd49494eea9",
   "ref": "master",
-  "workingTreeChanges": [],
+  "workingTreeChanges": [
+    "M projects/vidu2api/newapi/media-tts/public-openapi.json"
+  ],
   "hashes": {
     "public-docs.json": "a20e33e650ae12b9417d2d934fcb308692194473e0883ca633b6671e1d1d1cb3",
-    "openapi.json": "c72ec25d12d0dd4ac9c605446b6eb3df595e0db8fe13f30704626aa863a2ba2b",
+    "openapi.json": "1f9bf40db81ce7398d8fb16881faa633794536299eee8396e3cb8e330c213a92",
     "guide.zh.md": "d67459088c6136e3074ce01fd6b764607c86a050e46f54561c8622208dccd6bd",
     "guide.en.md": "7a538eff16a8184be9b241d0383ab12ea71555828b9c98a64e7aa1ea2cb3945b",
     "assets/voices.json": "85bdb312418190d02816d65225e7fc1e694941f579870a43ed9584db5ae63fa1",

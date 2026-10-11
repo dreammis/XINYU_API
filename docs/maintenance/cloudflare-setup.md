@@ -10,7 +10,7 @@
 - 线上图片、视频、语音 OpenAPI 均返回 200，与发布工作区文件逐字节一致，SHA-256 分别为 `90951bbc80bda1c1a425e0287ef688c51918f30b24133135222226b68c202c58`、`c36cb22f52816e1a3bc59afbd748bab73cb490d0b93a95af90c108983a925116`、`c72ec25d12d0dd4ac9c605446b6eb3df595e0db8fe13f30704626aa863a2ba2b`。
 - 本次只从独立发布工作区提交和推送，六个任务文件核对原始内容后同步回主目录，保留主目录的其他历史前端工作。
 
-最终采用自建 VitePress + Vue 文档主题 + Scalar 请求客户端，部署至 Cloudflare Pages。GitBook 自定义域名需要付费，用户已选择 Cloudflare；此前 GitBook 导入保留作历史记录。
+当前采用 VitePress + Vue 文档主题、JSON Forms Vue 表单渲染器和本站请求面板，部署至 Cloudflare Pages。JSON Forms 为 MIT 开源组件；Scalar 已于 2026-10-11 从当前调试实现及依赖中移除。GitBook 自定义域名需要付费，用户已选择 Cloudflare；此前 GitBook 导入保留作历史记录。
 
 ## 项目设置
 
@@ -34,7 +34,7 @@ GitHub 已在 Cloudflare 关联，production_deployments_enabled=true。Pages �
 
 `npm run docs:generate` 校验来源快照并生成 Markdown、OpenAPI、导航和调试允许列表。`npm run build` 再构建静态站。`site` 中的主题和公共静态配置手写维护，各语言页面自动生成。新能力不需要另写前端路由。
 
-接口页从同一份公开规范生成字段、响应与代码，Scalar 请求客户端仅在点击调试时加载。公开规范可从本站 `/openapi/<能力>.json` 下载，在线请求通过同源 `/api-proxy` 转发。目的地、路径与方法必须匹配公开规范。客户填写自己的 Bearer Key；无服务器管理员 Key，不持久化浏览器鉴权，不发送 Cookies，不记录密钥，不缓存接口响应。multipart、SSE 和下载响应流式转发；上游重定向明确报错，需在客户自己的客户端跟随。
+接口页从同一份公开规范生成字段、响应与代码，JSON Forms 调试表单及请求面板仅在点击调试时加载。公开规范可从本站 `/openapi/<能力>.json` 下载，在线请求通过同源 `/api-proxy` 转发。目的地、路径与方法必须匹配公开规范。客户填写自己的 Bearer Key；无服务器管理员 Key，不持久化浏览器鉴权，不发送 Cookies，不记录密钥，不缓存接口响应。multipart、SSE 和下载响应流式转发；上游重定向明确报错，需在客户自己的客户端跟随。
 
 文档静态访问使用 Pages 静态托管，调试请求使用 Pages Functions 免费额度；实际生成仍按 New API 账户正常收费。测试不应调用付费生成接口。
 
@@ -105,3 +105,14 @@ Cloudflare 构建环境自带的 Wrangler 3.114.17 不支持 JSON import attribu
 - `npm run build`、`npm run docs:check`、`npm test`（25/25）和 `wrangler pages functions build --outdir .cache/functions` 全部通过。主目录其他未提交工作保留，仅同步本次组件、浏览器检查及维护记录。
 - 截图与本轮结果保存在主目录 `.local/projects/vidu2api/playground-fix/`：`production.jpg`、`mobile.jpg`、`results.json`（84 页）、`uploads.json`（22 页）。
 - 后续修改公共调试组件或升级 Scalar 时，必须在构建页面实际打开弹窗。通过浏览器工具执行 `tests/playground-browser.mjs` 的 `inspectClientLayout`，将 DOM 结果交给 `assertClientLayout`；上传格式没有完整示例时再执行 `assertUnseededUpload`。这些检查读取真实样式和已启用字段，不发送请求；不能用构建成功替代浏览器验收。VitePress preview 在重建后需要重启，再核对页面的 app 资源版本，避免检查旧构建。
+
+## 调试参数说明与开源表单（2026-10-11）
+
+- 保留 VitePress/Vue，以 JSON Forms 3.8.0（MIT）的 Vue 渲染器提供契约表单、枚举、数组、嵌套布局和校验；新增双栏请求／代码／响应弹窗，移除 Scalar 三个依赖。所有参数说明、范围、枚举和默认值直接显示；出现校验错误也保留说明。Vox 1 缺少的中文说明在源公开 OpenAPI 补齐后按原同步流程导入。
+- 接口参数只按当前模型与模式的公开示例初始化，不自动填可选默认值；布尔支持省略／true／false。基础输入实时同步，整数小数由契约拒绝而非截断；multipart 保留 File 实例，image[] 按字面字段名发送，可移除文件后重选。鉴权只在组件内存中，示例凭据始终为占位符，调用仍只经过本站允许列表代理。
+- 真正的 HTTP 状态、耗时、响应体与响应头在同一弹窗展示；SSE 逐段接收，二进制音频有播放与下载入口，关闭／停止接收取消浏览器读取。响应样例和执行结果明确区分。原生 dialog 提供焦点约束、Esc 关闭和正文滚动锁定；手机通过请求／响应面板切换。
+- 已运行 npm run build、docs:check、npm test（29/29）及 Pages Functions 编译。新增测试覆盖 99 种接口／模型／模式初始化、可选值省略、false/0、文件数组、路径/查询/Range 与请求代码一致、非法数值与字段拒绝。
+- 浏览器 84 个中英文接口页面、22 个上传变体通过弹窗位置、当前模型、可见说明及上传默认值检查。真实 New API 查询使用虚构无效 Key 收到 401 JSON；本地响应夹具验证 false/0、两个 image[] 文件、实时 SSE 两段和 MP3 播放/下载；没有创建付费生成任务。新结果位于主目录 .local/projects/vidu2api/playground-fix/forms-results.json 和 forms-uploads.json。
+- 后续表单升级必须执行 tests/playground-browser.mjs 的真实 DOM 检查，并额外用本地夹具测试 image[] 文件选择和实时输入；仅调用请求序列化函数的单元测试不能覆盖 Vue 控件的路径和事件更新差异。
+
+- 深色背景及焦点关闭检查通过；手机通过本地 390×844 iframe 内容视口验收，弹窗恰好覆盖该视口且没有横向溢出，请求／响应标签正常切换。浏览器的 viewport 覆盖接口本轮没有改变实际 innerWidth，因此没有把它的调用成功当作手机验收依据。截图 forms-dark.png、forms-mobile.png。

@@ -1,17 +1,16 @@
 <script setup>
 import UiIcon from './UiIcon.vue';
-import { computed, onBeforeUnmount, ref, watch } from 'vue';
+import { computed, nextTick, onBeforeUnmount, ref, shallowRef, watch } from 'vue';
 import contracts from '../contracts.json';
 import catalog from '../catalog.json';
 import CodeExample from './CodeExample.vue';
 import VoiceBrowser from './VoiceBrowser.vue';
 import SchemaFields from './SchemaFields.vue';
-import { useData, useRouter } from 'vitepress';
+import { useRouter } from 'vitepress';
 import { operationExamples, requestCode, resolveSchema, responseExampleFor } from './openapi-content.mjs';
 
 const props = defineProps({ spec: String, endpoint: String, method: String, locale: String, model: String });
 const router = useRouter();
-const { isDark } = useData();
 const id = computed(() => props.spec.split('/').at(-1).replace(/\.json$/, ''));
 const specification = computed(() => contracts[id.value]);
 const operation = computed(() => specification.value.paths[props.endpoint][props.method]);
@@ -49,7 +48,8 @@ const modelEnum = computed(() => (resolveSchema(specification.value, resolveSche
   const detail = capability.value.models.find(model => model.name === name);
   return !detail?.operations || detail.operations.includes(operation.value.operationId);
 }));
-const container = ref(null);
+const requestDialog = shallowRef(null);
+const dialogInstance = ref(null);
 const clientLoading = ref(false);
 const error = ref('');
 const endpointStatus = ref('');
@@ -61,10 +61,8 @@ async function copyEndpoint() {
   } catch (failure) { endpointStatus.value = `${props.locale === 'zh' ? '复制失败' : 'Copy failed'}: ${failure.message}`; }
 }
 const mobileCodeOpen = ref(false);
-let client;
 let disposed = false;
-let revision = 0;
-watch([mediaType, mode, progress, selectedModel, selectedVoice, operation], () => { revision++; client?.app.unmount(); client = undefined; error.value = ''; });
+watch([mediaType, mode, progress, selectedModel, selectedVoice, operation], () => { error.value = ''; });
 watch(mediaType, () => { mode.value = 'json'; progress.value = false; });
 watch(operation, () => { mediaType.value = bodyTypes.value[0] ?? 'application/json'; mode.value = 'json'; progress.value = false; status.value = statuses.value.find(value => /^2/.test(value)) ?? statuses.value[0]; });
 
@@ -78,63 +76,23 @@ function changeStatus(value) {
   status.value = value;
 }
 
-// 调试客户端按需加载，只使用内存工作区；不安装持久化、分析或第三方代理插件。
+// 表单调试器按需加载；客户凭证仅留在组件内存，页面离开后立即释放。
 async function openClient() {
   if (clientLoading.value) return;
   clientLoading.value = true;
-  const current = revision;
   error.value = '';
   try {
-    if (!client) {
-      const [modal, workspace] = await Promise.all([import('@scalar/api-client/modal'), import('@scalar/workspace-store/client'), import('@scalar/api-client/style.css')]);
-      if (disposed || current !== revision) return;
-      const store = workspace.createWorkspaceStore();
-      const spec = structuredClone(specification.value);
-      if (props.locale === 'zh') {
-        function localize(value) {
-          if (!value || typeof value !== 'object') return;
-          if (value['x-description-zh']) value.description = value['x-description-zh'];
-          if (value['x-title-zh']) value.summary = value['x-title-zh'];
-          Object.values(value).forEach(localize);
-        }
-        localize(spec);
-      }
-      const item = spec.paths[props.endpoint];
-      if (item[props.method].requestBody) {
-        const selectedBody = item[props.method].requestBody.content[mediaType.value];
-        selectedBody.example = structuredClone(example.value);
-        delete selectedBody.examples;
-        // Scalar 也从当前模式初始化；不能带入规范里另一个模型的 4K 或时长示例。
-        const schema = resolveSchema(spec, selectedBody.schema);
-        // 缺少完整示例时不让 Scalar 自动造值；上传表单显式禁用可选项，避免互斥图片输入和流式参数同时启用。
-        if (example.value === undefined) {
-          selectedBody.example = mediaType.value === 'multipart/form-data'
-            ? Object.keys(schema.properties ?? {}).map(name => ({ name, value: name === 'model' ? selectedModel.value : '', isDisabled: !(schema.required ?? []).includes(name) }))
-            : {};
-        }
-        delete schema.example;
-        for (const [name, property] of Object.entries(schema.properties ?? {})) {
-          delete property.example;
-          if (example.value?.[name] !== undefined) property.default = example.value[name];
-          else delete property.default;
-        }
-        if (selectedModel.value && schema.properties?.model) schema.properties.model.enum = [selectedModel.value];
-        selectedBody.schema = schema;
-        item[props.method].requestBody.content = { [mediaType.value]: selectedBody };
-      }
-      spec.paths = { [props.endpoint]: { ...(item.parameters ? { parameters: item.parameters } : {}), [props.method]: item[props.method] } };
-      if (!await store.addDocument({ name: id.value, document: spec })) throw new Error('Unable to load the public operation');
-      if (disposed || current !== revision) return;
-      client = modal.createApiClientModal({ el: container.value, workspaceStore: store, options: { hideClientButton: true, proxyUrl: '/api-proxy', localization: { locale: props.locale === 'zh' ? 'zh-CN' : 'en' } } });
+    if (!requestDialog.value) {
+      const module = await import('./RequestDialog.vue');
+      if (disposed) return;
+      requestDialog.value = module.default;
+      await nextTick();
     }
-    client.open({ documentSlug: id.value, path: props.endpoint, method: props.method });
-  } catch (failure) {
-    error.value = failure.message;
-  } finally {
-    clientLoading.value = false;
-  }
+    await dialogInstance.value.open();
+  } catch (failure) { error.value = failure.message; }
+  finally { clientLoading.value = false; }
 }
-onBeforeUnmount(() => { disposed = true; client?.app.unmount(); });
+onBeforeUnmount(() => { disposed = true; });
 </script>
 
 <template>
@@ -177,7 +135,6 @@ onBeforeUnmount(() => { disposed = true; client?.app.unmount(); });
         </div>
       </aside>
     </div>
-    <!-- 弹窗脱离正文排版；外层提供 Scalar 工具样式作用域与当前主题，避免透明背景和层级失效。 -->
-    <Teleport to="body"><div ref="container" class="api-modal-host scalar-app" :class="isDark ? 'dark-mode' : 'light-mode'" /></Teleport>
+    <component :is="requestDialog" v-if="requestDialog" ref="dialogInstance" :spec="specification" :endpoint="endpoint" :method="method" :media-type="mediaType" :model="selectedModel" :locale="locale" :example="example" :response-example="responseExample" :response-status="status" :response-type="responseType" />
   </div>
 </template>

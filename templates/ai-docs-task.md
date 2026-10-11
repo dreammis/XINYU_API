@@ -8,7 +8,9 @@
 
 客户侧栏目为 API 手册、模型中心、接入指南、常见问题。未公开系列只在全部系列中标状态，不生成假接口。新增页面、模型和导航从生成器输出，不手改 `site/zh`、`site/en`、生成的数据 JSON 或复制另一份参数表。完整规则见 `docs/maintenance/model-catalog-contract.md`。
 
-请在 `G:/workspace/xyapi_doc` 接入或更新这项能力的客户文档，按现有 Cloudflare Pages + VitePress + Scalar 流程完成导入、检查和发布。不要重新猜测接口，也不要让我手抄参数。
+请在 `G:/workspace/xyapi_doc` 接入或更新这项能力的客户文档，按现有 Cloudflare Pages + VitePress/Vue + JSON Forms 流程完成导入、检查和发布。不要重新猜测接口，也不要让我手抄参数。
+
+正文和“试一试”从同一份 OpenAPI 读取参数说明、默认值和限制。来源应提供字段 `description` 与中文 `x-description-zh`，说明省略参数时的真实行为；缺少业务说明时回到源契约补充，不能由调试器猜测。表单说明必须直接可见，显示校验错误后也不能消失。新增能力还需在浏览器实际打开弹窗，验证当前模型／模式、实时输入、文件数组和响应展示。
 
 接入任务交接记录：【粘贴 New API 接入 AI 返回的文件路径或 Git 链接】。
 公开清单 / 来源登记项：【粘贴接入 AI 返回的路径或 JSON】。

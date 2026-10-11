@@ -8,6 +8,7 @@ export const icons = {
   other: '<path d="m14 4 6 6-10 10-6-6Z"/><path d="m4 4 3 3m10 10 3 3M3 9h3m12 6h3"/>',
   copy: '<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V4H4v12h4"/>',
   check: '<path d="m5 12 4 4L19 6"/>',
+  close: '<path d="m6 6 12 12M6 18 18 6"/>',
   chevron: '<path d="m6 9 6 6 6-6"/>',
   external: '<path d="M14 3h7v7m0-7L10 14M10 3H3v18h18v-7"/>',
   link: '<path d="m10 14 4-4m-6 6-2 2a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0m4 0 2-2a4 4 0 0 1 6 6l-4 4a4 4 0 0 1-6 0"/>',

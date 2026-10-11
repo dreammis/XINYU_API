@@ -6,8 +6,8 @@ Poll every 3–5 seconds. Terminal states are succeeded and failed. Querying doe
 
 [调用指南与限制](../../guides/media-tts.md)
 
-{% openapi src="https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-tts.json?version=a8a88a1076a1c43d" path="/tts/v1/tasks/{task_id}" method="get" %}
-https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-tts.json?version=a8a88a1076a1c43d
+{% openapi src="https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-tts.json?version=a045601e2c4b2c9d" path="/tts/v1/tasks/{task_id}" method="get" %}
+https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-tts.json?version=a045601e2c4b2c9d
 {% endopenapi %}
 
 ## 路径与请求头

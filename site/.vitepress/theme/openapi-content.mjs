@@ -67,8 +67,8 @@ export function responseExampleFor(operation, status, mediaType, example) {
 }
 
 // 代码示例中的凭据始终为占位符；文件、流式与 JSON 采用各自的读取方式。
-export function requestCode({ spec, endpoint, method, mediaType, example }) {
-  const url = `${spec.servers[0].url.replace(/\/$/, '')}${endpoint.replace(/\{([^}]+)\}/g, (_, name) => `YOUR_${name.toUpperCase()}`)}`;
+export function requestCode({ spec, endpoint, method, mediaType, example, parameters = {}, requestUrl }) {
+  const url = requestUrl ?? `${spec.servers[0].url.replace(/\/$/, '')}${endpoint.replace(/\{([^}]+)\}/g, (_, name) => parameters.path?.[name] !== undefined && parameters.path[name] !== '' ? encodeURIComponent(parameters.path[name]) : `YOUR_${name.toUpperCase()}`)}`;
   const hasBody = example !== undefined;
   const multipart = mediaType === 'multipart/form-data';
   const operation = spec.paths[endpoint][method];
@@ -82,17 +82,29 @@ export function requestCode({ spec, endpoint, method, mediaType, example }) {
   const curl = [`curl${stream ? ' -N' : ''} -X ${method.toUpperCase()} ${quote(url)}`, '  -H "Authorization: Bearer YOUR_API_KEY"'];
   const python = ['import requests', '', `url = ${JSON.stringify(url)}`, 'headers = {"Authorization": "Bearer YOUR_API_KEY"}'];
   const javascript = [];
+  // 请求头跟随用户填写，鉴权始终脱敏。与实际发送一致，流式示例显式声明 Accept。
+  const extraHeaders = Object.fromEntries(Object.entries(parameters.header ?? {}).filter(([name, value]) => value !== undefined && name.toLowerCase() !== 'authorization'));
+  if (stream) extraHeaders.Accept = 'text/event-stream';
+  for (const [name, value] of Object.entries(extraHeaders)) {
+    curl.push(`  -H ${quote(`${name}: ${value}`)}`);
+    python.push(`headers[${JSON.stringify(name)}] = ${JSON.stringify(String(value))}`);
+  }
   if (hasBody && multipart) {
     javascript.push('const form = new FormData();');
     const data = {};
-    const files = {};
+    const files = [];
     for (const [name, value] of Object.entries(example)) {
+      if (value === undefined) continue;
       const field = resolveSchema(spec, bodySchema.properties?.[name]);
       const file = field.format === 'binary' || (field.type === 'array' && resolveSchema(spec, field.items).format === 'binary');
       if (file) {
-        curl.push(`  -F ${quote(`${name}=@reference.png`)}`);
-        files[name] = 'reference.png';
-        javascript.push(`form.append(${JSON.stringify(name)}, new Blob([await (await import('node:fs/promises')).readFile('reference.png')]), 'reference.png');`);
+        const selected = Array.isArray(value) ? value : [value];
+        for (const file of selected) {
+          const filename = typeof File !== 'undefined' && file instanceof File ? file.name : 'reference.png';
+          curl.push(`  -F ${quote(`${name}=@${filename}`)}`);
+          files.push([name, filename]);
+          javascript.push(`form.append(${JSON.stringify(name)}, new Blob([await (await import('node:fs/promises')).readFile(${JSON.stringify(filename)})]), ${JSON.stringify(filename)});`);
+        }
       } else {
         const text = typeof value === 'object' ? JSON.stringify(value) : String(value);
         data[name] = text;
@@ -100,7 +112,7 @@ export function requestCode({ spec, endpoint, method, mediaType, example }) {
         javascript.push(`form.append(${JSON.stringify(name)}, ${JSON.stringify(text)});`);
       }
     }
-    python.push(`data = ${JSON.stringify(data)}`, `files = {name: open(filename, "rb") for name, filename in ${JSON.stringify(files)}.items()}`, `response = requests.${method}(url, headers=headers, data=data, files=files${stream || binary ? ', stream=True' : ''})`);
+    python.push(`data = ${JSON.stringify(data)}`, `files = [(name, open(filename, "rb")) for name, filename in ${JSON.stringify(files)}]`, `response = requests.${method}(url, headers=headers, data=data, files=files${stream || binary ? ', stream=True' : ''})`);
   } else if (hasBody) {
     curl.push(`  -H ${quote(`Content-Type: ${mediaType}`)}`, `  -d ${quote(json)}`);
     python.unshift('import json');
@@ -109,7 +121,7 @@ export function requestCode({ spec, endpoint, method, mediaType, example }) {
   } else {
     python.push(`response = requests.${method}(url, headers=headers${binary ? ', stream=True' : ''})`);
   }
-  javascript.push(`const response = await fetch(${JSON.stringify(url)}, {`, `  method: '${method.toUpperCase()}',`, `  headers: { Authorization: 'Bearer YOUR_API_KEY'${hasBody && !multipart ? `, 'Content-Type': '${mediaType}'` : ''} },`, ...(hasBody ? [`  body: ${multipart ? 'form' : 'JSON.stringify(payload)'},`] : []), '});', 'if (!response.ok) throw new Error(`HTTP ${response.status}`);');
+  javascript.push(`const response = await fetch(${JSON.stringify(url)}, {`, `  method: '${method.toUpperCase()}',`, `  headers: { Authorization: 'Bearer YOUR_API_KEY'${hasBody && !multipart ? `, 'Content-Type': '${mediaType}'` : ''}${Object.entries(extraHeaders).map(([name, value]) => `, ${JSON.stringify(name)}: ${JSON.stringify(String(value))}`).join('')} },`, ...(hasBody ? [`  body: ${multipart ? 'form' : 'JSON.stringify(payload)'},`] : []), '});', 'if (!response.ok) throw new Error(`HTTP ${response.status}`);');
   python.push('response.raise_for_status()');
   if (binary) {
     curl.push(`  -o ${filename}`);

@@ -6,8 +6,8 @@ One task produces one MP3. Fixed billing per successful generation, regardless o
 
 [Guide and limits](../../guides/media-tts.md)
 
-{% openapi src="https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-tts.json?version=a8a88a1076a1c43d" path="/tts/v1/tasks" method="post" %}
-https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-tts.json?version=a8a88a1076a1c43d
+{% openapi src="https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-tts.json?version=a045601e2c4b2c9d" path="/tts/v1/tasks" method="post" %}
+https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-tts.json?version=a045601e2c4b2c9d
 {% endopenapi %}
 
 ## application/json

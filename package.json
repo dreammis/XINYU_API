@@ -24,9 +24,11 @@
     "wrangler": "^4.147.0"
   },
   "dependencies": {
-    "@scalar/api-client": "^3.21.5",
-    "@scalar/api-reference": "^1.73.0",
-    "@scalar/workspace-store": "^0.68.1",
+    "@jsonforms/core": "3.8.0",
+    "@jsonforms/vue": "3.8.0",
+    "@jsonforms/vue-vanilla": "3.8.0",
+    "ajv": "8.18.0",
+    "ajv-formats": "2.1.1",
     "shiki": "2.5.0"
   }
 }
