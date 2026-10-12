@@ -6,8 +6,8 @@ Reference-image editing without masks. JSON image accepts one or more sources. M
 
 [Guide and limits](../../guides/media-image.md)
 
-{% openapi src="https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-image.json?version=a7ea7864e5d7baea" path="/v1/images/edits" method="post" %}
-https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-image.json?version=a7ea7864e5d7baea
+{% openapi src="https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-image.json?version=f8e6bd50cfcb6e35" path="/v1/images/edits" method="post" %}
+https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-image.json?version=f8e6bd50cfcb6e35
 {% endopenapi %}
 
 ## application/json

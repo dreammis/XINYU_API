@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "XY API Speech",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "servers": [
     {
@@ -20,6 +20,133 @@
     }
   ],
   "paths": {
+    "/v1/audio/speech": {
+      "post": {
+        "tags": [
+          "Speech"
+        ],
+        "operationId": "synthesizeSpeech",
+        "summary": "Synthesize speech synchronously",
+        "x-title-zh": "同步语音合成",
+        "description": "Wait for completion and return MP3 bytes. One successful request costs one generation fee. Vox 1 does not support SSE or stream:true. A disconnected request may still generate audio; do not automatically resubmit.",
+        "x-description-zh": "等待生成完成，直接返回 MP3 二进制。默认分组每次成功生成约 ¥0.10。Vox 1 不支持 SSE 或 stream:true。断连后生成可能继续，请勿自动重发。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CanonicalSpeech"
+              },
+              "example": {
+                "model": "vox-1",
+                "input": "你好，欢迎使用我们的语音服务。",
+                "voice": "vx_dbd27c4a9332",
+                "speed": 1,
+                "response_format": "mp3",
+                "metadata": {
+                  "pitch": 0,
+                  "volume": 0,
+                  "emotion": "neutral",
+                  "enhance": true
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "MP3 audio bytes",
+            "content": {
+              "audio/mpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "code": {
+                          "type": "string"
+                        },
+                        "param": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "JSON response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/tts/v1/tasks": {
       "post": {
         "tags": [
@@ -35,21 +162,116 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateSpeech"
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/CanonicalSpeech"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CreateSpeech"
+                  }
+                ],
+                "type": "object",
+                "required": [
+                  "model",
+                  "voice"
+                ],
+                "properties": {
+                  "model": {
+                    "type": "string",
+                    "enum": [
+                      "vox-1"
+                    ],
+                    "x-description-zh": "本页选定的模型调用名称。"
+                  },
+                  "input": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 5000,
+                    "description": "Plain text, up to 5000 weighted character units: U+4E00–U+9FFF Han characters count twice, other Unicode code points once. No truncation or splitting. Emotion markup is not interpreted.",
+                    "x-description-zh": "普通文本，最多 5000 个加权字符单位：U+4E00–U+9FFF 汉字计 2，其余 Unicode 字符计 1。不截断、不拆单；文本内情绪标签不解析，请使用 emotion 参数。"
+                  },
+                  "voice": {
+                    "type": "string",
+                    "pattern": "^vx_[a-f0-9]{12}$",
+                    "description": "A voice ID from /assets/media-tts/voices.json on the documentation site. Voices belong to their listed models.",
+                    "x-description-zh": "从文档音色库选择音色 ID；音色只能用于目录中标明的模型。"
+                  },
+                  "speed": {
+                    "type": "number",
+                    "minimum": 0.5,
+                    "maximum": 2,
+                    "default": 1,
+                    "description": "Speaking speed multiplier.",
+                    "x-description-zh": "语速倍率，1 为正常语速，范围 0.5–2。"
+                  },
+                  "response_format": {
+                    "type": "string",
+                    "enum": [
+                      "mp3"
+                    ],
+                    "default": "mp3",
+                    "description": "Only MP3 is supported.",
+                    "x-description-zh": "当前只支持 MP3。"
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "pitch": {
+                        "type": "integer",
+                        "minimum": -12,
+                        "maximum": 12,
+                        "default": 0,
+                        "description": "Pitch control.",
+                        "x-description-zh": "音调控制，范围 -12–12，0 保持默认音调。"
+                      },
+                      "volume": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 10,
+                        "default": 0,
+                        "description": "Volume control: 0 retains baseline volume; values up to 10 increase it. Zero is not mute.",
+                        "x-description-zh": "音量控制，0 为基础音量，最高 10；0 不是静音。"
+                      },
+                      "emotion": {
+                        "type": "string",
+                        "enum": [
+                          "",
+                          "happy",
+                          "sad",
+                          "angry",
+                          "fearful",
+                          "disgusted",
+                          "surprised",
+                          "neutral"
+                        ],
+                        "default": "",
+                        "description": "Emotion applied to the entire text. Perceived effect varies with voice and text.",
+                        "x-description-zh": "作用于整段文本的情绪；实际效果随音色和文本变化。空字符串使用默认情绪。"
+                      },
+                      "enhance": {
+                        "type": "boolean",
+                        "default": true,
+                        "description": "Enable speech enhancement. Set false for an unenhanced request.",
+                        "x-description-zh": "是否开启语音增强。传 false 关闭增强；不传时默认开启。"
+                      }
+                    }
+                  }
+                },
+                "description": "The form uses canonical speech fields. Legacy text/parameters/output requests remain valid in the JSON editor; do not mix formats.",
+                "x-description-zh": "表单使用新版语音字段。旧版 text/parameters/output 请求仍可在 JSON 编辑中提交，不能混用两种格式。"
               },
               "example": {
                 "model": "vox-1",
-                "text": "你好，欢迎使用我们的语音服务。",
+                "input": "你好，欢迎使用我们的语音服务。",
                 "voice": "vx_dbd27c4a9332",
-                "parameters": {
-                  "speed": 1,
+                "speed": 1,
+                "response_format": "mp3",
+                "metadata": {
                   "pitch": 0,
                   "volume": 0,
                   "emotion": "neutral",
                   "enhance": true
-                },
-                "output": {
-                  "format": "mp3"
                 }
               }
             }
@@ -121,6 +343,24 @@
               }
             }
           }
+        },
+        "x-playground-task": {
+          "poll": "/tts/v1/tasks/{task_id}",
+          "parameter": "task_id",
+          "states": [
+            "queued",
+            "running",
+            "succeeded",
+            "failed"
+          ],
+          "completed": [
+            "succeeded"
+          ],
+          "failed": [
+            "failed"
+          ],
+          "artifacts": "/v1/tasks/{task_id}/artifacts",
+          "download": "/v1/tasks/{task_id}/artifacts/{artifact_key}/content"
         }
       }
     },
@@ -408,9 +648,6 @@
               }
             }
           },
-          "416": {
-            "description": "Requested byte range is invalid."
-          },
           "400": {
             "description": "JSON response",
             "content": {
@@ -440,6 +677,9 @@
                 }
               }
             }
+          },
+          "416": {
+            "description": "Requested byte range is invalid."
           },
           "429": {
             "description": "JSON response",
@@ -517,9 +757,6 @@
               }
             }
           },
-          "416": {
-            "description": "Requested byte range is invalid."
-          },
           "400": {
             "description": "JSON response",
             "content": {
@@ -549,6 +786,9 @@
                 }
               }
             }
+          },
+          "416": {
+            "description": "Requested byte range is invalid."
           },
           "429": {
             "description": "JSON response",
@@ -784,6 +1024,98 @@
                   "type": "string",
                   "description": "Use this URL to retrieve the audio. Access parameters on share URLs act as credentials."
                 }
+              }
+            }
+          }
+        }
+      },
+      "CanonicalSpeech": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "model",
+          "input",
+          "voice"
+        ],
+        "properties": {
+          "model": {
+            "type": "string",
+            "enum": [
+              "vox-1"
+            ],
+            "x-description-zh": "本页选定的模型调用名称。"
+          },
+          "input": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 5000,
+            "description": "Plain text, up to 5000 weighted character units: U+4E00–U+9FFF Han characters count twice, other Unicode code points once. No truncation or splitting. Emotion markup is not interpreted.",
+            "x-description-zh": "普通文本，最多 5000 个加权字符单位：U+4E00–U+9FFF 汉字计 2，其余 Unicode 字符计 1。不截断、不拆单；文本内情绪标签不解析，请使用 emotion 参数。"
+          },
+          "voice": {
+            "type": "string",
+            "pattern": "^vx_[a-f0-9]{12}$",
+            "description": "A voice ID from /assets/media-tts/voices.json on the documentation site. Voices belong to their listed models.",
+            "x-description-zh": "从文档音色库选择音色 ID；音色只能用于目录中标明的模型。"
+          },
+          "speed": {
+            "type": "number",
+            "minimum": 0.5,
+            "maximum": 2,
+            "default": 1,
+            "description": "Speaking speed multiplier.",
+            "x-description-zh": "语速倍率，1 为正常语速，范围 0.5–2。"
+          },
+          "response_format": {
+            "type": "string",
+            "enum": [
+              "mp3"
+            ],
+            "default": "mp3",
+            "description": "Only MP3 is supported.",
+            "x-description-zh": "当前只支持 MP3。"
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "pitch": {
+                "type": "integer",
+                "minimum": -12,
+                "maximum": 12,
+                "default": 0,
+                "description": "Pitch control.",
+                "x-description-zh": "音调控制，范围 -12–12，0 保持默认音调。"
+              },
+              "volume": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10,
+                "default": 0,
+                "description": "Volume control: 0 retains baseline volume; values up to 10 increase it. Zero is not mute.",
+                "x-description-zh": "音量控制，0 为基础音量，最高 10；0 不是静音。"
+              },
+              "emotion": {
+                "type": "string",
+                "enum": [
+                  "",
+                  "happy",
+                  "sad",
+                  "angry",
+                  "fearful",
+                  "disgusted",
+                  "surprised",
+                  "neutral"
+                ],
+                "default": "",
+                "description": "Emotion applied to the entire text. Perceived effect varies with voice and text.",
+                "x-description-zh": "作用于整段文本的情绪；实际效果随音色和文本变化。空字符串使用默认情绪。"
+              },
+              "enhance": {
+                "type": "boolean",
+                "default": true,
+                "description": "Enable speech enhancement. Set false for an unenhanced request.",
+                "x-description-zh": "是否开启语音增强。传 false 关闭增强；不传时默认开启。"
               }
             }
           }

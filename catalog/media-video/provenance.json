@@ -1,15 +1,13 @@
 {
-  "repository": "dreammis/vidu2api",
-  "revision": "c3277c83bc408ef12cd01834ca1c7b1913324131",
-  "ref": "main",
+  "repository": "dreammis/XINYU_API",
+  "revision": "693f80cb5703c6172291d204ead6c7db1c3fd72e",
+  "ref": "master",
   "workingTreeChanges": [
-    "?? integrations/newapi/media-video/public-docs.json",
-    "?? integrations/newapi/media-video/public-guide.en.md",
-    "?? integrations/newapi/media-video/public-openapi.json"
+    "M projects/vidu2api/newapi/media-video/public-openapi.json"
   ],
   "hashes": {
-    "public-docs.json": "fcbd30a571895b2331b1f4d430a37a3664dbe6de4fd74255c0fc5b575b021af3",
-    "openapi.json": "c36cb22f52816e1a3bc59afbd748bab73cb490d0b93a95af90c108983a925116",
+    "public-docs.json": "57ad0195f62ce348ad99074e77dd78ec60e0914e2080d36ce44edbfa45760788",
+    "openapi.json": "8a7e31d3fd36d97964646ca04acda60d3bb22ac2c9eb9c256fc15222e1de03b8",
     "guide.zh.md": "ea7616c3ca1646902e4a702238782c843ca1e9fd4f823c102ed4a44d97e956c7",
     "guide.en.md": "89df0e1c2bad4fbb2395af3f85ee3935697192ff00c0867b777d375337c7acc3"
   }

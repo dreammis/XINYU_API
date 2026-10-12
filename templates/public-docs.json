@@ -5,9 +5,9 @@
   "version": "1.0.0",
   "category": "tool",
   "models": [],
-  "openapi": "integrations/newapi/your-capability/public-openapi.json",
+  "openapi": "projects/your-source/newapi/your-capability/public-openapi.json",
   "guides": {
-    "zh": "integrations/newapi/your-capability/public-guide.zh.md",
-    "en": "integrations/newapi/your-capability/public-guide.en.md"
+    "zh": "projects/your-source/newapi/your-capability/public-guide.zh.md",
+    "en": "projects/your-source/newapi/your-capability/public-guide.en.md"
   }
 }

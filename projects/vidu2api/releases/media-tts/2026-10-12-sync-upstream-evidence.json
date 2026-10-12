@@ -1,0 +1,394 @@
+{
+  "scope": "Upstream A only; New API customer acceptance pending",
+  "runtime": {
+    "runtimeMatchesLocal": true,
+    "commit": "1d0a8407b0fe9a3137082d2aa404f02374a01ce3",
+    "sourceHashes": {
+      "gateway/app.py": "73cd67da6bc542c8fb120a3d0baa392428dedaf2083838f8a2cd64b42fa23b20",
+      "gateway/audio_generation.py": "8070c9dedd38c4c7430c20d5fa1cff5712143ed9cf4830cd09a4a955410b1eef",
+      "gateway/schemas.py": "f85dd037d13b8fff09230af68bb92c5b55ba80ea41260befdccba47943d20c39",
+      "gateway/tts_voices.json": "0faed966b59bb22658429890b642c791a367a037237aba6dd647603b0de342e4"
+    }
+  },
+  "deployment": {
+    "deployedAt": "2026-10-12T01:26:49Z",
+    "image": "vidu2api:vox-tts-20261012-sync",
+    "imageId": "sha256:0e427bc450402fb5ed226268a6b5efbc64495e4b20114bbf93260d16ffe54211",
+    "rollbackContainer": "vidu2api-pre-vox-20261012-sync",
+    "configPreserved": {
+      "Env": true,
+      "Entrypoint": true,
+      "Cmd": true,
+      "WorkingDir": true,
+      "Labels": true
+    },
+    "hostConfigPreserved": true,
+    "sourceHashes": {
+      "gateway/app.py": "73cd67da6bc542c8fb120a3d0baa392428dedaf2083838f8a2cd64b42fa23b20",
+      "gateway/audio_generation.py": "8070c9dedd38c4c7430c20d5fa1cff5712143ed9cf4830cd09a4a955410b1eef",
+      "gateway/schemas.py": "f85dd037d13b8fff09230af68bb92c5b55ba80ea41260befdccba47943d20c39",
+      "gateway/tts_voices.json": "0faed966b59bb22658429890b642c791a367a037237aba6dd647603b0de342e4"
+    }
+  },
+  "liveAcceptance": {
+    "startedAt": "2026-10-12T01:27:02.114494+00:00",
+    "requests": [
+      {
+        "name": "short-public-domain",
+        "url": "https://vidu2api.cgssoccer.com/v1/audio/speech",
+        "request": {
+          "model": "vox-1",
+          "input": "你好，这是同步语音验收。声音参数已传入，欢迎使用。",
+          "voice": "vx_dbd27c4a9332",
+          "speed": 1.25,
+          "response_format": "mp3",
+          "metadata": {
+            "pitch": -2,
+            "volume": 5,
+            "emotion": "happy",
+            "enhance": false
+          }
+        },
+        "submittedAt": "2026-10-12T01:27:02.304055+00:00",
+        "status": 200,
+        "contentType": "audio/mpeg",
+        "seconds": 13.996,
+        "bytes": 67392,
+        "sha256": "cbe1e6bd5efbe90675c9ff8e375fdb8e501f7a835b14dc567510152287c1d300",
+        "sourceTagsAbsent": true
+      },
+      {
+        "name": "long-origin",
+        "url": "http://127.0.0.1:18320/v1/audio/speech",
+        "request": {
+          "model": "vox-1",
+          "input": "[2500 Han characters; original submitted without changes]",
+          "voice": "vx_dbd27c4a9332",
+          "response_format": "mp3"
+        },
+        "submittedAt": "2026-10-12T01:27:16.302203+00:00",
+        "status": 200,
+        "contentType": "audio/mpeg",
+        "seconds": 21.47,
+        "bytes": 10156032,
+        "sha256": "299416d922938186b22960318c25d838b78cb70cef905a5bef3e9c2b2b827e4e",
+        "sourceTagsAbsent": true
+      }
+    ],
+    "validationErrors": [
+      {
+        "name": "long-invalid",
+        "status": 422,
+        "contentType": "application/json",
+        "response": {
+          "detail": "weighted input over limit; no generation"
+        }
+      },
+      {
+        "name": "voice-invalid",
+        "status": 422,
+        "contentType": "application/json",
+        "response": {
+          "detail": [
+            {
+              "type": "value_error",
+              "loc": [
+                "body",
+                "vox-1",
+                "voice"
+              ],
+              "msg": "Value error, voice is not available for this model",
+              "input": "vx_missing",
+              "ctx": {
+                "error": {}
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "format-invalid",
+        "status": 422,
+        "contentType": "application/json",
+        "response": {
+          "detail": [
+            {
+              "type": "literal_error",
+              "loc": [
+                "body",
+                "vox-1",
+                "response_format"
+              ],
+              "msg": "Input should be 'mp3'",
+              "input": "wav",
+              "ctx": {
+                "expected": "'mp3'"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "metadata-null",
+        "status": 422,
+        "contentType": "application/json",
+        "response": {
+          "detail": [
+            {
+              "type": "model_attributes_type",
+              "loc": [
+                "body",
+                "vox-1",
+                "metadata"
+              ],
+              "msg": "Input should be a valid dictionary or object to extract fields from",
+              "input": null
+            }
+          ]
+        }
+      },
+      {
+        "name": "top-level-control",
+        "status": 422,
+        "contentType": "application/json",
+        "response": {
+          "detail": [
+            {
+              "type": "extra_forbidden",
+              "loc": [
+                "body",
+                "vox-1",
+                "pitch"
+              ],
+              "msg": "Extra inputs are not permitted",
+              "input": 2
+            }
+          ]
+        }
+      },
+      {
+        "name": "speed-invalid",
+        "status": 422,
+        "contentType": "application/json",
+        "response": {
+          "detail": [
+            {
+              "type": "less_than_equal",
+              "loc": [
+                "body",
+                "vox-1",
+                "speed"
+              ],
+              "msg": "Input should be less than or equal to 2",
+              "input": 3,
+              "ctx": {
+                "le": 2.0
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "model-invalid",
+        "status": 422,
+        "contentType": "application/json",
+        "response": {
+          "detail": [
+            {
+              "type": "speech_model",
+              "loc": [
+                "body"
+              ],
+              "msg": "unsupported speech model",
+              "input": {
+                "model": "unknown",
+                "input": "你好，这是同步语音验收。声音参数已传入，欢迎使用。",
+                "voice": "vx_dbd27c4a9332",
+                "speed": 1.25,
+                "response_format": "mp3",
+                "metadata": {
+                  "pitch": -2,
+                  "volume": 5,
+                  "emotion": "happy",
+                  "enhance": false
+                }
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "anonymousStatus": 401,
+    "async": {
+      "submittedAt": "2026-10-12T01:27:37.822202+00:00",
+      "submitStatus": 200,
+      "initialStatus": "queued",
+      "id": "4a9fbbfa2ec343e88ba6dc8f9dd9ad10",
+      "status": "succeeded",
+      "contentStatus": 200,
+      "bytes": 62208,
+      "seconds": 10.104,
+      "sha256": "2942cb8e9d38fd490ae52089c114cb30cb1713d5edd57c3f219806c90690716a",
+      "sourceTagsAbsent": true,
+      "headStatus": 200,
+      "rangeStatus": 206,
+      "anonymousStatus": 401
+    },
+    "storedSyncTasks": [
+      {
+        "id": "bb515863-4570-422b-9a57-7ecddf005f85",
+        "internalModelMatches": true,
+        "internalVoiceMatches": true,
+        "status": "success",
+        "originalTextLength": 25
+      },
+      {
+        "id": "b1522277-1c4f-42fe-9532-6b56c15f7b0d",
+        "internalModelMatches": true,
+        "internalVoiceMatches": true,
+        "status": "success",
+        "originalTextLength": 2500
+      }
+    ],
+    "temporaryKeyDeleted": true,
+    "finishedAt": "2026-10-12T01:27:48.013297+00:00"
+  },
+  "audioValidation": [
+    {
+      "name": "short-public-domain",
+      "probe": {
+        "programs": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "32000",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "format_name": "mp3",
+          "duration": "4.176000",
+          "size": "67392"
+        }
+      },
+      "fullDecodePassed": true,
+      "decodeErrors": ""
+    },
+    {
+      "name": "long-origin",
+      "probe": {
+        "programs": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "32000",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "format_name": "mp3",
+          "duration": "634.716000",
+          "size": "10156032"
+        }
+      },
+      "fullDecodePassed": true,
+      "decodeErrors": ""
+    },
+    {
+      "name": "async",
+      "probe": {
+        "programs": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "32000",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "format_name": "mp3",
+          "duration": "3.852000",
+          "size": "62208"
+        }
+      },
+      "fullDecodePassed": true,
+      "decodeErrors": ""
+    }
+  ],
+  "providerControlVerification": {
+    "detailQueriedWithoutGeneration": true,
+    "taskState": "success",
+    "providerEchoedControls": [
+      {
+        "path": "task.input.prompts[0].audio.emotion",
+        "value": "happy"
+      },
+      {
+        "path": "task.input.prompts[0].audio.pitch",
+        "value": -2
+      },
+      {
+        "path": "task.input.enhance",
+        "value": false
+      },
+      {
+        "path": "task.settings.voice_id",
+        "mappedVoiceMatches": true
+      },
+      {
+        "path": "task.settings.speed",
+        "value": 1.25
+      },
+      {
+        "path": "task.settings.volume",
+        "value": 5
+      }
+    ],
+    "rootKeys": [
+      "id",
+      "input",
+      "settings",
+      "type",
+      "state",
+      "creations",
+      "err_code",
+      "scene",
+      "created_at",
+      "origin_task_type",
+      "extra_params",
+      "err_msg",
+      "stage_results"
+    ]
+  },
+  "generationCount": 3,
+  "generationRetries": 0,
+  "tests": {
+    "command": "uv run pytest tests -q",
+    "passed": 388,
+    "skipped": 27,
+    "subtestsPassed": 40
+  },
+  "finalHealth": {
+    "healthStatus": 200,
+    "activeTasks": 0,
+    "acceptanceWindowAudioTaskCount": 3,
+    "taskResults": [
+      {
+        "kind": "generation",
+        "status": "success",
+        "textUnits": 46
+      },
+      {
+        "kind": "generation",
+        "status": "success",
+        "textUnits": 5000
+      },
+      {
+        "kind": "async_audio",
+        "status": "success",
+        "textUnits": 32
+      }
+    ],
+    "temporaryKeyCount": 0
+  }
+}

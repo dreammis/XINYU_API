@@ -18,9 +18,10 @@
     "image-pro",
     "image-creative"
   ],
-  "openapi": "integrations/newapi/media-image/public-openapi.json",
+  "openapi": "projects/vidu2api/newapi/media-image/public-openapi.json",
   "guides": {
-    "zh": "integrations/newapi/media-image/README.md",
-    "en": "integrations/newapi/media-image/public-guide.en.md"
-  }
+    "zh": "projects/vidu2api/newapi/media-image/public-guide.zh.md",
+    "en": "projects/vidu2api/newapi/media-image/public-guide.en.md"
+  },
+  "category": "image"
 }

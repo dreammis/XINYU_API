@@ -1,4 +1,5 @@
 // 规范引用按 JSON Pointer 解析，展示和示例使用同一个原始 schema。
+import { executionMode } from './execution-mode.mjs';
 export function resolveSchema(spec, schema = {}) {
   if (!schema.$ref) return schema;
   const target = schema.$ref.slice(2).split('/').reduce((value, key) => value?.[key.replaceAll('~1', '/').replaceAll('~0', '~')], spec);
@@ -25,7 +26,8 @@ export function requestExample(spec, body, model) {
     // 换模型不能沿用其他模型的尺寸、时长和质量。模型页只保留已交付示例的必填字段。
     const required = new Set(schema.required ?? []);
     // Responses 的 input/prompt 由 oneOf 声明必填，不能在最小示例中丢掉。
-    for (const branch of schema.oneOf ?? []) {
+    for (const definition of schema.oneOf ?? []) {
+      const branch = resolveSchema(spec, definition);
       if (branch.required?.every(key => value[key] !== undefined)) branch.required.forEach(key => required.add(key));
     }
     value = Object.fromEntries(Object.entries(value).filter(([key]) => key === 'model' || required.has(key)));
@@ -44,12 +46,16 @@ export function operationExamples(spec, operation, mediaType, model) {
   if (minimal && typeof minimal === 'object') {
     for (const key of ['stream', 'delivery', 'progress', 'background']) if (!schema.required?.includes(key)) delete minimal[key];
   }
-  const examples = [{ id: 'json', example: minimal, responseType: 'application/json', title: { zh: '普通 JSON', en: 'JSON' } }];
+  // 请求为 JSON 不代表响应也是 JSON；同步语音应配对实际音频响应。
+  const successTypes = Object.entries(operation.responses).filter(([status]) => /^2/.test(status)).flatMap(([, response]) => Object.keys(response.content ?? {}));
+  const responseType = successTypes.includes('application/json') ? 'application/json' : successTypes.find(type => /^(audio|video|image)\//.test(type) || type === 'application/octet-stream') ?? 'application/json';
+  const examples = [{ id: 'json', example: minimal, responseType, title: responseType.startsWith('audio/') ? { zh: '音频文件', en: 'Audio file' } : responseType === 'application/json' ? { zh: '普通 JSON', en: 'JSON' } : { zh: '文件', en: 'File' } }];
   if (minimal && schema.properties?.stream && Object.values(operation.responses).some(response => response.content?.['text/event-stream'])) {
     examples.push({ id: 'stream', example: { ...minimal, stream: true }, responseType: 'text/event-stream', title: { zh: '流式 SSE', en: 'SSE stream' } });
     if (schema.properties.delivery?.const === 'url') examples.push({ id: 'stream-url', example: { ...minimal, stream: true, delivery: 'url' }, responseType: 'text/event-stream', title: { zh: '流式 SSE · URL 交付', en: 'SSE · URL delivery' } });
   }
   if (minimal && schema.properties?.background) examples.push({ id: 'background', example: { ...minimal, background: true }, responseType: 'application/json', title: { zh: '后台任务', en: 'Background task' } });
+  for (const item of examples) if (executionMode(operation, item.example) === 'async') item.title = {zh: '异步任务 · JSON', en: 'Async task · JSON'};
   return examples;
 }
 

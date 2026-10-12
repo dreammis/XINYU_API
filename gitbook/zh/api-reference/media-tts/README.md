@@ -4,6 +4,7 @@
 
 | 方法 | 路径 | 说明 |
 | --- | --- | --- |
+| POST | `/v1/audio/speech` | [同步语音合成](synthesize-speech.md) |
 | POST | `/tts/v1/tasks` | [创建语音任务](create-speech.md) |
 | GET | `/tts/v1/tasks/{task_id}` | [查询语音任务](get-speech.md) |
 | GET | `/v1/tasks/{task_id}/artifacts` | [获取音频产物地址](list-speech-artifacts.md) |

@@ -6,7 +6,7 @@
     "zh": "语音合成",
     "en": "Text to speech"
   },
-  "version": "1.0.0",
+  "version": "1.1.0",
   "models": [
     "vox-1"
   ],
@@ -374,6 +374,25 @@
     "samples/vx_fc778d49259c.mp3": "projects/vidu2api/newapi/media-tts/public-assets/samples/vx_fc778d49259c.mp3",
     "samples/vx_fd03045561e7.mp3": "projects/vidu2api/newapi/media-tts/public-assets/samples/vx_fd03045561e7.mp3",
     "samples/vx_fd6a6cace7ed.mp3": "projects/vidu2api/newapi/media-tts/public-assets/samples/vx_fd6a6cace7ed.mp3",
-    "samples/vx_ff6e671b0946.mp3": "projects/vidu2api/newapi/media-tts/public-assets/samples/vx_ff6e671b0946.mp3"
+    "samples/vx_ff6e671b0946.mp3": "projects/vidu2api/newapi/media-tts/public-assets/samples/vx_ff6e671b0946.mp3",
+    "avatars/vx_5c8d6b5ec0fb.png": "projects/vidu2api/newapi/media-tts/public-assets/avatars/vx_5c8d6b5ec0fb.png",
+    "avatars/vx_51c761e96b01.png": "projects/vidu2api/newapi/media-tts/public-assets/avatars/vx_51c761e96b01.png",
+    "avatars/vx_d19916489ad4.png": "projects/vidu2api/newapi/media-tts/public-assets/avatars/vx_d19916489ad4.png",
+    "avatars/vx_143020b9ce61.jpg": "projects/vidu2api/newapi/media-tts/public-assets/avatars/vx_143020b9ce61.jpg",
+    "avatars/vx_14538dd3c7fd.png": "projects/vidu2api/newapi/media-tts/public-assets/avatars/vx_14538dd3c7fd.png",
+    "avatars/vx_0944ae284bd7.png": "projects/vidu2api/newapi/media-tts/public-assets/avatars/vx_0944ae284bd7.png",
+    "avatars/vx_3c65ce790c99.png": "projects/vidu2api/newapi/media-tts/public-assets/avatars/vx_3c65ce790c99.png",
+    "avatars/vx_801a37ed55ce.png": "projects/vidu2api/newapi/media-tts/public-assets/avatars/vx_801a37ed55ce.png",
+    "avatars/vx_ee1c4ca5b34c.png": "projects/vidu2api/newapi/media-tts/public-assets/avatars/vx_ee1c4ca5b34c.png",
+    "avatars/vx_cb4d5c7f7a30.jpg": "projects/vidu2api/newapi/media-tts/public-assets/avatars/vx_cb4d5c7f7a30.jpg",
+    "avatars/vx_de51d8082bdc.png": "projects/vidu2api/newapi/media-tts/public-assets/avatars/vx_de51d8082bdc.png",
+    "avatars/vx_44d1f5eaf607.png": "projects/vidu2api/newapi/media-tts/public-assets/avatars/vx_44d1f5eaf607.png",
+    "avatars/vx_7dc89e106349.png": "projects/vidu2api/newapi/media-tts/public-assets/avatars/vx_7dc89e106349.png",
+    "avatars/vx_edde2de56db5.png": "projects/vidu2api/newapi/media-tts/public-assets/avatars/vx_edde2de56db5.png",
+    "avatars/vx_8a99a27aca93.jpg": "projects/vidu2api/newapi/media-tts/public-assets/avatars/vx_8a99a27aca93.jpg",
+    "avatars/vx_a75d3ffdc125.png": "projects/vidu2api/newapi/media-tts/public-assets/avatars/vx_a75d3ffdc125.png",
+    "avatars/vx_c49d31c1c2ec.png": "projects/vidu2api/newapi/media-tts/public-assets/avatars/vx_c49d31c1c2ec.png",
+    "avatars/vx_7a3439e3f564.png": "projects/vidu2api/newapi/media-tts/public-assets/avatars/vx_7a3439e3f564.png",
+    "avatars/vx_41052c2f8097.png": "projects/vidu2api/newapi/media-tts/public-assets/avatars/vx_41052c2f8097.png"
   }
 }

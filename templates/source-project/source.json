@@ -1,0 +1,12 @@
+{
+  "sourceId": "your-source",
+  "repository": null,
+  "localDirectory": null,
+  "checkedAt": null,
+  "sourceRevision": null,
+  "workingTreeChanges": [],
+  "originalDocuments": [],
+  "implementation": [],
+  "capabilities": [],
+  "note": "模板：由 A 的 AI 根据实际工程填写。能力记录包含 id、integrationDirectory、publicManifest；只有本项目维护自定义插件源码时填写 pluginKey，复用其他项目插件时链接其维护位置，避免重复归属。"
+}

@@ -1,35 +1,28 @@
-# 发给文档工程 AI 的任务说明
+# 发给 C 的维护 AI：核对接入交付并发布文档
 
-## 系列和模型中心
+你维护 C：接入与文档中心 G:/workspace/xyapi_doc。A 是实现功能的源工程；B 是运行中的 New API 服务。默认 A 的 AI 已在 C 完成适配器和公开文件，你负责公共规则、汇总校验与发布，不重新抄参数。
 
-新能力按公开清单的 `category` 自动进入系列；旧清单尚未携带分类时，在 `sources.json` 登记 `category`，不能按工程名或模型名前缀猜。两处都提供分类时必须一致。
+交付记录：【填写 C 的 projects/<源工程ID>/releases/<能力ID>/<版本>.md 或外部交付路径】。
+能力/清单：【填写 ID 或 public-docs.json 位置】。
 
-模型详情使用清单中的可选 `modelDetails`；适用操作只引用真实请求模型枚举支持的入口。系列选型页使用 `sources.json` 中 `selectionSections` 指定的中英文二级标题，直接摘录公开指南。标题不存在时构建失败，需要回到来源登记修正，不能静默略过。
+先读 AGENTS.md、START_HERE.md、docs/maintenance/api-release-sop.md、newapi/README.md。
 
-客户侧栏目为 API 手册、模型中心、接入指南、常见问题。未公开系列只在全部系列中标状态，不生成假接口。新增页面、模型和导航从生成器输出，不手改 `site/zh`、`site/en`、生成的数据 JSON 或复制另一份参数表。完整规则见 `docs/maintenance/model-catalog-contract.md`。
+当前在线调试采用 VitePress/Vue + JSON Forms（MIT）。正文和“试一试”从同一份 OpenAPI 读取参数说明、默认值和限制；来源字段应提供 description 与中文 x-description-zh，并写明省略参数时的行为。表单说明必须直接可见，显示校验错误后也保留；新增能力在浏览器实际验证当前模型／模式、实时输入、文件数组和响应展示。
 
-请在 `G:/workspace/xyapi_doc` 接入或更新这项能力的客户文档，按现有 Cloudflare Pages + VitePress/Vue + JSON Forms 流程完成导入、检查和发布。不要重新猜测接口，也不要让我手抄参数。
+1. 读取适配器、公开文件与交付证据，核对 A 业务版本和 B 真实启用/验收结果。未验收能力只做本地预览，不发布为已可用。
+2. C 的 projects/<源工程ID>/newapi/<能力ID>/ 是集中能力的唯一客户协议维护入口；sources.json 登记 C 自身。相同协议的多个渠道复用同一能力。确实留在外部维护的契约才登记外部仓库，不做第二份副本。
+3. 按 docs/maintenance/model-catalog-contract.md 核对 category、modelDetails、modelGroups 和 selectionSections。分类不靠名字猜，选型章节直接引用指南，标题缺失明确失败。
+4. 先 npm test 验证真实适配逻辑；npm run docs:sync 导入 C 本机公开文件，再 npm run build、npm run docs:check。按现有 CI 编译 Pages Function。外部远端发布需要时才用 docs:sync:remote。
+5. 检查中英文导航、模型、接口、示例、规范下载与在线调试。调试使用客户 Key 和本站 /api-proxy，不引入管理员 Key 或第三方代理；401 不能替代业务和计费验收。
+6. 修改契约回 projects/<源工程ID>/newapi/<能力ID>/，共用文案回 content；不手改 catalog、gitbook、site 自动生成页面或允许列表。
+7. 本机有无关前端工作和未推送历史。复用适用的隔离发布工作区或基于远端生产分支准备本次提交，只发布本次接入/文档必要文件，不 git add .，不把无关历史整块推送。
+8. 按会话已有授权发布并核对 Cloudflare 实际部署、公开页面与文档版本。C 文件发布不等于 B 已启用，网站旧 URL 可用不等于本次部署成功。
+9. 在同一交付记录回填契约来源 SHA、未提交状态、检查结果、C 文档提交和部署链接。C 内维护无需给每个 A 再设置通知 Secret；确实使用外部通知时核对该段实际运行记录。
 
-正文和“试一试”从同一份 OpenAPI 读取参数说明、默认值和限制。来源应提供字段 `description` 与中文 `x-description-zh`，说明省略参数时的真实行为；缺少业务说明时回到源契约补充，不能由调试器猜测。表单说明必须直接可见，显示校验错误后也不能消失。新增能力还需在浏览器实际打开弹窗，验证当前模型／模式、实时输入、文件数组和响应展示。
+完成后返回中文/英文页面、客户接入验收状态、源码和文档版本、检查与部署结果、明确待完成项。不要未经我授权向其他任务发送消息。
 
-接入任务交接记录：【粘贴 New API 接入 AI 返回的文件路径或 Git 链接】。
-公开清单 / 来源登记项：【粘贴接入 AI 返回的路径或 JSON】。
 
-执行 SOP：`docs/maintenance/api-release-sop.md`。
-
-请完成以下工作：
-
-1. 读取本工程规则、交接记录、公开清单、实际客户规范和已部署验收证据。分清“上游可用”“接入已实现”“客户入口已验收”“文档已发布”；没有客户入口验收时可以完成本地预览，但不能发布为可用能力。
-2. 确认客户协议只有一个维护仓库。已登记能力更新原登记；新能力才新增 `sources.json`。ID 不与其他能力重复，ref 是已经发布的契约版本，不能用不存在的分支或把开发分支默认当作上线版本。
-3. 确认全部登记来源可从远端读取。当前导入器一次读取全部来源；不能因某个来源缺文件就手改快照或跳过错误。只读取清单中列出的公开文件，不导入内部交接证据。
-4. 正式发布使用 `npm run docs:sync:remote`。本机联调用 `npm run docs:sync`，如实记录未提交变化。导入后运行 `npm run build`、`npm run docs:check`、`npm test`，按现有 CI 完成 Pages Function 编译检查。
-5. 验证中英文导航、能力页、接口参数、示例、规范下载地址和在线调试。调试使用客户自己的 Key 和本站 `/api-proxy`，不增加管理员 Key 或第三方调试代理。沿用现有授权额度；401 只能证明鉴权链路，不能代替业务结果与计费验收。
-6. 不手改 `catalog`、`gitbook`、自动生成页面或调试允许列表；接口问题交回公开契约维护任务修正。共用文案在 `content` 中维护。
-7. 本机已有未推送的前端历史和其他未提交工作；先检查 Git 状态和任务附件，复用适用的发布工作区或基于远端生产分支隔离发布。只提交本次文档、来源、快照和所需生成变化，不能 `git add .` 或把主目录历史整块推送。
-8. 当前会话已授权发布的内容，完成后推送文档仓库生产分支，确认 Cloudflare 实际部署成功、公开 URL 可访问。否则完成可审阅结果，并明确需要的具体发布授权。不要把“提交成功”写成“网站已上线”。
-9. 核对源仓库通知 workflow 与跨仓库 Secrets 是否已配置，给出“源 → 文档”“文档 → Cloudflare”两段分别验证的结果，不能把现有网站上线等同整个链路自动化完成。
-10. 在交接记录的“文档发布”部分填写实际导入 SHA、文档提交、部署结果和站点地址。记录在维护文档中，内部交接材料不进入客户站导航。
-
-完成后给我：中文/英文页面链接、来源版本、检查结论、Cloudflare 部署结果、自动同步状态及仍缺少的具体条件。不要未经我授权给其他任务发送消息。
+完整技术规范：G:/workspace/xyapi_doc/docs/integration/README.md。项目索引：G:/workspace/xyapi_doc/projects/README.md。
+先在 projects/<真实源工程ID>/ 保存 README、source.json、upstream/api.md、research/newapi-integration.md；能力目录补 channel.md。项目模板在 templates/source-project/。C 的文档作者先读项目资料和验收证据，再导入客户契约。
 
 公共调试与正文必须共用字段约束和组合规则说明：范围、默认值、文件互斥输入及条件限制都要在发送前可读。修改表单／JSON 切换时检查无效草稿是否恢复为当前有效值；音色试听按钮必须与原生播放器的播放／暂停事件同步。

@@ -1,0 +1,6 @@
+{
+  "baseUrl": "https://openai.2yanx.dpdns.org",
+  "adminUserId": "1",
+  "credentialFile": ".local/newapi/admin.credential.xml",
+  "sourceThread": "01a0ff08-4edc-7ef3-94b7-f595aa972c54"
+}

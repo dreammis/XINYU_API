@@ -28,6 +28,7 @@
 
 * [总览与模型选择](api-reference/media-tts/README.md)
 * [使用流程与限制](guides/media-tts.md)
+* [POST 同步语音合成](api-reference/media-tts/synthesize-speech.md)
 * [POST 创建语音任务](api-reference/media-tts/create-speech.md)
 * [GET 查询语音任务](api-reference/media-tts/get-speech.md)
 * [GET 获取音频产物地址](api-reference/media-tts/list-speech-artifacts.md)

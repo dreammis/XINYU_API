@@ -6,36 +6,37 @@
 
 [调用指南与限制](../../guides/media-tts.md)
 
-{% openapi src="https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-tts.json?version=a045601e2c4b2c9d" path="/tts/v1/tasks" method="post" %}
-https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-tts.json?version=a045601e2c4b2c9d
+{% openapi src="https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-tts.json?version=bdc985cc3380ed2a" path="/tts/v1/tasks" method="post" %}
+https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-tts.json?version=bdc985cc3380ed2a
 {% endopenapi %}
 
 ## application/json
 
+The form uses canonical speech fields. Legacy text/parameters/output requests remain valid in the JSON editor; do not mix formats.
+
 | 参数 | 类型 | 必填 | 默认值 / 可选值 | 说明 |
 | --- | --- | --- | --- | --- |
 | `model` | string | 是 | vox-1 | 本页选定的模型调用名称。 |
-| `text` | string | 是 | — | 普通文本，最多 5000 个加权字符单位：U+4E00–U+9FFF 汉字计 2，其余 Unicode 字符计 1。不截断、不拆单；文本内情绪标签不解析，请使用 emotion 参数。 |
+| `input` | string | 否 | — | 普通文本，最多 5000 个加权字符单位：U+4E00–U+9FFF 汉字计 2，其余 Unicode 字符计 1。不截断、不拆单；文本内情绪标签不解析，请使用 emotion 参数。 |
 | `voice` | string | 是 | — | 从文档音色库选择音色 ID；音色只能用于目录中标明的模型。 |
-| `parameters` | object | 否 | — |  |
-| `output` | object | 否 | — |  |
+| `speed` | number | 否 | 1 | 语速倍率，1 为正常语速，范围 0.5–2。 |
+| `response_format` | string | 否 | mp3 | 当前只支持 MP3。 |
+| `metadata` | object | 否 | — |  |
 
 ### 请求示例
 
 ```json
 {
   "model": "vox-1",
-  "text": "你好，欢迎使用我们的语音服务。",
+  "input": "你好，欢迎使用我们的语音服务。",
   "voice": "vx_dbd27c4a9332",
-  "parameters": {
-    "speed": 1,
+  "speed": 1,
+  "response_format": "mp3",
+  "metadata": {
     "pitch": 0,
     "volume": 0,
     "emotion": "neutral",
     "enhance": true
-  },
-  "output": {
-    "format": "mp3"
   }
 }
 ```

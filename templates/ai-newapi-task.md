@@ -1,36 +1,27 @@
-# 发给 New API 接入 AI 的任务说明
+# 在 C 单独完成 New API 接入
 
-## 文档站系列与模型展示信息
+该任务用于从 A 移交接入工作时；默认 A 的 AI 已按 START_HERE.md 同时负责接入，不要求额外开任务。
 
-在公开清单中填写 `category`：`image`、`video`、`tts`、`music`、`text`、`transcription`、`tool` 或 `other`。非模型能力仍使用 `models: []`。
+A 是业务源工程，B 是运行的 New API 服务，C 是接入与文档中心 G:/workspace/xyapi_doc。接入源码和客户契约维护在 C 的 projects/<源工程ID>/newapi/<能力ID>/。
 
-需要模型分组与选型说明时，提供可选的 `modelDetails`，以 `models` 中的客户名称作为键，字段为 `group`、中英文 `title`、中英文 `summary`、适用操作 ID 数组 `operations`。操作 ID 必须存在于同一份 OpenAPI，信息来自真实接入行为。不要根据名称猜原厂身份、性能或能力。
+上游信息：【填写 A 的目录、接口说明或交付记录；已有上下文直接核对】。
+本次能力：【名称/ID】。
 
-同一协议的模型共用规范；指南集中维护经过验证的模型差异表。补齐操作、参数、响应、请求头与嵌套 schema 的 `x-description-zh`，操作标题使用 `x-title-zh`。文档站可在来源登记中指定 `selectionSections` 的中英文二级标题，直接引用选型章节，避免重复维护差异表。
+先读 C 的 AGENTS.md、START_HERE.md、newapi/README.md 和 docs/maintenance/api-release-sop.md。请在 C 实现或更新本次接入：
 
-示例格式及完整规则见 `G:/workspace/xyapi_doc/docs/maintenance/model-catalog-contract.md`。
+1. 核对 A 实际 API 与证据，确定客户入口、鉴权、参数转换、响应/错误、异步/流式与计费。
+2. 查已有能力、插件与渠道。相同协议复用同一能力；按实际使用插件、内置渠道或适配服务，不为了文档制造封装。
+3. 在 C 的能力目录完成适配实现与测试。管理凭证从本机加密目录加载；共享价格、渠道配置先读取再合并本次条目。
+4. 按已有授权部署并启用到 B，用客户 Key 验收真实成功、错误、任务/下载和账单，记录运行源码哈希与版本。没有条件的项保持待验证。
+5. 根据客户实际行为更新 C 的四个公开文件和版本，真实适配器校验公开示例。非模型能力 models 为 []。
+6. 按 docs/maintenance/model-catalog-contract.md 交付 category 与可选 modelDetails。操作 ID 必须存在且确实支持该模型；标题 x-title-zh、说明 x-description-zh 补齐中文；选型章节引用同一指南，不复制第二份限制表。
+7. 首次登记 sources.json 指向 C 自身，已有能力只更新原项。在 projects/<源工程ID>/releases/<能力ID>/<版本>.md 保存脱敏交付记录，链接 A 证据。
+8. 运行 npm test、npm run docs:sync、npm run build、npm run docs:check；验收后按已有授权发布本次文件并确认 B 运行与 C 网站部署。C 内集中维护不需要 A 配置跨仓库通知 Token。
 
-请把这项已经调通的能力接入 New API，完成客户鉴权、实际调用、计费及公开文档交付。不要只给方案。
+公开文件使用 templates/public-docs.json，路径相对 C 根目录；public-openapi.json 用 OpenAPI 3.1，版本与清单一致，引用仅内部、operationId 稳定唯一。不得输出凭证或在公开文件放管理接口、内部路由与成本。
 
-上游交接记录：【粘贴上游 AI 返回的文件路径或 Git 链接；若本任务已经完成接入，直接核对现有实现】。
+保留其他任务工作，只合并本次条目和文件，禁止整份覆盖或 git add .。完成后给出代码/契约位置、启用版本、脱敏客户与账单证据、交付记录和文档结果，不让我手填 JSON。不要未经我授权向其他任务发送消息。
 
-协作 SOP：`G:/workspace/xyapi_doc/docs/maintenance/api-release-sop.md`。
-交接记录模板：`G:/workspace/xyapi_doc/templates/api-release-handoff.md`。
-公开清单模板：`G:/workspace/xyapi_doc/templates/public-docs.json`。
-文档格式校验规则：`G:/workspace/xyapi_doc/scripts/docs-contract.mjs`。
 
-请按以下顺序完成：
-
-1. 读上游交接、实际实现、本工程规则和已有接入模式。确定客户通过 New API 实际调用的路径、参数、鉴权、结果、错误与计费语义；使用本工程适合的插件或渠道方式，不为了文档创建额外封装。
-2. 确定稳定能力 ID、客户协议维护仓库和目录。如果客户协议在源工程插件实现，公开文件放插件旁；如果实现在独立 New API 仓库，公开文件就放对应适配目录。一个客户协议只有一个公开文档维护位置，不让上游和文档工程各抄一份。
-3. 实现或核验客户 Key 鉴权、参数与模型映射、上下游请求响应转换、计费、失败处理和长任务查询。非模型能力也可以接入，不强行制造 model 参数。与现有能力完全相同的内部渠道复用现有契约，不重复注册能力。
-4. 在任务已有授权范围内部署、启用并验收。以客户真实入口检查成功调用、输入错误、鉴权错误、长任务恢复和账单变化。记录计费单位、扣费时机、失败或取消退款行为。没有真实验证条件时明确保持“待验证”，不要把代码合并、插件上传、管理员测试或 401 当作全部验收通过。
-5. 根据实现和证据交付 `public-openapi.json`、中英文指南、`public-docs.json`。这些描述的是客户接口。使用 OpenAPI 3.1，规范版本与清单版本一致，所有引用在规范内，操作 ID 稳定且唯一，补齐示例和中文标题。`models` 只列客户可用名称，非模型能力为 `[]`。清单中的文件路径相对本仓库根目录。已有指南可直接引用，不复制第二份。
-6. 用真实适配器或协议解码器验证公开请求示例，用实际响应核对 schema、流式事件和下载格式。运行本工程已有适用检查；`vidu2api` 的现有命令是 `node --test integrations/newapi/public-contract.test.mjs`，其他工程使用对应实现的测试。纯 OpenAPI 语法通过不等于接口实现通过。
-7. 在本工程保存最终交接记录，链接上游记录，填写“客户入口验收”和“公开文件交付”。给出已启用版本、验收证据、清单位置、发布 ref、远端契约 SHA、变更摘要。当前任务如已授权发布，就只发布本次接口/公开契约相关改动，保留其他工作；否则明确哪些文件尚未到远端。
-8. 首次接线时，按 SOP 安装通知 workflow。使用 `G:/workspace/xyapi_doc/templates/source-docs-sync.yml`，默认在客户入口验收后手动触发。若已有真实上线流水线，通知接在部署和客户验收成功之后；不能简单把源码 push 当作已发布。缺少跨仓库权限时列出准确的仓库、Secret 名称和所需权限，不把 Token 放进聊天或文件。
-9. 输出可直接交给文档任务的来源登记项：`id`、`repository`、`ref`、`localDirectory`、`manifest`。确认该 ref 存在且全部公开文件在对应提交中。文档任务按登记 ref 读取，发通知不会自动更换 ref。
-
-后续修改客户字段、默认值、模型、限制、结果格式、流式事件或计费行为时，在同一次改动更新规范、指南和版本，验收后发布。开发中未上线的契约不能进入文档工程读取的发布 ref。
-
-完成后返回：客户入口当前状态、公开清单绝对路径或远端链接、发布 ref/SHA、脱敏验收结论、交接记录路径及登记 JSON。指南中不出现真实 Key、管理接口、渠道密钥或内部成本。不要未经我授权给其他任务发送消息。
+完整技术规范：G:/workspace/xyapi_doc/docs/integration/README.md。项目索引：G:/workspace/xyapi_doc/projects/README.md。
+先在 projects/<真实源工程ID>/ 保存 README、source.json、upstream/api.md、research/newapi-integration.md；能力目录补 channel.md。项目模板在 templates/source-project/。C 的文档作者先读项目资料和验收证据，再导入客户契约。

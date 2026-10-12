@@ -27,11 +27,11 @@ export function validateBundle(manifest, spec, guides) {
     publicPath(manifest.guides[locale]);
   }
   publicPath(manifest.openapi);
-  // 音色目录与试听只导入显式列出的公开资源，内部映射和证据永不随目录发布。
+  // 音色目录、试听与静态头像只导入显式列出的资源；不接受可执行的 SVG/HTML。
   if (manifest.assets !== undefined && (!manifest.assets || typeof manifest.assets !== 'object' || Array.isArray(manifest.assets))) throw new Error(`${manifest.id}: assets must be a path mapping`);
   for (const [name, source] of Object.entries(manifest.assets ?? {})) {
     publicPath(name); publicPath(source);
-    if (!/\.(json|mp3)$/.test(name) || path.posix.extname(name) !== path.posix.extname(source)) throw new Error(`${manifest.id}: unsupported public asset ${name}`);
+    if (!/\.(json|mp3|png|jpg|webp)$/.test(name) || path.posix.extname(name) !== path.posix.extname(source)) throw new Error(`${manifest.id}: unsupported public asset ${name}`);
   }
   const operationIds = new Set();
   for (const [endpoint, item] of Object.entries(spec.paths)) {
@@ -41,6 +41,12 @@ export function validateBundle(manifest, spec, guides) {
       if (!operation) continue;
       if (!operation.operationId || operationIds.has(operation.operationId) || !Object.keys(operation.responses ?? {}).length) throw new Error(`${manifest.id}: invalid/duplicate operation ${method} ${endpoint}`);
       operationIds.add(operation.operationId);
+      // 调试器跟随任务契约发起 GET，错误的登记不能变成任意地址转发或重复生成。
+      const task = operation['x-playground-task'];
+      if (task) {
+        for (const followup of [task.poll, task.artifacts, task.download].filter(Boolean)) if (!spec.paths[followup]?.get) throw new Error(`${manifest.id}: missing task GET ${followup}`);
+        if (!task.poll || !task.parameter || !task.poll.includes(`{${task.parameter}}`) || !Array.isArray(task.states) || !task.states.length || !task.completed?.length || !task.failed?.length || [...task.completed, ...task.failed].some(state => !task.states.includes(state))) throw new Error(`${manifest.id}: invalid task workflow`);
+      }
     }
   }
   function visit(value) {

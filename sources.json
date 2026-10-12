@@ -54,10 +54,10 @@
           "Parameters and output dimensions"
         ]
       },
-      "repository": "dreammis/vidu2api",
-      "ref": "main",
-      "localDirectory": "../vidu2api",
-      "manifest": "integrations/newapi/media-image/public-docs.json",
+      "repository": "dreammis/XINYU_API",
+      "ref": "master",
+      "localDirectory": ".",
+      "manifest": "projects/vidu2api/newapi/media-image/public-docs.json",
       "modelNotes": [
         {
           "models": [
@@ -132,10 +132,10 @@
           "Model capabilities"
         ]
       },
-      "repository": "dreammis/vidu2api",
-      "ref": "main",
-      "localDirectory": "../vidu2api",
-      "manifest": "integrations/newapi/media-video/public-docs.json",
+      "repository": "dreammis/XINYU_API",
+      "ref": "master",
+      "localDirectory": ".",
+      "manifest": "projects/vidu2api/newapi/media-video/public-docs.json",
       "modelNotes": [
         {
           "models": [

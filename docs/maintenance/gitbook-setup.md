@@ -23,7 +23,7 @@ GitBook 插件已连接，已在组织 `-LReNmlWasTFD0ptGuSE` 创建并发布 XY
 
 首次选择 **从 GitHub 导入**。当前网站采用两个语言空间，各空间分别绑定同一仓库、分支及上表目录，读取各目录 .gitbook.yaml 和 SUMMARY.md。网站路径分别配置为 zh、en；GitBook 将默认中文空间发布在网站根路径，英文在 /en/。
 
-根目录 gitbook-docs.yaml 保留与当前网站一致的结构，供以后使用整站 Git Sync；当前空间独立绑定不依赖根目录配置。若改为整站绑定，先在 GitBook 关联现有空间 key xyapi-docs-zh / xyapi-docs-en，避免建立重复空间。
+历史上根目录 gitbook-docs.yaml 用于整站 Git Sync；2026-10-12 确定只维护 VitePress + Vue 后已移除该托管配置。`gitbook/` 仍作为当前生成器的 Markdown/OpenAPI 导出与构建中间产物保留，不能删除。本文的空间绑定记录仅用于追溯历史，不是当前部署步骤。
 
 参考站采用侧栏分组、中央正文和页内目录。导航已分为开始使用、能力指南、API Reference。GitBook 提供搜索和移动端布局；在网站定制中设置 XY API 标识、颜色和控制台链接。
 

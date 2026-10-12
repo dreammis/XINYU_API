@@ -12,6 +12,11 @@ export default [
   },
   {
     "origin": "https://openai.2yanx.dpdns.org",
+    "path": "/v1/audio/speech",
+    "method": "POST"
+  },
+  {
+    "origin": "https://openai.2yanx.dpdns.org",
     "path": "/tts/v1/tasks",
     "method": "POST"
   },

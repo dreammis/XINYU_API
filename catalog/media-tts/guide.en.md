@@ -1,6 +1,6 @@
 # Text to speech and voice samples
 
-Vox 1 creates one MP3 from text for narration, announcements and everyday reading. Its own task API supports voice selection, speaking speed, pitch, volume, emotion and enhancement.
+Vox 1 creates one MP3 from text for narration, announcements and everyday reading. The default synchronous API returns MP3 bytes directly; asynchronous tasks remain available. Both support voice selection, speaking speed, pitch, volume, emotion and enhancement.
 
 ## Model and pricing
 
@@ -14,13 +14,37 @@ The CNY estimate uses an exchange rate of 7.3. Account group multipliers and dis
 
 ## Listen and choose a voice
 
-Open [Create a speech task](../api-reference/media-tts/create-speech.md), filter by language, search voices and play fixed samples. Selecting a voice updates the code example and the playground request.
+Open [Synthesize speech](../api-reference/media-tts/synthesize-speech.md), filter by language, search voices and play fixed samples. Selecting a voice updates the code example and the playground request.
 
 Fixed sample playback is free and requires no API key. Synthesizing your own text requires a customer key and normal billing. Some voices have no fixed sample.
 
 Applications may read the [voice catalog](https://xyapi-docs.pages.dev/assets/media-tts/voices.json). It lists public `id`, supported `models`, name, language, description and `preview_url`, which is `null` when no sample is available. Voice IDs are scoped to their listed models. Each model defines its own controls and limits.
 
-## Create, poll and download
+## Synchronous: receive MP3 directly (recommended)
+
+`POST /v1/audio/speech` waits for completion and returns `Content-Type: audio/mpeg` with MP3 bytes, rather than a queued task.
+
+```bash
+curl https://openai.2yanx.dpdns.org/v1/audio/speech \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"model":"vox-1","input":"Hello, welcome to our speech service.","voice":"vx_dbd27c4a9332","speed":1,"response_format":"mp3","metadata":{"pitch":0,"volume":0,"emotion":"neutral","enhance":true}}' \
+  -o speech.mp3
+```
+
+Put `speed` at the top level and other controls in `metadata`. Vox 1 supports MP3 only, with no `stream:true`, SSE or progressive playback. Both execution modes have the same price and text limit.
+
+Generation may continue after a timeout or disconnect. Do not assume no generation or charge occurred, and do not automatically resubmit. The synchronous route provides no customer task ID to poll. Use asynchronous tasks when you need persistent records or recovery after disconnect. Check HTTP status and JSON errors before saving audio; 422 indicates validation failure, although New API may show only a generic message.
+
+## Asynchronous: create, poll and download
+
+`POST /tts/v1/tasks` returns an `id` and `status` immediately. [Create a speech task](../api-reference/media-tts/create-speech.md) accepts the same canonical fields as synchronous speech:
+
+```json
+{"model":"vox-1","input":"Hello, welcome to our speech service.","voice":"vx_dbd27c4a9332","speed":1,"response_format":"mp3","metadata":{"pitch":0,"volume":0,"emotion":"neutral","enhance":true}}
+```
+
+Legacy `text` / `parameters` / `output` requests remain supported. Do not mix the two request formats:
 
 ```bash
 curl https://openai.2yanx.dpdns.org/tts/v1/tasks \
@@ -52,6 +76,6 @@ Download after success using the task owner's customer key. The audio artifact k
 | `emotion` | Empty string by default | Applies to the full text: `happy`, `sad`, `angry`, `fearful`, `disgusted`, `surprised`, `neutral` |
 | `enhance` | Boolean / `true` | Speech enhancement switch |
 
-Put controls inside `parameters`. Use JSON numbers and booleans. Perceived emotion varies with the voice and text, so compare short samples first. Only MP3 is supported. Unknown fields, formats and unsupported voices produce an explicit error.
+For canonical requests, put `speed` at the top level and other controls in `metadata`. Legacy asynchronous requests use `parameters`. Use JSON numbers and booleans. Perceived emotion varies with the voice and text, so compare short samples first. Only MP3 is supported. Unsupported formats, out-of-range controls and invalid voices produce an error. The synchronous relay may ignore unregistered top-level fields; follow this contract. The playground validates requests before sending.
 
 Correct the input before creating a replacement for a failed task. For a temporary service error, retry later after checking any existing task's terminal state.

@@ -7,7 +7,7 @@ import { operationExamples, resolveSchema, requestCode } from '../site/.vitepres
 import { parameterDescription, schemaConstraints, schemaRules } from '../site/.vitepress/theme/schema-presentation.mjs';
 const contracts = Object.fromEntries(await Promise.all(['media-image', 'media-video', 'media-tts'].map(async id => [id, JSON.parse(await readFile(new URL(`../catalog/${id}/openapi.json`, import.meta.url), 'utf8'))])));
 const ajv = createRequestValidator();
-const speech = { spec: contracts['media-tts'], endpoint: '/tts/v1/tasks', method: 'post', mediaType: 'application/json', model: 'vox-1', locale: 'zh' };
+const speech = { spec: contracts['media-tts'], endpoint: '/v1/audio/speech', method: 'post', mediaType: 'application/json', model: 'vox-1', locale: 'zh' };
 
 test('every published model and mode compiles and retains valid seeds without optional defaults', () => {
   let count = 0;
@@ -40,17 +40,17 @@ test('visible explanations retain nested sound controls and invalid types fail w
   for (const text of ['语速倍率', '音调控制', '0 不是静音', '实际效果随音色和文本变化', '默认开启', '0.5', 'false']) assert.ok(ui.includes(text), text);
   const example = operationExamples(speech.spec, speech.spec.paths[speech.endpoint].post, speech.mediaType, speech.model)[0].example;
   const data = requestFormData({ example, model: speech.model, parameters: [], hasBody: true });
-  assert.equal(data.body.parameters, undefined);
-  data.body.parameters = { speed: 1.25, pitch: 0, volume: 0, enhance: false };
+  assert.equal(data.body.metadata, undefined);
+  data.body.metadata = { pitch: 0, volume: 0, enhance: false };
   const validate = ajv.compile(definition.schema);
   assert.equal(validate(data), true);
   const request = buildPlaygroundRequest({ ...speech, data, apiKey: '  Bearer fictional-test-key  ' });
-  assert.deepEqual(JSON.parse(request.init.body).parameters, data.body.parameters);
+  assert.deepEqual(JSON.parse(request.init.body).metadata, data.body.metadata);
   assert.equal(request.init.headers.get('Authorization'), 'Bearer fictional-test-key');
   assert.equal(request.init.credentials, 'omit');
-  for (const invalid of [{ pitch: .5 }, { speed: 3 }, { enhance: 'false' }, { volume: -1 }, { emotion: 'unknown' }]) assert.equal(validate({ body: { ...data.body, parameters: invalid } }), false);
+  for (const invalid of [{ pitch: .5 }, { enhance: 'false' }, { volume: -1 }, { emotion: 'unknown' }]) assert.equal(validate({ body: { ...data.body, metadata: invalid } }), false);
   assert.equal(validate({ body: { ...data.body, extra: 1 } }), false);
-  assert.equal(validate({ body: { ...data.body, text: 'a'.repeat(5001) } }), false);
+  assert.equal(validate({ body: { ...data.body, input: 'a'.repeat(5001) } }), false);
 });
 
 test('multipart sends actual file arrays and preserves false/zero with no manually set boundary', () => {

@@ -6,8 +6,8 @@ Create one asynchronous task. Fixed per-video billing; failed tasks are refunded
 
 [Guide and limits](../../guides/media-video.md)
 
-{% openapi src="https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-video.json?version=9ea567a7401837be" path="/v1/videos" method="post" %}
-https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-video.json?version=9ea567a7401837be
+{% openapi src="https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-video.json?version=06f35544a23bc7c9" path="/v1/videos" method="post" %}
+https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-video.json?version=06f35544a23bc7c9
 {% endopenapi %}
 
 ## application/json

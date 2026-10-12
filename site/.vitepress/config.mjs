@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { defineConfig } from 'vitepress';
+import localApiProxy from './vite-api-proxy.mjs';
 
 const sidebar = JSON.parse(readFileSync(new URL('./sidebar.json', import.meta.url), 'utf8'));
 
@@ -7,6 +8,7 @@ export default defineConfig({
   title: 'XY API',
   description: '统一入口，调用图片、视频与更多服务。',
   cleanUrls: true,
+  vite: {plugins: [localApiProxy]},
   lastUpdated: true,
   head: [['link', { rel: 'icon', href: '/logo.svg', type: 'image/svg+xml' }]],
   locales: {

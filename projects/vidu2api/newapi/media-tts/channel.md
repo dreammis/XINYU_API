@@ -2,7 +2,7 @@
 
 公开模型 `vox-1`（Vox 1），能力/插件 `media-tts`。真实上游是 A 的 Vidu TTS，不公开源音色 ID、来源地址、标签或错误；不宣称自主训练。B 为 New API v1.0.0-rc.41，A base URL https://vidu2api.cgssoccer.com。
 
-使用 type61 独立渠道；native POST /tts/v1/tasks、GET /tts/v1/tasks/:task_id。A 的 /internal/tts/tasks JSON 创建/查询和 /content 文件接口都需渠道 Bearer 鉴权。B 泛型产物接口提供客户文件鉴权、分享地址与代理，不向客户直出 A 地址。首期只支持 MP3。
+同步入口现已使用内置 type1 渠道25（vox-sync），POST /v1/audio/speech 返回 MP3。异步保留 type61 渠道24；native POST /tts/v1/tasks、GET /tts/v1/tasks/:task_id。A 的 /internal/tts/tasks JSON 创建/查询和 /content 文件接口都需渠道 Bearer 鉴权。B 泛型产物接口提供客户文件鉴权、分享地址与代理，不向客户直出 A 地址。首期只支持 MP3。
 
 定价由用户授权选择：按成功生成次数，每次约人民币 0.10 元，默认分组倍率 1。实例 USDExchangeRate=7.3、QuotaPerUnit=500000、显示 USD，对应 ModelPrice[vox-1]=0.01369863。extractUsage 返回 null；失败退款需真实账单验收。参考阿里云模型广场语音模型 0.8 元/万字符和豆包 Coze 系统音色 0.0003 元/字符，作为普通质量定位参考，不称为行业统计均价。短文本单次价并非总是比按字数方案便宜。
 
@@ -13,3 +13,7 @@
 音色导入脚本 import-voices.py 将内部 JSON 映射为中性 vx_ ID，public-assets 只放明确公开的目录和 MP3。353 音色、24 语言、345 可下载样本，8 个源样本403/404为 null，不借用其他声音。来源原文、不可用资源和预检探测证据存 C 的 ignored .local/projects/vidu2api/；上线实账和部署版本写 releases/media-tts。
 
 未来接入不同渠道时，独立能力使用独立模型；只有声音目录、字段语义、范围、格式和限制真正一致的渠道，才共享同一个调用名。不为未来渠道预造适配层。管理员凭证只从 newapi/load-session.ps1 加载；使用服务端渠道复制保留上游密钥，只合并本次模型价格和元数据。
+
+## 1.1.0 实际上线
+
+2026-10-12 已启用 media-tts 1.1.0；同步/异步客户生成和实际账单见 ../../releases/media-tts/1.1.0.md。音频旧 ModelPrice 结算实测0费用，已改为模型 tiered_expr：tier("request", fixed(0.01369863))；任务单独覆盖 media-tts::vox-1 为 tier("request", 0.01369863)。同步短句与2500汉字均6849 quota。不能仅检查旧价格配置就宣称收费正常。

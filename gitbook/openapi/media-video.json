@@ -221,7 +221,24 @@
             }
           }
         },
-        "x-description-zh": "创建一个异步视频任务，按条计费，失败退款。保存任务 ID；客户端超时后先检查原任务，避免重复生成。"
+        "x-description-zh": "创建一个异步视频任务，按条计费，失败退款。保存任务 ID；客户端超时后先检查原任务，避免重复生成。",
+        "x-playground-task": {
+          "poll": "/v1/videos/{video_id}",
+          "parameter": "video_id",
+          "states": [
+            "queued",
+            "in_progress",
+            "completed",
+            "failed"
+          ],
+          "completed": [
+            "completed"
+          ],
+          "failed": [
+            "failed"
+          ],
+          "download": "/v1/videos/{video_id}/content"
+        }
       }
     },
     "/v1/videos/{video_id}": {
@@ -530,7 +547,39 @@
             }
           }
         },
-        "x-description-zh": "stream:true 返回进度和最终视频链接，以 response.completed 结束；background:true 返回 resp_ ID 供后续查询。流中没有实时视频帧。"
+        "x-description-zh": "stream:true 返回进度和最终视频链接，以 response.completed 结束；background:true 返回 resp_ ID 供后续查询。流中没有实时视频帧。",
+        "x-playground-task": {
+          "when": {
+            "background": true
+          },
+          "poll": "/v1/responses/{response_id}",
+          "parameter": "response_id",
+          "states": [
+            "queued",
+            "in_progress",
+            "completed",
+            "failed",
+            "cancelled",
+            "incomplete"
+          ],
+          "completed": [
+            "completed"
+          ],
+          "failed": [
+            "failed",
+            "cancelled",
+            "incomplete"
+          ]
+        },
+        "x-playground-stream": {
+          "completed": [
+            "response.completed"
+          ],
+          "failed": [
+            "response.failed",
+            "error"
+          ]
+        }
       }
     },
     "/v1/responses/{response_id}": {

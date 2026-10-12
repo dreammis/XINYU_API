@@ -1,10 +1,20 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { meta, normalizeRequest, native, buildSubmitRequest, parseSubmitResponse, buildQueryRequest, parseTaskResult, extractUsage, listArtifacts, buildContentRequest } from './plugin.js';
+import { meta, normalizeRequest, normalizeSpeechRequest, native, buildSubmitRequest, parseSubmitResponse, buildQueryRequest, parseTaskResult, extractUsage, listArtifacts, buildContentRequest } from './plugin.js';
 
 const catalog = JSON.parse(readFileSync(new URL('./public-assets/voices.json', import.meta.url)));
 const request = { model: 'vox-1', text: '你好', voice: catalog.models[0].default_voice };
+
+test('canonical speech fields have identical upstream meaning to the legacy asynchronous request', () => {
+  const canonical = {model: request.model, input: request.text, voice: request.voice, speed: 1.25, response_format: 'mp3', metadata: {pitch: -2, volume: 0, emotion: 'happy', enhance: false}};
+  const legacy = {...request, parameters: {speed: 1.25, pitch: -2, volume: 0, emotion: 'happy', enhance: false}, output: {format: 'mp3'}};
+  assert.deepEqual(normalizeSpeechRequest(canonical), normalizeRequest(legacy));
+  assert.deepEqual(native.create({body: {kind: 'json', value: canonical}}).requestBody, normalizeRequest(legacy));
+  for (const extra of [{text: 'mixed'}, {parameters: {}}, {pitch: 2}, {background: true}, {metadata: {speed: 1}}, {metadata: null}, {response_format: 'wav'}]) assert.throws(() => normalizeSpeechRequest({...canonical, ...extra}));
+  assert.throws(() => normalizeRequest({...request, parameters: null}));
+  assert.throws(() => normalizeRequest({...request, output: null}));
+});
 test('public contract version, model and request examples match the native adapter', () => {
   const manifest = JSON.parse(readFileSync(new URL('./public-docs.json', import.meta.url)));
   const spec = JSON.parse(readFileSync(new URL('./public-openapi.json', import.meta.url)));
@@ -36,6 +46,7 @@ test('native interface keeps supplier fields and errors private', () => {
   const result=native.status({},task);
   assert.deepEqual(result,{id:'public-id',model:'vox-1',status:'succeeded',audio:{format:'mp3',mime_type:'audio/mpeg',artifacts:'/v1/tasks/public-id/artifacts'}});
   assert.doesNotMatch(JSON.stringify(native.status({}, {...task,status:'FAILURE',data:{error:{message:'vidu private'}}})),/vidu|private/i);
+  assert.throws(() => native.status({}, {...task, status:'UNKNOWN'}), /invalid TTS task status/);
 });
 test('maps the durable upstream lifecycle and authenticated artifact content', () => {
   const context={baseUrl:'https://upstream.example/',authHeader:'Bearer fixture',requestBody:normalizeRequest(request),taskId:'a'.repeat(32)};

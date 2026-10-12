@@ -1,54 +1,52 @@
-# 多工程接口文档发布流程
+# 接入与文档发布工作流
 
-## 契约放在客户真正调用的那一层
+完整步骤先读 [START_HERE](../../START_HERE.md)、[A 的接入规范](../integration/README.md) 和 [接口发布 SOP](api-release-sop.md)。C 的资料入口是 [源工程索引](../../projects/README.md)。
 
-源工程实现功能，接入层负责客户鉴权、参数转换、计费和结果表达。两层的请求响应可能不同。例如源工程使用 `duration` 并返回媒体 URL，客户通过 `seconds` 创建任务，再通过 `/content` 下载。因此公开文档以 **客户入口** 为准。
+## 唯一维护位置
 
-插件接入的契约放在插件旁，内置渠道或独立网关的契约放在对应接入目录，不必为了文档额外写插件。
+A 是功能源工程，B 是运行的 New API 服务，C 是本仓库 G:/workspace/xyapi_doc。默认由 A 的 AI 在 C 编写接入代码和公开客户契约；C 维护统一规则、生成器与站点发布。
 
-图片中文直接引用 `integrations/newapi/media-image/README.md`，视频中文直接引用 `docs/video_studio_api.md`。各接入目录新增 `public-guide.en.md`、`public-openapi.json` 和 `public-docs.json`，汇总站不再抄写指南。
+图片与视频已迁入 projects/vidu2api/newapi/media-image、projects/vidu2api/newapi/media-video。客户契约与插件旁的测试一起维护，A 旧文件是迁入前副本，不再用于导入。A 业务 API、队列和仍在 A 的配套服务继续由其真实运行代码负责，位置见 newapi/README.md。
 
-OpenAPI 描述路径、方法、鉴权、参数、默认值、响应和示例；指南说明跨参数限制、任务流程和收费语义。
+公开契约描述客户经过 B 实际看到的协议，包括参数转换、鉴权、结果、错误、异步/流式流程和计费。不能用 A 内部协议替代客户协议。非模型能力同样登记，models 可以为空。
 
-## 新工程第一次接入
+## C 内首次接入
 
-1. 在客户适配目录写好公开规范与指南。复制 `templates/public-docs.json`，填写能力 ID、名称、版本和文件路径，路径相对源工程根目录。
-2. 在 `sources.json` 登记 repository、ref、localDirectory、manifest。每个能力 ID 唯一。
-3. 执行 `npm run docs:sync`、`npm run build`、`npm run docs:check`，查看生成页面。
-4. 把 `templates/source-docs-sync.yml` 放到源工程 `.github/workflows/public-docs.yml`；调整 paths 覆盖实际公开指南。设置 `DOCS_DISPATCH_TOKEN`，允许通知文档仓库。
-5. 文档仓库设置私有源工程读取用的 `DOCS_SOURCE_TOKEN`。目标源工程只需要 Contents: read，公开工程无需此 secret。
-6. 发布并验收接入代码后提交公开契约。契约 push 会通知文档仓库，也可以手动运行通知 workflow。
+1. 在 projects/<源工程ID>/newapi/<能力ID>/ 实现插件或实际适配方式、测试与四个公开文件；公开清单使用 templates/public-docs.json。
+2. sources.json 增加唯一 ID，登记 C 自身：dreammis/XINYU_API、master、localDirectory "." 和清单路径。保留分类、模型分组与选型章节规则，见 model-catalog-contract.md。
+3. 用真实适配逻辑核对示例，部署/启用到 B 后验收客户入口与账单，在 projects/<源工程ID>/releases/<能力ID>/<版本>.md 保存脱敏交付记录。
+4. 运行 npm test、npm run docs:sync、npm run build、npm run docs:check，核对页面和调试。
+5. 验收后发布本次 C 文件并确认 Cloudflare 实际部署结果，回填 B 运行版本与 C 文档版本。
 
-新能力可以是搜索、转写、文件转换或任何计费功能；HTTP 路径不限制为大模型协议，`models` 可以为空。
+后续直接修改 C 同一能力的接入和公开契约，再导入、检查、发布。不需要为每个 A 配置来源通知，不需要到文档工程重填接口参数。
 
-## 后续更新
+## 快照与生成结果
 
-只修改源工程适配器和对应公开契约。字段、默认值、限制或结果改变时更新规范版本和指南，保持公开示例测试通过。发布未完成时不要将待上线能力写入已发布契约。
+| 位置 | 是否人工维护 | 内容 |
+| --- | --- | --- |
+| projects/<源工程ID>/ | 是 | 身份、上游说明、接入研究、newapi/<能力ID>/ 实现/配置/客户文件与验收记录 |
+| content/zh、content/en | 是 | 共用指南与 FAQ |
+| sources.json | 是 | 能力清单登记、模型展示指针 |
+| catalog/<ID>/ | 否，由 docs:sync 导入 | 带来源提交、未提交标记和内容哈希的公开快照 |
+| gitbook/ | 否，由生成器导出 | 可移植 Markdown / OpenAPI |
+| site/zh、site/en 与公开数据文件 | 否，由生成器输出 | 站点页面、模型目录、调试允许列表 |
 
-源工程通知 → 文档仓库读取登记 ref → 记录提交 SHA 和哈希 → 构建与校验 → 提交 catalog、gitbook 和 site/public-endpoints.mjs → Cloudflare Pages 自动构建部署。
+build 只使用已导入快照。公开契约改动后必须先 docs:sync；手改快照会触发哈希错误，手改 Markdown 导出会触发生成差异。缺文件、坏链接和错误哈希明确失败。
 
-通知不携带正文，汇总站只读取已登记文件。内部报告、调试 JSON、渠道密钥不会因为位于源工程就自动进入页面。
+本机导入记录 C 的 HEAD 和 workingTreeChanges，未提交文件不能伪装成已发布版本。生产发布保持接入源码、原始契约、登记和快照同批一致。当前 docs:check 检查生成一致性与 OpenAPI，npm test 包括真实插件和公开示例测试，CI 还编译 Pages Function。
 
-## 发布版本与运行版本
+## 外部仓库例外
 
-**源码合并不等于 New API 插件已经激活。** 文档必须对应已验收的客户入口。日常 ref 可指向只提交已发布契约的分支；严格固定版本时用 release tag 或提交 SHA。不要将含未上线接口的开发分支作为公开来源。
+确需从外部接入仓库维护公开契约时，sources.json 指向那个唯一维护仓库，避免再抄一份客户指南。docs:sync:remote 固定登记 ref 的远端提交再读取文件；一次读取全部来源，缺文件或权限失败不会静默跳过。
 
-当前来源 ref 为 main。本次首次导入来自本机工作区，新增文件未提交，`catalog/*/provenance.json` 如实记录 workingTreeChanges。因此 GitHub 自动导入尚未具备全部远程文件。
+外部仓库按 templates/source-docs-sync.yml 在客户入口部署验收后通知 C；私有读取用 DOCS_SOURCE_TOKEN，跨仓库通知用 DOCS_DISPATCH_TOKEN，两者不同。集中到 C 的能力不需要这段跨仓库通知接线。
 
-文档仓库本次已发布到 master，Cloudflare Pages 已成功自动部署，当前展示的是已经校验的本机快照。此前 GitBook 导入保留为历史记录。自动远端导入还需先提交源工程公开导出文件和已上线适配器，并配置 DOCS_SOURCE_TOKEN / DOCS_DISPATCH_TOKEN。图片 plugin.js 原本尚未跟踪，源工程发布提交必须包含实际插件；否则公开契约测试无法读取其实现。不要只提交测试而漏掉实现。
+C 的 Import released public contracts workflow 保留为远端导入工具，不是当前集中协作必须经过的步骤。新迁入文件先实际发布到 C 远端，远端导入才可读取，不在迁入前声称它已成功。
 
-源工程 integrations/newapi/AGENTS.md 和文档仓库 AGENTS.md 已记录维护入口，让后续代码助手随接口改动更新公开契约。当前托管、自动部署与域名状态见 cloudflare-setup.md；GitBook 历史状态见 gitbook-setup.md。
+## 多渠道、发布与回退
 
-## 修改入口与退役
+相同路径、输入输出和计费语义的多个渠道复用一个能力契约，内部路由记录 A 的来源。客户行为或流程有差异时明确描述，无法共用时使用独立能力 ID；每项能力独立规范，避免共同使用 /v1/responses 时互相覆盖。
 
-catalog 是只读快照，gitbook 是构建结果。手改快照触发哈希错误，手改生成页触发构建差异。修改应回到源工程公开文件或本仓库 content。
+源码合并、B 接入启用、客户验收、C 网站发布各有实际证据。公开发布的契约必须对应已验收运行行为；价格说明同步当前公开配置。回退确认实际运行版本后恢复契约，再导入和发布。下线先安排客户入口退役，移除登记和共用链接后由生成器清理页面。
 
-Cloudflare 从本仓库构建，修改通用文案时编辑 content，修改接口时编辑源工程公开契约。gitbook 是可移植导出，site 各语言页面在构建时生成；不直接修改生成页面。
-
-能力下线时移除登记项并更新共用指南链接，然后构建。生成器删除已退役页面与规范，不会悄悄修补作者写错的链接。
-
-## 同一能力的多个渠道
-
-多个渠道如果提供相同的路径、参数、响应和计费语义，只维护一份公共契约，渠道选择留在内部路由。客户需要选择模型或参数时，在同一指南描述差异；协议流程不同则分别说明。
-
-每个能力独立导出 OpenAPI，不合成一个全局规范，避免多个能力共用 `/v1/responses` 等入口时互相覆盖。站点自动导航负责汇总。
+共用管理密文在 .local/newapi，各源工程的秘密/原始证据在 .local/projects/<源工程ID>/ 或已有私有运行配置。公开清单仅列公开文件，项目内部资料不会自动导入。Pages /api-proxy 使用客户 Key，不能接入管理员令牌。网站自动部署与域名记录见 cloudflare-setup.md；GitBook 历史记录见 gitbook-setup.md。

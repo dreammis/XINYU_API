@@ -3,7 +3,7 @@ const VOICES = {"vx_5c7dbf05cc11": "Arabic_CalmWoman", "vx_e8ed26268727": "Arabi
 const PARAMETERS = ["speed", "pitch", "volume", "emotion", "enhance"];
 
 export const meta = {
-  apiVersion: 1, key: "media-tts", name: "Vox", version: "1.0.0",
+  apiVersion: 1, key: "media-tts", name: "Vox", version: "1.1.0",
   author: {name: "XY API"}, icon: "text:Vox",
   description: {zh: "文本转语音与音色控制", en: "Text to speech and voice controls"},
   models: ["vox-1"], fetchMode: "per_task", auth: "api_key",
@@ -24,8 +24,8 @@ export function normalizeRequest(input) {
   const units = typeof input.text === "string" ? Array.from(input.text).reduce((sum, character) => sum + (character >= "\u4e00" && character <= "\u9fff" ? 2 : 1), 0) : 0;
   if (typeof input.text !== "string" || !input.text.trim() || units > 5000) throw new Error("text must contain 1-5000 weighted character units (Han characters count twice)");
   if (typeof input.voice !== "string" || !Object.hasOwn(VOICES, input.voice)) throw new Error("voice is not available for this model");
-  const p = input.parameters ?? {};
-  const output = input.output ?? {};
+  const p = input.parameters === undefined ? {} : input.parameters;
+  const output = input.output === undefined ? {} : input.output;
   object(p, PARAMETERS, "parameters");
   object(output, ["format"], "output");
   if (output.format !== undefined && output.format !== "mp3") throw new Error("Vox 1 supports MP3 output only");
@@ -44,7 +44,8 @@ export function normalizeRequest(input) {
 // 查询展示只返回稳定字段；任务快照、来源地址和供应商错误不进入客户响应。
 function publicTask(task) {
   const statuses = {NOT_START: "queued", SUBMITTED: "queued", QUEUED: "queued", IN_PROGRESS: "running", SUCCESS: "succeeded", FAILURE: "failed"};
-  const result = {id: task.task_id, model: "vox-1", status: statuses[task.status] ?? "running"};
+  if (!Object.hasOwn(statuses, task.status)) throw new Error("invalid TTS task status");
+  const result = {id: task.task_id, model: "vox-1", status: statuses[task.status]};
   if (task.status === "SUCCESS") result.audio = {format: "mp3", mime_type: "audio/mpeg", artifacts: "/v1/tasks/" + encodeURIComponent(task.task_id) + "/artifacts"};
   if (task.status === "FAILURE") result.error = {code: task.data?.error?.code === "text_too_long" ? "text_too_long" : "generation_failed", message: task.data?.error?.code === "text_too_long" ? "Shorten the input text." : "Audio generation failed."};
   return result;
@@ -53,12 +54,22 @@ function publicTask(task) {
 export const native = {
   create(ctx) {
     if (ctx.body.kind !== "json") throw new Error("Content-Type must be application/json");
-    return {kind: "submit", model: ctx.body.value.model, action: "synthesize", requestBody: normalizeRequest(ctx.body.value)};
+    return {kind: "submit", model: ctx.body.value.model, action: "synthesize", requestBody: Object.hasOwn(ctx.body.value, "input") ? normalizeSpeechRequest(ctx.body.value) : normalizeRequest(ctx.body.value)};
   },
   created(ctx, task) { return publicTask(task); },
   status(ctx, task) { return publicTask(task); },
   error(ctx, error) { return {error: {code: error.code, message: error.httpStatus >= 500 ? "TTS service temporarily unavailable." : error.message}}; },
 };
+
+// 同步 OpenAI 字段和异步新请求共享转换；旧 text/parameters 格式保留兼容，禁止混用。
+export function normalizeSpeechRequest(input) {
+  object(input, ["model", "input", "voice", "speed", "response_format", "metadata"], "request");
+  const controls = input.metadata === undefined ? {} : input.metadata;
+  object(controls, ["pitch", "volume", "emotion", "enhance"], "metadata");
+  return normalizeRequest({model: input.model, text: input.input, voice: input.voice,
+    parameters: {...controls, ...(input.speed === undefined ? {} : {speed: input.speed})},
+    output: input.response_format === undefined ? {} : {format: input.response_format}});
+}
 
 export function buildSubmitRequest(ctx) {
   return {url: ctx.baseUrl.replace(/\/$/, "") + "/internal/tts/tasks", method: "POST", headers: {Authorization: ctx.authHeader, "Content-Type": "application/json"}, body: ctx.requestBody};

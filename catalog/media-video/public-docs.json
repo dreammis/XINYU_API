@@ -12,9 +12,10 @@
     "cogvideo-basic",
     "cogvideo-short"
   ],
-  "openapi": "integrations/newapi/media-video/public-openapi.json",
+  "openapi": "projects/vidu2api/newapi/media-video/public-openapi.json",
   "guides": {
-    "zh": "docs/video_studio_api.md",
-    "en": "integrations/newapi/media-video/public-guide.en.md"
-  }
+    "zh": "projects/vidu2api/newapi/media-video/public-guide.zh.md",
+    "en": "projects/vidu2api/newapi/media-video/public-guide.en.md"
+  },
+  "category": "video"
 }

@@ -5,6 +5,7 @@ import contracts from '../contracts.json';
 import catalog from '../catalog.json';
 import CodeExample from './CodeExample.vue';
 import VoiceBrowser from './VoiceBrowser.vue';
+import { executionMode, executionLabels } from './execution-mode.mjs';
 import SchemaFields from './SchemaFields.vue';
 import { parameterDescription, schemaConstraints } from './schema-presentation.mjs';
 import { useRouter } from 'vitepress';
@@ -31,6 +32,7 @@ const example = computed(() => {
   const value = progress.value && activeMode.value.example?.stream ? { ...activeMode.value.example, progress: true } : activeMode.value.example;
   return selectedVoice.value && id.value === 'media-tts' ? {...value, voice: selectedVoice.value} : value;
 });
+const execution = computed(() => executionMode(operation.value, example.value));
 const codes = computed(() => requestCode({ spec: specification.value, endpoint: props.endpoint, method: props.method, mediaType: mediaType.value, example: example.value }));
 const parameters = computed(() => {
   const item = specification.value.paths[props.endpoint];
@@ -103,6 +105,7 @@ onBeforeUnmount(() => { disposed = true; });
       <div class="api-document">
         <div class="endpoint-line"><span :class="['method-badge', method]">{{ method.toUpperCase() }}</span><code>{{ endpoint }}</code><button class="endpoint-copy" :aria-label="locale === 'zh' ? '复制接口地址' : 'Copy endpoint URL'" @click="copyEndpoint"><UiIcon name="copy" /></button><button class="endpoint-try" :disabled="clientLoading" @click="openClient">{{ locale === 'zh' ? '试一试' : 'Try it' }}<UiIcon name="external" /></button></div><span class="endpoint-status" role="status">{{ endpointStatus }}</span>
         <p v-if="operation['x-description-zh'] || operation.description" class="api-description">{{ locale === 'zh' ? operation['x-description-zh'] ?? operation.description : operation.description }}</p>
+        <p class="field-note"><strong>{{ executionLabels[execution][locale] }}</strong> · {{ execution === 'async' ? (locale === 'zh' ? '先返回任务 ID；在调试面板查询状态，完成后获取结果。' : 'Returns a task ID. Query its status in the playground, then retrieve the result.') : execution === 'stream' ? (locale === 'zh' ? '持续接收事件；最终完成或错误事件决定结果。' : 'Receives events continuously. Check the final completion or error event.') : (locale === 'zh' ? '本次请求等待处理并直接返回 JSON 或文件。' : 'This request waits for processing and returns JSON or a file directly.') }}</p>
         <div class="api-resource-links"><a :href="`/${locale}/api-reference/${id}/`">{{ locale === 'zh' ? '模型选择与限制' : 'Model selection and limits' }} →</a><a :href="`/${locale}/guides/${id}`">{{ locale === 'zh' ? '完整使用流程' : 'Full usage flow' }} →</a></div>
         <h2 id="authentication">{{ locale === 'zh' ? '鉴权' : 'Authentication' }}</h2>
         <p>{{ locale === 'zh' ? '使用客户 API Key。' : 'Use a customer API Key.' }} <a :href="`/${locale}/authentication`">{{ locale === 'zh' ? '获取与配置' : 'Setup' }} →</a></p>

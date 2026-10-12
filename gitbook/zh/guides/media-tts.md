@@ -1,6 +1,6 @@
 # 语音合成与音色试听
 
-Vox 1 把文字生成一份 MP3 音频，适合短视频配音、播报和普通朗读。使用自有 TTS 任务接口，支持音色、语速、音调、音量、情绪和增强控制。
+Vox 1 把文字生成一份 MP3 音频，适合短视频配音、播报和普通朗读。默认使用同步接口直接返回 MP3，也保留异步任务接口。支持音色、语速、音调、音量、情绪和增强控制。
 
 ## 模型与价格
 
@@ -14,13 +14,37 @@ Vox 1 把文字生成一份 MP3 音频，适合短视频配音、播报和普通
 
 ## 先试听，再选择音色
 
-打开[创建语音任务](../api-reference/media-tts/create-speech.md)，可以按语言筛选、搜索名称、播放固定样本，再点击“使用此音色”。选择会同步到代码示例和调试请求。
+打开[同步语音合成](../api-reference/media-tts/synthesize-speech.md)，可以按语言筛选、搜索名称、播放固定样本，再点击“使用此音色”。选择会同步到代码示例和调试请求。
 
 固定样本试听免费，无需 API Key。自己输入文字生成音频，需要客户 Key，并按正常规则收费。部分音色暂无固定试听，不代表不能选择。
 
 程序可从文档站读取[音色目录](https://xyapi-docs.pages.dev/assets/media-tts/voices.json)。目录包含音色 `id`、适用 `models`、名称、语言、描述和 `preview_url`；没有试听时地址为 `null`。使用目录里的公开 ID，音色只适用于其列出的模型。不同模型的音色、参数和限制以各自目录为准。
 
-## 创建、查询、下载
+## 同步：直接得到 MP3（推荐）
+
+`POST /v1/audio/speech` 等待生成完成，成功返回 `Content-Type: audio/mpeg` 的音频二进制，保存即可播放；不会返回排队任务 JSON。
+
+```bash
+curl https://openai.2yanx.dpdns.org/v1/audio/speech \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"model":"vox-1","input":"你好，欢迎使用我们的语音服务。","voice":"vx_dbd27c4a9332","speed":1,"response_format":"mp3","metadata":{"pitch":0,"volume":0,"emotion":"neutral","enhance":true}}' \
+  -o speech.mp3
+```
+
+语速 `speed` 位于顶层，其余控制放在 `metadata`。Vox 1 当前只支持 MP3，不支持 `stream:true`、SSE 或边生成边播放。同步与异步的区别是等待方式，价格和文本限制相同。
+
+同步客户端超时或停止接收后，上游生成可能继续，不能由断连判断未生成或未收费，也不要自动重发。同步入口不提供可供查询的客户任务 ID；需要断线后继续查询、排队处理或持久任务记录时，请选异步入口。成功时保存音频，失败时先检查 HTTP 状态和 JSON 错误；422 表示输入校验失败，New API 的错误消息可能只显示通用错误。
+
+## 异步：创建、查询、下载
+
+`POST /tts/v1/tasks` 立即返回任务 `id` 和 `status`，再查询、下载。[创建语音任务](../api-reference/media-tts/create-speech.md)支持与同步相同的 `input`、`speed`、`response_format`、`metadata` 字段：
+
+```json
+{"model":"vox-1","input":"你好，欢迎使用我们的语音服务。","voice":"vx_dbd27c4a9332","speed":1,"response_format":"mp3","metadata":{"pitch":0,"volume":0,"emotion":"neutral","enhance":true}}
+```
+
+旧版 `text` / `parameters` / `output` 请求继续兼容，不能与新版字段混用：
 
 ```bash
 curl https://openai.2yanx.dpdns.org/tts/v1/tasks \
@@ -57,6 +81,6 @@ curl https://openai.2yanx.dpdns.org/v1/tasks/TASK_ID/artifacts/audio/content \
 | `emotion` | 默认空字符串 | 全文情绪；支持 `happy`、`sad`、`angry`、`fearful`、`disgusted`、`surprised`、`neutral` |
 | `enhance` | 布尔值，默认 `true` | 语音增强开关 |
 
-参数放在 `parameters` 对象里，数字使用 JSON 数值，开关使用 JSON 布尔值。情绪效果受音色和文本影响，建议先用短句比较。当前只支持 MP3；不支持的字段、格式或模型音色组合会明确报错。
+新版请求的 `speed` 放在顶层，`pitch` / `volume` / `emotion` / `enhance` 放在 `metadata`；旧异步请求使用 `parameters`。数字使用 JSON 数值，开关使用 JSON 布尔值。情绪效果受音色和文本影响，建议先用短句比较。当前只支持 MP3；不支持的格式、越界控制或无效音色会报错。同步中继可能忽略未登记的顶层字段，请严格使用本文协议；文档调试器会在发送前校验。
 
 失败任务的公开错误仅说明任务失败。修正文本、音色或参数后，再创建新任务；临时服务错误可稍后重试，但已有任务必须先查终态。

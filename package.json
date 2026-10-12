@@ -1,27 +1,17 @@
 {
   "name": "xyapi_doc",
   "version": "1.0.0",
-  "type": "module",
   "description": "XY API 文档站与多工程公开接口契约汇总。",
   "scripts": {
     "build": "npm run docs:generate && vitepress build site",
-    "docs:generate": "node scripts/build-docs.mjs && node scripts/build-site.mjs",
-    "dev": "npm run docs:generate && vitepress dev site",
-    "preview": "vitepress preview site",
-    "deploy": "wrangler pages deploy site/.vitepress/dist --project-name xyapi-docs --branch master",
     "docs:sync": "node scripts/sync-docs.mjs",
     "docs:sync:remote": "node scripts/sync-docs.mjs --remote",
     "docs:check": "node scripts/build-docs.mjs --check && node scripts/validate-openapi.mjs",
-    "test": "node --test tests/*.test.mjs projects/*/newapi/*/*.test.mjs",
-    "dev:legacy": "vitepress dev docs",
-    "build:legacy": "vitepress build docs",
-    "start:legacy": "vitepress preview docs"
-  },
-  "devDependencies": {
-    "@apidevtools/swagger-parser": "^12.1.0",
-    "vitepress": "^1.0.0",
-    "vue": "^3.0.0",
-    "wrangler": "^4.147.0"
+    "test": "node --test tests/*.test.mjs projects/*/newapi/*/*.test.mjs projects/*/newapi/*.test.mjs",
+    "docs:generate": "node scripts/build-docs.mjs && node scripts/build-site.mjs",
+    "dev": "npm run docs:generate && vitepress dev site",
+    "preview": "vitepress preview site",
+    "deploy": "wrangler pages deploy site/.vitepress/dist --project-name xyapi-docs --branch master"
   },
   "dependencies": {
     "@jsonforms/core": "3.8.0",
@@ -30,5 +20,12 @@
     "ajv": "8.18.0",
     "ajv-formats": "2.1.1",
     "shiki": "2.5.0"
-  }
+  },
+  "devDependencies": {
+    "@apidevtools/swagger-parser": "^12.1.0",
+    "vitepress": "^1.0.0",
+    "vue": "^3.0.0",
+    "wrangler": "^4.147.0"
+  },
+  "type": "module"
 }

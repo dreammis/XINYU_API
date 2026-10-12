@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "your-capability",
+  "title": { "zh": "你的能力", "en": "Your capability" },
+  "version": "1.0.0",
+  "category": "tool",
+  "models": [],
+  "openapi": "projects/your-source/newapi/your-capability/public-openapi.json",
+  "guides": {
+    "zh": "projects/your-source/newapi/your-capability/public-guide.zh.md",
+    "en": "projects/your-source/newapi/your-capability/public-guide.en.md"
+  }
+}

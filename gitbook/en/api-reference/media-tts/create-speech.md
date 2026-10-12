@@ -6,36 +6,37 @@ One task produces one MP3. Fixed billing per successful generation, regardless o
 
 [Guide and limits](../../guides/media-tts.md)
 
-{% openapi src="https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-tts.json?version=a045601e2c4b2c9d" path="/tts/v1/tasks" method="post" %}
-https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-tts.json?version=a045601e2c4b2c9d
+{% openapi src="https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-tts.json?version=bdc985cc3380ed2a" path="/tts/v1/tasks" method="post" %}
+https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-tts.json?version=bdc985cc3380ed2a
 {% endopenapi %}
 
 ## application/json
 
+The form uses canonical speech fields. Legacy text/parameters/output requests remain valid in the JSON editor; do not mix formats.
+
 | Name | Type | Required | Default / values | Description |
 | --- | --- | --- | --- | --- |
 | `model` | string | yes | vox-1 |  |
-| `text` | string | yes | — | Plain text, up to 5000 weighted character units: U+4E00–U+9FFF Han characters count twice, other Unicode code points once. No truncation or splitting. Emotion markup is not interpreted. |
+| `input` | string | no | — | Plain text, up to 5000 weighted character units: U+4E00–U+9FFF Han characters count twice, other Unicode code points once. No truncation or splitting. Emotion markup is not interpreted. |
 | `voice` | string | yes | — | A voice ID from /assets/media-tts/voices.json on the documentation site. Voices belong to their listed models. |
-| `parameters` | object | no | — |  |
-| `output` | object | no | — |  |
+| `speed` | number | no | 1 | Speaking speed multiplier. |
+| `response_format` | string | no | mp3 | Only MP3 is supported. |
+| `metadata` | object | no | — |  |
 
 ### Example request
 
 ```json
 {
   "model": "vox-1",
-  "text": "你好，欢迎使用我们的语音服务。",
+  "input": "你好，欢迎使用我们的语音服务。",
   "voice": "vx_dbd27c4a9332",
-  "parameters": {
-    "speed": 1,
+  "speed": 1,
+  "response_format": "mp3",
+  "metadata": {
     "pitch": 0,
     "volume": 0,
     "emotion": "neutral",
     "enhance": true
-  },
-  "output": {
-    "format": "mp3"
   }
 }
 ```

@@ -78,7 +78,7 @@ test('series and model pages preserve public contracts and reject broken selecti
       const tts = navigation.find(item => item.text.includes(locale === 'zh' ? '语音 TTS' : 'Text to speech'));
       assert.equal(tts.items.length, 1);
       assert.equal(tts.items[0].link, `/${locale}/models/media-tts/vox-1`);
-      assert.equal(tts.items[0].items[0].link, `/${locale}/api-reference/media-tts/models/vox-1/create-speech`);
+      assert.equal(tts.items[0].items[0].link, `/${locale}/api-reference/media-tts/models/vox-1/synthesize-speech`);
       const modelCenter = sidebar[`/${locale}/models`].find(item => item.text === tts.text);
       assert.equal(modelCenter.items[0].link, tts.items[0].link);
       const creation = sidebar[`/${locale}/api-reference/media-tts/models/vox-1/`];

@@ -1,0 +1,95 @@
+{
+  "importedOn": "2026-10-10",
+  "sourceRepository": "dreammis/vidu2api",
+  "sourceDirectory": "G:/workspace/vidu2api",
+  "files": [
+    {
+      "source": "integrations/newapi/media-image/plugin.js",
+      "destination": "projects/vidu2api/newapi/media-image/plugin.js",
+      "sha256": "ebb4b9509c696efb9f85174715551d53efdaa548041e0ebd9d4cd27873704457"
+    },
+    {
+      "source": "integrations/newapi/media-image/plugin.test.mjs",
+      "destination": "projects/vidu2api/newapi/media-image/plugin.test.mjs",
+      "sha256": "3eb9278941485a59e388442203e775512a33c43817ecfb5069270be21e4ec977"
+    },
+    {
+      "source": "integrations/newapi/media-image/public-openapi.json",
+      "destination": "projects/vidu2api/newapi/media-image/public-openapi.json",
+      "sha256": "e44587015bcb93368ebac93173a722f48d5e7b79f1036ae7f8243caed7c68fd8"
+    },
+    {
+      "source": "integrations/newapi/media-image/public-guide.en.md",
+      "destination": "projects/vidu2api/newapi/media-image/public-guide.en.md",
+      "sha256": "e315e626447f132ede7c5ad5655ecb59cacc21b548936a256a54e883f3be1778"
+    },
+    {
+      "source": "integrations/newapi/media-image/README.md",
+      "destination": "projects/vidu2api/newapi/media-image/public-guide.zh.md",
+      "sha256": "702603e61d6a377a82e6541202de575e430860f939e635a04ede269e4abca5eb"
+    },
+    {
+      "source": "integrations/newapi/media-video/plugin.js",
+      "destination": "projects/vidu2api/newapi/media-video/plugin.js",
+      "sha256": "6d2c35a8a1844330101fc52d482ac25c68b59593a590eb20b5b098f42c7302e8"
+    },
+    {
+      "source": "integrations/newapi/media-video/plugin.test.mjs",
+      "destination": "projects/vidu2api/newapi/media-video/plugin.test.mjs",
+      "sha256": "44312cce1fb4c7b652218aac510b19a9c34f6f7d1735b8e22dd59a6efaa49193"
+    },
+    {
+      "source": "integrations/newapi/media-video/public-openapi.json",
+      "destination": "projects/vidu2api/newapi/media-video/public-openapi.json",
+      "sha256": "c36cb22f52816e1a3bc59afbd748bab73cb490d0b93a95af90c108983a925116"
+    },
+    {
+      "source": "integrations/newapi/media-video/public-guide.en.md",
+      "destination": "projects/vidu2api/newapi/media-video/public-guide.en.md",
+      "sha256": "89df0e1c2bad4fbb2395af3f85ee3935697192ff00c0867b777d375337c7acc3"
+    },
+    {
+      "source": "docs/video_studio_api.md",
+      "destination": "projects/vidu2api/newapi/media-video/public-guide.zh.md",
+      "sha256": "ea7616c3ca1646902e4a702238782c843ca1e9fd4f823c102ed4a44d97e956c7"
+    },
+    {
+      "source": "integrations/newapi/public-contract.test.mjs",
+      "destination": "projects/vidu2api/newapi/public-contract.test.mjs",
+      "sha256": "d6eb3c3b90429be019e6d6330805ddfcae8cf76a1eab5e6fa31bef27a8e69785"
+    }
+  ],
+  "note": "现有插件、测试与公开指南集中到 C；A 的旧副本不再是客户协议维护入口。配套服务仍在 A，见 newapi/README.md。生产部署不随文件迁入自动发生。",
+  "sourceRevision": "1e4be7a5bc99c1d231bbd48c423fb0bdb5210614",
+  "sourceWorkingTreeChanges": [
+    "?? integrations/newapi/media-video/public-guide.en.md",
+    "?? integrations/newapi/media-video/public-openapi.json",
+    "?? integrations/newapi/public-contract.test.mjs"
+  ],
+  "runtimeVerification": {
+    "checkedAt": "2026-10-10T08:20:25.5345557Z",
+    "newapiVersion": "v1.0.0-rc.41",
+    "plugins": [
+      {
+        "key": "media-image",
+        "version": "1.2.0",
+        "enabled": true,
+        "active": true,
+        "sourceHash": "ebb4b9509c696efb9f85174715551d53efdaa548041e0ebd9d4cd27873704457",
+        "localSourceHash": "ebb4b9509c696efb9f85174715551d53efdaa548041e0ebd9d4cd27873704457",
+        "sourceHashMatchesLocal": true
+      },
+      {
+        "key": "media-video",
+        "version": "1.0.0",
+        "enabled": true,
+        "active": true,
+        "sourceHash": "6d2c35a8a1844330101fc52d482ac25c68b59593a590eb20b5b098f42c7302e8",
+        "localSourceHash": "6d2c35a8a1844330101fc52d482ac25c68b59593a590eb20b5b098f42c7302e8",
+        "sourceHashMatchesLocal": true
+      }
+    ],
+    "paidRequestsCreated": 0,
+    "runtimeConfigurationChanged": false
+  }
+}

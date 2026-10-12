@@ -1,18 +1,31 @@
-# 发给上游工程 AI 的任务说明
+# 发给 A 的 AI：完成业务、New API 接入和客户文档
 
-我已经在这个工程调通了一项 API，接下来要接入 New API，用它提供客户鉴权与计费，并发布客户文档。
+你负责 A：实现功能的源工程。C 是统一接入与文档中心 G:/workspace/xyapi_doc；B 是正在运行的 New API 服务，不需要再向另一个 B 的 AI 交接。
 
-本次能力：【填写功能名称；如上下文已经明确，直接从上下文确定】。
+本次能力：【填写名称；上下文已明确就从上下文确定】。
 
-请完成上游交付，不要只解释如何交付：
+请先读 A 的工程规则，再读：
+- G:/workspace/xyapi_doc/AGENTS.md
+- G:/workspace/xyapi_doc/START_HERE.md
+- G:/workspace/xyapi_doc/newapi/README.md
 
-1. 读取本工程约定、实际路由、参数处理和结果生成代码。明确本次能力的真实请求方法、路径、鉴权方式、字段、默认值、限制、成功结果和错误。区别本机可用与已部署可用。
-2. 提供最小成功调用示例和有代表性的错误示例。异步接口交付创建、查询、结果获取流程；流式接口交付事件结构、结束条件、连接中断后的行为。未知行为列为待确认，不推断默认值、幂等性或重试结果。
-3. 用真实实现核对示例和响应，运行已有适用测试。使用现有授权的测试凭证和额度，不把模拟数据或鉴权失败当成成功业务验收。无法完成的真实验证写明缺少什么条件。
-4. 使用 `G:/workspace/xyapi_doc/templates/api-release-handoff.md` 的结构，在本工程 `docs/releases/<能力ID>/<版本>.md` 或既有交付目录保存交接记录，填写“上游交付”。记录仓库、本机路径、源码提交、部署环境和版本、接口说明文件、脱敏验证证据。
-5. 说明 New API 接入应该调用哪个内部入口，以及可能需要处理的参数或响应差异。客户接口尚未确定时，不把内部接口宣称为客户接口，也不承诺客户计费规则。
-6. 保留其他未提交工作；提交或发布仅按当前任务已有授权执行。未提交和未部署的部分如实记录，不把本机路径当成远端可读取文件。
+你最熟悉 A 的 API，请直接把本次 New API 接入代码、适配测试和客户文档写到 C，完成可执行交付，不只输出方案：
 
-协作流程见 `G:/workspace/xyapi_doc/docs/maintenance/api-release-sop.md`。同一工程已经包含 New API 插件时，明确插件位置和负责接入的代码；其他任务负责接入时，这份记录就是交接依据。
+1. 核对 A 真实实现、接口、鉴权、限制、响应、异步/流式行为及实际部署版本，运行 A 适用测试。
+2. 查看 C 已有能力，确定复用还是新增稳定能力 ID。业务修改在 A；插件/适配器和客户契约在 C 的 projects/<源工程ID>/newapi/<能力ID>/。
+3. 按 C 现有模式实现客户鉴权链路、参数与模型映射、结果/错误转换和计费。非模型功能不虚构模型参数，相同客户协议的多个渠道复用原能力。
+4. 按已有授权部署/启用到 B，使用客户 Key 验收成功调用、非法输入、异步/流式/下载和实际账单。管理凭证从 C 的加密本机目录加载，不输出。修改共享价格/渠道前读取当前值，只合并本次条目。
+5. 在 C 同一能力目录维护 public-openapi.json、public-guide.zh.md、public-guide.en.md、public-docs.json。它们描述客户经过 B 看到的接口，不把 A 的内部响应直接作为客户规范。
+6. 分类、modelDetails、模型分组与选型章节按 C 的 docs/maintenance/model-catalog-contract.md；使用 templates/public-docs.json，新能力在 sources.json 登记 C 自身，已有能力更新原项。
+7. 按 C 的 templates/api-release-handoff.md，在 projects/<源工程ID>/releases/<能力ID>/<版本>.md 保存一份脱敏交付记录，链接 A 源码与部署证据，记录 B 启用版本、客户与计费验收。
+8. 在 C 运行 npm test、npm run docs:sync、npm run build、npm run docs:check，核对公开页面和调试。测试不发付费请求；真实业务验收单独记录。验收后按会话已有授权发布本次 A/C 相关文件，确认 B 实际运行与 Cloudflare 实际部署两个结果。
 
-完成后给我：交接记录绝对路径或 Git 链接、能力 ID、验证结果、当前状态，以及接入任务可以直接使用的内部请求示例。公开示例用占位 Key；凭证和内部敏感数据不要写入公开文档。不要未经我授权给其他任务发送消息。
+多个 A 的 AI 各负责独立能力目录，修改共享文件前检查 Git 和进行中的工作。保留其他任务修改与前端历史，不 git add .，不整块推送无关历史。
+
+不能验证或部署的内容标为待验证/未部署，不把源码 push、上传插件、管理员 dry-run 或 401 说成业务验收成功。公开文件不含真实 Key、渠道密钥、内部管理信息或成本。
+
+完整 SOP：G:/workspace/xyapi_doc/docs/maintenance/api-release-sop.md。完成后返回能力 ID、A/C 改动位置、实际运行版本、验收/计费结果、交付记录路径、文档部署状态。无需我手填 JSON 或再把接口说明抄到 C。不要未经我授权向其他任务发送消息。
+
+
+完整技术规范：G:/workspace/xyapi_doc/docs/integration/README.md。项目索引：G:/workspace/xyapi_doc/projects/README.md。
+先在 projects/<真实源工程ID>/ 保存 README、source.json、upstream/api.md、research/newapi-integration.md；能力目录补 channel.md。项目模板在 templates/source-project/。C 的文档作者先读项目资料和验收证据，再导入客户契约。

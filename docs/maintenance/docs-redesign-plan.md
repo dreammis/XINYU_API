@@ -175,10 +175,10 @@ API 手册
 | 方案 | 能解决什么 | 本次判断 |
 | --- | --- | --- |
 | Mintlify 托管 | 已有完整导航、内容组件与接口页体验 | 参考它的设计。若决定购买或接入，需另核对套餐与功能；本次不要求迁移 |
-| VitePress + Vue 定制 + Scalar + Cloudflare | 复用已经部署的内容、构建、搜索与调试代理，改导航与页面呈现 | 推荐。VitePress 支持自定义主题与 Vue 交互组件，并非只能使用默认文档布局 |
+| VitePress + Vue 定制 + JSON Forms / AJV + Cloudflare | 复用已经部署的内容、构建、搜索与调试代理，改导航与页面呈现 | 当前方案。VitePress 支持自定义主题与 Vue 交互组件，并非只能使用默认文档布局 |
 | Next.js + Fumadocs | 使用 React 文档组件和布局系统重新组织页面 | 可选，适合以后文档与 React 产品深度整合；当前会增加迁移、静态构建与托管验收工作 |
 
-参考：[VitePress 自定义能力](https://vitepress.dev/guide/what-is-vitepress)、[Fumadocs UI](https://www.fumadocs.dev/docs/ui)、[Scalar API Client](https://scalar.com/products/api-client)。本站 package.json 中仍有历史 Next/Fumadocs 依赖，但当前生产脚本是 VitePress；不能据依赖存在就把旧站当成当前发布版本。
+参考：[VitePress 自定义能力](https://vitepress.dev/guide/what-is-vitepress)。2026-10-12 已决定继续维护 VitePress + Vue，调试使用 JSON Forms + AJV；Next.js、React、Fumadocs、Scalar 的旧站代码、直接依赖与迁移方案已清理。上表中的其他平台仅为历史选型比较，不是待执行迁移任务。
 
 ## 接口来源需要补充哪些数据
 

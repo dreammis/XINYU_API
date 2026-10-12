@@ -28,6 +28,7 @@
 
 * [Overview and model selection](api-reference/media-tts/README.md)
 * [Usage and limits](guides/media-tts.md)
+* [POST Synthesize speech synchronously](api-reference/media-tts/synthesize-speech.md)
 * [POST Create a speech task](api-reference/media-tts/create-speech.md)
 * [GET Get speech task status](api-reference/media-tts/get-speech.md)
 * [GET List generated audio artifacts](api-reference/media-tts/list-speech-artifacts.md)

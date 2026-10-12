@@ -2,13 +2,71 @@
   "sourceId": "vidu2api",
   "repository": "dreammis/vidu2api",
   "localDirectory": "G:/workspace/vidu2api",
-  "capabilities": [
+  "checkedAt": "2026-10-10T08:59:58.8349450Z",
+  "sourceRevision": "1e4be7a5bc99c1d231bbd48c423fb0bdb5210614",
+  "workingTreeChanges": [
+    "?? docs/newapi_image_channel_plan.md"
+  ],
+  "originalDocuments": [
     {
-      "id": "media-tts",
-      "pluginKey": "media-tts",
-      "publicManifest": "projects/vidu2api/newapi/media-tts/public-docs.json"
+      "path": "docs/gateway_api_reference.md",
+      "sha256": "a186310a834cb35ca5a9767d975554c5bf546199a0a480376117e09b81c67dac"
+    },
+    {
+      "path": "docs/image_generation_api_reference.md",
+      "sha256": "b1a337ff5fbc1e964fac36bda84eb6e2c9a238bd145bf2e5b08b425a8797b74a"
+    },
+    {
+      "path": "docs/video_api_reference.md",
+      "sha256": "7dd19bf8b91bd3d873be0889fb92010d1cdf8fc510e254c08e21d120470f0e6b"
+    },
+    {
+      "path": "docs/newapi_video_integration_research.md",
+      "sha256": "ec55010726018e55b402d648893c86e41a570326b60db612c98583eb18ffefd4"
+    },
+    {
+      "path": "docs/newapi_image_channel_plan.md",
+      "sha256": "cb757818073b0a88c0ec776945060fcf600c6c70d33ab2b4d95b295457a87a5a"
     }
   ],
-  "note": "内部来源资料；实际部署与源码版本见 releases。",
-  "sourceRevision": "8d707c6594c7e2804d33f473382842a62a2a29f8"
+  "implementation": [
+    {
+      "path": "gateway/app.py",
+      "sha256": "25b2f7aa104fbaaf9e2600b4633c5dcd55b448a06cce2dcfdccc981b1d971446"
+    },
+    {
+      "path": "gateway/schemas.py",
+      "sha256": "29a410b4e16315d4d293d589cdfe7fe797c11a3bb772c1d15c6cb633a4f1863d"
+    },
+    {
+      "path": "gateway/image_generation.py",
+      "sha256": "b0d27f9f95aa38759b87dd1702f94f4072cab34cc376b22b38777f89263faa48"
+    },
+    {
+      "path": "gateway/video_generation.py",
+      "sha256": "31dcce31ece2885b468043101069d84fe87a7dcb11b68be27effa6e742bba707"
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "media-image",
+      "integrationDirectory": "projects/vidu2api/newapi/media-image",
+      "pluginKey": "media-image",
+      "publicManifest": "projects/vidu2api/newapi/media-image/public-docs.json"
+    },
+    {
+      "id": "media-video",
+      "integrationDirectory": "projects/vidu2api/newapi/media-video",
+      "pluginKey": "media-video",
+      "publicManifest": "projects/vidu2api/newapi/media-video/public-docs.json"
+    },
+    {
+      "id": "media-tts",
+      "integrationDirectory": "projects/vidu2api/newapi/media-tts",
+      "pluginKey": "media-tts",
+      "publicManifest": "projects/vidu2api/newapi/media-tts/public-docs.json",
+      "sourceRevision": "8d707c6"
+    }
+  ],
+  "note": "身份/源码资料，非客户公开清单。当前工作区修改不代表 A/B 部署版本；真实版本按 releases 证据。"
 }

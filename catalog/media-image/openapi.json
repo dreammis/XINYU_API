@@ -148,7 +148,17 @@
           "#/components/schemas/ImageProgressEvent",
           "#/components/schemas/ImageCompletedEvent",
           "#/components/schemas/ImageURLCompletedEvent"
-        ]
+        ],
+        "x-playground-stream": {
+          "completed": [
+            "image_generation.completed",
+            "image_edit.completed",
+            "image_url.completed"
+          ],
+          "failed": [
+            "error"
+          ]
+        }
       }
     },
     "/v1/images/edits": {
@@ -435,7 +445,17 @@
           "#/components/schemas/ImageProgressEvent",
           "#/components/schemas/ImageCompletedEvent",
           "#/components/schemas/ImageURLCompletedEvent"
-        ]
+        ],
+        "x-playground-stream": {
+          "completed": [
+            "image_generation.completed",
+            "image_edit.completed",
+            "image_url.completed"
+          ],
+          "failed": [
+            "error"
+          ]
+        }
       }
     }
   },

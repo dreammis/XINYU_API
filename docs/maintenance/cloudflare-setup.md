@@ -130,3 +130,10 @@ Cloudflare 构建环境自带的 Wrangler 3.114.17 不支持 JSON import attribu
 - 最终构建的真实浏览器覆盖 84 个中英文接口页、22 个上传变体，结果为主目录 `.local/projects/vidu2api/playground-fix/audit-results.json`、`audit-uploads.json`。390×844 iframe 内容视口中弹窗宽度与 scrollWidth 均为 390，请求/响应切换通过；截图 `audit-mobile.png`。preview 对启动后新增静态测试文件返回 404，重启后正常，仅为本地测试服务的文件索引行为。
 - 实现提交 `ab6beee2889a2ba087028bb1019d4cdc364f1207` 已推送 master；[GitHub 检查](https://github.com/dreammis/XINYU_API/actions/runs/38144677940) 为 completed/success。生产部署 `e839f75f-0930-4fa2-a248-8c48f9a7afa8` 的 deploy/success 完成于 `2026-10-11T13:51:41.09611Z`。生产浏览器实际打开图片编辑 multipart 弹窗，确认互斥规则可见；截图 `.local/projects/vidu2api/playground-fix/audit-production.png`。
 - 生产页与新 theme 资源返回 200；图片、视频、语音 OpenAPI SHA-256 分别保持 `90951bbc80bda1c1a425e0287ef688c51918f30b24133135222226b68c202c58`、`c36cb22f52816e1a3bc59afbd748bab73cb490d0b93a95af90c108983a925116`、`1f9bf40db81ce7398d8fb16881faa633794536299eee8396e3cb8e330c213a92`。协议、价格及业务适配器未修改；深色模式说明区实际背景/文字对比验收通过，截图 `audit-dark.png`。
+
+## Vox 1 同步与执行模式调试发布（2026-10-12）
+
+- A 同步服务已部署，C 实际新增内置音频渠道25，保留任务渠道24，激活 media-tts 1.1.0。同步短句与2500汉字返回MP3；新版及旧版异步查询/下载通过。逐条账单发现旧音频按次配置实际结算0，已使用现有固定价格表达式修正，修正后同步短长与异步均6849 quota。详细证据及限制见 projects/vidu2api/releases/media-tts/1.1.0.md。
+- 公开契约默认同步入口，保留旧异步。调试器区分同步、异步和流式；任务查询、自动查询、音频播放/下载、SSE事件与实际终态分开展示。Vox1没有流式功能。音色353项/24语言，使用原有头像与统一默认图标。
+- 保留 VitePress + Vue + JSON Forms，清理未使用的 Next/React/Fumadocs/Scalar 历史实现与依赖；gitbook目录仍为当前可移植导出。将已完成的接入维护目录迁移及协作SOP一并同步到发布分支。
+- 主工作区构建、docs:check、100项测试通过；发布工作区重新安装192包，独立构建和检查，Pages Functions编译通过。真实浏览器检查同步/异步页面和新版声音控制表单；客户Key仅内存，本站/api-proxy目的地由契约生成，本地开发代理复用同一规则。

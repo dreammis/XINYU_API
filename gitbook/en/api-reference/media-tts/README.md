@@ -4,6 +4,7 @@
 
 | Method | Path | Description |
 | --- | --- | --- |
+| POST | `/v1/audio/speech` | [Synthesize speech synchronously](synthesize-speech.md) |
 | POST | `/tts/v1/tasks` | [Create a speech task](create-speech.md) |
 | GET | `/tts/v1/tasks/{task_id}` | [Get speech task status](get-speech.md) |
 | GET | `/v1/tasks/{task_id}/artifacts` | [List generated audio artifacts](list-speech-artifacts.md) |

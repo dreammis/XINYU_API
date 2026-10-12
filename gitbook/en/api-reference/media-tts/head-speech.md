@@ -6,8 +6,8 @@ Use the task owner customer key. The audio artifact key is audio. Supports byte 
 
 [Guide and limits](../../guides/media-tts.md)
 
-{% openapi src="https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-tts.json?version=a045601e2c4b2c9d" path="/v1/tasks/{task_id}/artifacts/{artifact_key}/content" method="head" %}
-https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-tts.json?version=a045601e2c4b2c9d
+{% openapi src="https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-tts.json?version=bdc985cc3380ed2a" path="/v1/tasks/{task_id}/artifacts/{artifact_key}/content" method="head" %}
+https://raw.githubusercontent.com/dreammis/XINYU_API/master/gitbook/openapi/media-tts.json?version=bdc985cc3380ed2a
 {% endopenapi %}
 
 ## Path and header parameters

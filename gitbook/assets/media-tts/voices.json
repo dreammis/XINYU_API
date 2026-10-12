@@ -20,7 +20,8 @@
       "name": "Calm Woman",
       "language": "ar",
       "description": "柔和温润，娓娓道来，理性通透",
-      "preview_url": "/assets/media-tts/samples/vx_5c7dbf05cc11.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_5c7dbf05cc11.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_e8ed26268727",
@@ -30,7 +31,8 @@
       "name": "Friendly Guy",
       "language": "ar",
       "description": "醇厚温暖，从容淡定，宠溺感",
-      "preview_url": "/assets/media-tts/samples/vx_e8ed26268727.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_e8ed26268727.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_bcf624c6bb85",
@@ -40,7 +42,8 @@
       "name": "Elegant Lady",
       "language": "cs",
       "description": "清脆明亮，轻快流畅，亲切自然",
-      "preview_url": "/assets/media-tts/samples/vx_bcf624c6bb85.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_bcf624c6bb85.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_81bbc5b8059f",
@@ -50,7 +53,8 @@
       "name": "Steadfast Narrator",
       "language": "cs",
       "description": "清晰明亮，紧凑流畅，现场报道感",
-      "preview_url": "/assets/media-tts/samples/vx_81bbc5b8059f.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_81bbc5b8059f.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_6369080f1591",
@@ -60,7 +64,8 @@
       "name": "Assured Presenter",
       "language": "cs",
       "description": "浑厚有力，抑扬顿挫，新闻现场感",
-      "preview_url": "/assets/media-tts/samples/vx_6369080f1591.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_6369080f1591.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_5740bb6a14a8",
@@ -70,7 +75,8 @@
       "name": "Friendly Man",
       "language": "de",
       "description": "轻松自然，如话家常，邻家感",
-      "preview_url": "/assets/media-tts/samples/vx_5740bb6a14a8.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_5740bb6a14a8.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_37faadf6bdba",
@@ -80,7 +86,8 @@
       "name": "Playful Man",
       "language": "de",
       "description": "自然清亮，轻快流畅，亲密交谈",
-      "preview_url": "/assets/media-tts/samples/vx_37faadf6bdba.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_37faadf6bdba.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_4517839e66e6",
@@ -90,7 +97,8 @@
       "name": "Sweet Lady",
       "language": "de",
       "description": "轻柔细腻，舒缓流畅，忧郁深情",
-      "preview_url": "/assets/media-tts/samples/vx_4517839e66e6.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_4517839e66e6.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_985ba7368039",
@@ -100,7 +108,8 @@
       "name": "Gentle Lady",
       "language": "el",
       "description": "柔和细腻，娓娓道来，叙述感",
-      "preview_url": "/assets/media-tts/samples/vx_985ba7368039.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_985ba7368039.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_d333739a2e8a",
@@ -110,7 +119,8 @@
       "name": "Girl Next Door",
       "language": "el",
       "description": "清亮自然，语速轻快，随性幽默",
-      "preview_url": "/assets/media-tts/samples/vx_d333739a2e8a.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_d333739a2e8a.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_5bcf1d832194",
@@ -120,7 +130,8 @@
       "name": "Thoughtful Mentor",
       "language": "el",
       "description": "清亮亲切，自然流畅，轻松活泼",
-      "preview_url": "/assets/media-tts/samples/vx_5bcf1d832194.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_5bcf1d832194.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_3ccea6fa629f",
@@ -130,7 +141,8 @@
       "name": "Arnold",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_3ccea6fa629f.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_3ccea6fa629f.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_c9c44c760934",
@@ -140,7 +152,8 @@
       "name": "Attractive Girl",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_c9c44c760934.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_c9c44c760934.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_1c6940026144",
@@ -150,7 +163,8 @@
       "name": "Charming Lady",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_1c6940026144.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_1c6940026144.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_60a9eae3f76d",
@@ -160,7 +174,8 @@
       "name": "Charming Santa",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_60a9eae3f76d.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_60a9eae3f76d.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_18b9beca077d",
@@ -170,7 +185,8 @@
       "name": "Cute Elf",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_18b9beca077d.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_18b9beca077d.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_5c8d6b5ec0fb",
@@ -180,7 +196,8 @@
       "name": "Aussie Bloke",
       "language": "en",
       "description": "明亮且富有质感",
-      "preview_url": "/assets/media-tts/samples/vx_5c8d6b5ec0fb.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_5c8d6b5ec0fb.mp3",
+      "avatar_url": "/assets/media-tts/avatars/vx_5c8d6b5ec0fb.png"
     },
     {
       "id": "vx_51c761e96b01",
@@ -190,7 +207,8 @@
       "name": "Bossy Leader",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_51c761e96b01.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_51c761e96b01.mp3",
+      "avatar_url": "/assets/media-tts/avatars/vx_51c761e96b01.png"
     },
     {
       "id": "vx_d19916489ad4",
@@ -200,7 +218,8 @@
       "name": "Comedian",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_d19916489ad4.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_d19916489ad4.mp3",
+      "avatar_url": "/assets/media-tts/avatars/vx_d19916489ad4.png"
     },
     {
       "id": "vx_143020b9ce61",
@@ -210,7 +229,8 @@
       "name": "Male Debater",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_143020b9ce61.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_143020b9ce61.mp3",
+      "avatar_url": "/assets/media-tts/avatars/vx_143020b9ce61.jpg"
     },
     {
       "id": "vx_14538dd3c7fd",
@@ -220,7 +240,8 @@
       "name": "Deep-voiced Gentleman",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_14538dd3c7fd.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_14538dd3c7fd.mp3",
+      "avatar_url": "/assets/media-tts/avatars/vx_14538dd3c7fd.png"
     },
     {
       "id": "vx_0944ae284bd7",
@@ -230,7 +251,8 @@
       "name": "Diligent Youth",
       "language": "en",
       "description": "清脆明亮，轻快活泼，热情感染力",
-      "preview_url": "/assets/media-tts/samples/vx_0944ae284bd7.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_0944ae284bd7.mp3",
+      "avatar_url": "/assets/media-tts/avatars/vx_0944ae284bd7.png"
     },
     {
       "id": "vx_343c0d2432bf",
@@ -240,7 +262,8 @@
       "name": "Gentle-voiced Man",
       "language": "en",
       "description": "醇厚深沉，娓娓道来，极具故事感",
-      "preview_url": "/assets/media-tts/samples/vx_343c0d2432bf.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_343c0d2432bf.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_3c65ce790c99",
@@ -250,7 +273,8 @@
       "name": "Graceful Lady",
       "language": "en",
       "description": "温润，舒缓，文学感",
-      "preview_url": "/assets/media-tts/samples/vx_3c65ce790c99.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_3c65ce790c99.mp3",
+      "avatar_url": "/assets/media-tts/avatars/vx_3c65ce790c99.png"
     },
     {
       "id": "vx_801a37ed55ce",
@@ -260,7 +284,8 @@
       "name": "Jovial Man",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_801a37ed55ce.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_801a37ed55ce.mp3",
+      "avatar_url": "/assets/media-tts/avatars/vx_801a37ed55ce.png"
     },
     {
       "id": "vx_ee1c4ca5b34c",
@@ -270,7 +295,8 @@
       "name": "Lovely Girl",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_ee1c4ca5b34c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_ee1c4ca5b34c.mp3",
+      "avatar_url": "/assets/media-tts/avatars/vx_ee1c4ca5b34c.png"
     },
     {
       "id": "vx_cb4d5c7f7a30",
@@ -280,7 +306,8 @@
       "name": "Mature Partner",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_cb4d5c7f7a30.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_cb4d5c7f7a30.mp3",
+      "avatar_url": "/assets/media-tts/avatars/vx_cb4d5c7f7a30.jpg"
     },
     {
       "id": "vx_de51d8082bdc",
@@ -290,7 +317,8 @@
       "name": "Passionate Youth",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_de51d8082bdc.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_de51d8082bdc.mp3",
+      "avatar_url": "/assets/media-tts/avatars/vx_de51d8082bdc.png"
     },
     {
       "id": "vx_44d1f5eaf607",
@@ -300,7 +328,8 @@
       "name": "Playful Girl",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_44d1f5eaf607.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_44d1f5eaf607.mp3",
+      "avatar_url": "/assets/media-tts/avatars/vx_44d1f5eaf607.png"
     },
     {
       "id": "vx_7dc89e106349",
@@ -310,7 +339,8 @@
       "name": "Reserved Young Man",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_7dc89e106349.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_7dc89e106349.mp3",
+      "avatar_url": "/assets/media-tts/avatars/vx_7dc89e106349.png"
     },
     {
       "id": "vx_edde2de56db5",
@@ -320,7 +350,8 @@
       "name": "Teen Boy",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_edde2de56db5.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_edde2de56db5.mp3",
+      "avatar_url": "/assets/media-tts/avatars/vx_edde2de56db5.png"
     },
     {
       "id": "vx_8a99a27aca93",
@@ -330,7 +361,8 @@
       "name": "Sentimental Lady",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_8a99a27aca93.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_8a99a27aca93.mp3",
+      "avatar_url": "/assets/media-tts/avatars/vx_8a99a27aca93.jpg"
     },
     {
       "id": "vx_a75d3ffdc125",
@@ -340,7 +372,8 @@
       "name": "Trustworthy Man",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_a75d3ffdc125.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_a75d3ffdc125.mp3",
+      "avatar_url": "/assets/media-tts/avatars/vx_a75d3ffdc125.png"
     },
     {
       "id": "vx_7bdf69267bf4",
@@ -350,7 +383,8 @@
       "name": "Trustworthy Man",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_7bdf69267bf4.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_7bdf69267bf4.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_c49d31c1c2ec",
@@ -360,7 +394,8 @@
       "name": "Upset Girl",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_c49d31c1c2ec.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_c49d31c1c2ec.mp3",
+      "avatar_url": "/assets/media-tts/avatars/vx_c49d31c1c2ec.png"
     },
     {
       "id": "vx_0b70e53ca15a",
@@ -370,7 +405,8 @@
       "name": "Whispering girl",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_0b70e53ca15a.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_0b70e53ca15a.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_7a3439e3f564",
@@ -380,7 +416,8 @@
       "name": "Whispering girl",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_7a3439e3f564.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_7a3439e3f564.mp3",
+      "avatar_url": "/assets/media-tts/avatars/vx_7a3439e3f564.png"
     },
     {
       "id": "vx_41052c2f8097",
@@ -390,7 +427,8 @@
       "name": "Wise Lady",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_41052c2f8097.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_41052c2f8097.mp3",
+      "avatar_url": "/assets/media-tts/avatars/vx_41052c2f8097.png"
     },
     {
       "id": "vx_95768db78443",
@@ -400,7 +438,8 @@
       "name": "Grinch",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_95768db78443.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_95768db78443.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_ff6e671b0946",
@@ -410,7 +449,8 @@
       "name": "Rudolph",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_ff6e671b0946.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_ff6e671b0946.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_4814c633ecd8",
@@ -420,7 +460,8 @@
       "name": "Santa Claus",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_4814c633ecd8.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_4814c633ecd8.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_0c3b14ca3941",
@@ -430,7 +471,8 @@
       "name": "Serene Woman",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_0c3b14ca3941.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_0c3b14ca3941.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_208e1c7cb1a5",
@@ -440,7 +482,8 @@
       "name": "Sweet Girl",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_208e1c7cb1a5.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_208e1c7cb1a5.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_2b0ceeb6cf18",
@@ -450,7 +493,8 @@
       "name": "沉稳老者",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_2b0ceeb6cf18.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_2b0ceeb6cf18.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_24345c161939",
@@ -460,7 +504,8 @@
       "name": "资深领袖",
       "language": "en",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_24345c161939.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_24345c161939.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_1df92551cc1d",
@@ -470,7 +515,8 @@
       "name": "Angry Man",
       "language": "es",
       "description": "紧绷高亢，急促激烈，歇斯底里",
-      "preview_url": "/assets/media-tts/samples/vx_1df92551cc1d.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_1df92551cc1d.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_a454926e9723",
@@ -480,7 +526,8 @@
       "name": "Anime Character",
       "language": "es",
       "description": "粗犷沙哑，急促多变，紧张氛围感",
-      "preview_url": "/assets/media-tts/samples/vx_a454926e9723.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_a454926e9723.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_14d45c5f2ab8",
@@ -490,7 +537,8 @@
       "name": "Arnold",
       "language": "es",
       "description": "低沉沙哑，娓娓道来，阅历感",
-      "preview_url": "/assets/media-tts/samples/vx_14d45c5f2ab8.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_14d45c5f2ab8.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_405d77315c17",
@@ -500,7 +548,8 @@
       "name": "Assertive Queen",
       "language": "es",
       "description": "清亮锐利，干脆利落，高冷且果断",
-      "preview_url": "/assets/media-tts/samples/vx_405d77315c17.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_405d77315c17.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_46b568540303",
@@ -510,7 +559,8 @@
       "name": "Bossy Leader",
       "language": "es",
       "description": "沙哑粗砺，威严有力，带有压迫感",
-      "preview_url": "/assets/media-tts/samples/vx_46b568540303.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_46b568540303.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_0eb473c5b48b",
@@ -520,7 +570,8 @@
       "name": "Captivating Storyteller",
       "language": "es",
       "description": "深沉厚重，娓娓道来，历史厚重感",
-      "preview_url": "/assets/media-tts/samples/vx_0eb473c5b48b.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_0eb473c5b48b.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_670d42900a5f",
@@ -530,7 +581,8 @@
       "name": "Caring Girlfriend",
       "language": "es",
       "description": "甜美柔和，舒缓流畅，邻家亲切感",
-      "preview_url": "/assets/media-tts/samples/vx_670d42900a5f.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_670d42900a5f.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_9f9e3a40aaff",
@@ -540,7 +592,8 @@
       "name": "Chatty Girl",
       "language": "es",
       "description": "甜美明亮，轻快跳跃，邻家女孩般的陪伴感",
-      "preview_url": "/assets/media-tts/samples/vx_9f9e3a40aaff.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_9f9e3a40aaff.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_6d4d0c42995c",
@@ -550,7 +603,8 @@
       "name": "Comedian",
       "language": "es",
       "description": "高亢明快，抑扬顿挫，幽默诙谐",
-      "preview_url": "/assets/media-tts/samples/vx_6d4d0c42995c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_6d4d0c42995c.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_1acc8e4fe968",
@@ -560,7 +614,8 @@
       "name": "Compelling Girl",
       "language": "es",
       "description": "清亮坚定，干脆利落，自信果敢",
-      "preview_url": "/assets/media-tts/samples/vx_1acc8e4fe968.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_1acc8e4fe968.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_613a10066f31",
@@ -570,7 +625,8 @@
       "name": "Confident Woman",
       "language": "es",
       "description": "明亮清晰，干脆利落，知性力量感",
-      "preview_url": "/assets/media-tts/samples/vx_613a10066f31.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_613a10066f31.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_ba31f2ace528",
@@ -580,7 +636,8 @@
       "name": "Debator",
       "language": "es",
       "description": "沙哑粗砺，抑扬顿挫，狡黠匪气",
-      "preview_url": "/assets/media-tts/samples/vx_ba31f2ace528.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_ba31f2ace528.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_9505f4e708ef",
@@ -590,7 +647,8 @@
       "name": "Deep-toned Man",
       "language": "es",
       "description": "浑厚，抑扬顿挫，反派魅力",
-      "preview_url": "/assets/media-tts/samples/vx_9505f4e708ef.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_9505f4e708ef.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_e3c7cb9d0f90",
@@ -600,7 +658,8 @@
       "name": "Determined Manager",
       "language": "es",
       "description": "锐利坚定，字字铿锵，充满压迫感",
-      "preview_url": "/assets/media-tts/samples/vx_e3c7cb9d0f90.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_e3c7cb9d0f90.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_429f570735f0",
@@ -610,7 +669,8 @@
       "name": "Energetic Boy",
       "language": "es",
       "description": "清脆明亮，轻快活泼，充满朝气",
-      "preview_url": "/assets/media-tts/samples/vx_429f570735f0.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_429f570735f0.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_ef896b8265b7",
@@ -620,7 +680,8 @@
       "name": "Frank Lady",
       "language": "es",
       "description": "明亮尖锐，节奏急促，极具戏剧张力",
-      "preview_url": "/assets/media-tts/samples/vx_ef896b8265b7.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_ef896b8265b7.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_91b3283f73af",
@@ -630,7 +691,8 @@
       "name": "Fussy hostess",
       "language": "es",
       "description": "尖锐高亢，急促迫切，傲慢且挑剔",
-      "preview_url": "/assets/media-tts/samples/vx_91b3283f73af.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_91b3283f73af.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_a668c1bdf9ce",
@@ -640,7 +702,8 @@
       "name": "Ghost",
       "language": "es",
       "description": "粗犷沙哑，干练急促，战场实况感",
-      "preview_url": "/assets/media-tts/samples/vx_a668c1bdf9ce.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_a668c1bdf9ce.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_a20c4d1c9c5b",
@@ -650,7 +713,8 @@
       "name": "Humorous Elder",
       "language": "es",
       "description": "沙哑滑稽，夸张起伏，喜剧画面感",
-      "preview_url": "/assets/media-tts/samples/vx_a20c4d1c9c5b.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_a20c4d1c9c5b.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_4154ba8ca5c6",
@@ -660,7 +724,8 @@
       "name": "Intonate Girl",
       "language": "es",
       "description": "清脆明亮，节奏轻快跳跃，戏剧张力",
-      "preview_url": "/assets/media-tts/samples/vx_4154ba8ca5c6.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_4154ba8ca5c6.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_79d9090bb2a2",
@@ -670,7 +735,8 @@
       "name": "Jovial Man",
       "language": "es",
       "description": "略带沙哑，慵懒随性，乐天搞怪",
-      "preview_url": "/assets/media-tts/samples/vx_79d9090bb2a2.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_79d9090bb2a2.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_7ad856cdfa6c",
@@ -680,7 +746,8 @@
       "name": "Kind-hearted Girl",
       "language": "es",
       "description": "甜美清亮，轻快活泼，邻家亲切感",
-      "preview_url": "/assets/media-tts/samples/vx_7ad856cdfa6c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_7ad856cdfa6c.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_093324649305",
@@ -690,7 +757,8 @@
       "name": "Mature Partner",
       "language": "es",
       "description": "粗犷沙哑，慵懒随意，历经沧桑",
-      "preview_url": "/assets/media-tts/samples/vx_093324649305.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_093324649305.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_0e9dcd3bfe75",
@@ -700,7 +768,8 @@
       "name": "Narrator",
       "language": "es",
       "description": "热情洋溢，夸张戏剧化，慈祥母亲角色",
-      "preview_url": "/assets/media-tts/samples/vx_0e9dcd3bfe75.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_0e9dcd3bfe75.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_46d5be41f531",
@@ -710,7 +779,8 @@
       "name": "Passionate Warrior",
       "language": "es",
       "description": "清朗，紧凑有力，热血",
-      "preview_url": "/assets/media-tts/samples/vx_46d5be41f531.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_46d5be41f531.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_a9befc7d9eb9",
@@ -720,7 +790,8 @@
       "name": "Powerful Soldier",
       "language": "es",
       "description": "刚毅有力，干脆利落，极具战斗感",
-      "preview_url": "/assets/media-tts/samples/vx_a9befc7d9eb9.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_a9befc7d9eb9.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_faa5f23b460a",
@@ -730,7 +801,8 @@
       "name": "Powerful Veteran",
       "language": "es",
       "description": "低沉粗砺，强硬有力，充满压迫感",
-      "preview_url": "/assets/media-tts/samples/vx_faa5f23b460a.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_faa5f23b460a.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_e94634bda6ef",
@@ -740,7 +812,8 @@
       "name": "Rational Man",
       "language": "es",
       "description": "低沉浑厚，从容不迫，严肃冷峻",
-      "preview_url": "/assets/media-tts/samples/vx_e94634bda6ef.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_e94634bda6ef.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_11d4e48035e4",
@@ -750,7 +823,8 @@
       "name": "Reliable Man",
       "language": "es",
       "description": "低沉浑厚，从容不迫，沉稳与睿智",
-      "preview_url": "/assets/media-tts/samples/vx_11d4e48035e4.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_11d4e48035e4.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_a193edf38e7a",
@@ -760,7 +834,8 @@
       "name": "Reserved Young Man",
       "language": "es",
       "description": "温润清澈，娓娓道来，极具叙事感",
-      "preview_url": "/assets/media-tts/samples/vx_a193edf38e7a.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_a193edf38e7a.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_2677bbf128ce",
@@ -770,7 +845,8 @@
       "name": "Romantic Husband",
       "language": "es",
       "description": "自然松弛，随意慵懒，愤世嫉俗",
-      "preview_url": "/assets/media-tts/samples/vx_2677bbf128ce.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_2677bbf128ce.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_c95f10696050",
@@ -780,7 +856,8 @@
       "name": "Rudolph",
       "language": "es",
       "description": "稚嫩鼻音，迟缓笨拙，纯真童趣",
-      "preview_url": "/assets/media-tts/samples/vx_c95f10696050.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_c95f10696050.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_f716a090701d",
@@ -790,7 +867,8 @@
       "name": "Santa Claus",
       "language": "es",
       "description": "浑厚洪亮，抑扬顿挫，和蔼可亲",
-      "preview_url": "/assets/media-tts/samples/vx_f716a090701d.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_f716a090701d.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_4f8cf7bfeaa8",
@@ -800,7 +878,8 @@
       "name": "Sensible Manager",
       "language": "es",
       "description": "略带沙哑，节奏急促，焦急恳切",
-      "preview_url": "/assets/media-tts/samples/vx_4f8cf7bfeaa8.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_4f8cf7bfeaa8.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_08c14efe326b",
@@ -810,7 +889,8 @@
       "name": "Serene Elder",
       "language": "es",
       "description": "苍老沙哑，节奏缓慢，充满戏剧张力",
-      "preview_url": "/assets/media-tts/samples/vx_08c14efe326b.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_08c14efe326b.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_65e05e78fa41",
@@ -820,7 +900,8 @@
       "name": "Serene Woman",
       "language": "es",
       "description": "明亮清脆，灵活多变，生动活泼",
-      "preview_url": "/assets/media-tts/samples/vx_65e05e78fa41.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_65e05e78fa41.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_9dca5a5d3c49",
@@ -830,7 +911,8 @@
       "name": "Sincere Teen",
       "language": "es",
       "description": "清脆明亮，节奏急促，充满吐槽感",
-      "preview_url": "/assets/media-tts/samples/vx_9dca5a5d3c49.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_9dca5a5d3c49.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_2e9429d570e0",
@@ -840,7 +922,8 @@
       "name": "Sophisticated Lady",
       "language": "es",
       "description": "略带沙哑，豪爽干练，自信笃定",
-      "preview_url": "/assets/media-tts/samples/vx_2e9429d570e0.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_2e9429d570e0.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_e9bc133d0a6b",
@@ -850,7 +933,8 @@
       "name": "Steady Mentor",
       "language": "es",
       "description": "粗砺沙哑，戏剧夸张，凶狠狂妄",
-      "preview_url": "/assets/media-tts/samples/vx_e9bc133d0a6b.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_e9bc133d0a6b.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_241ec2102c23",
@@ -860,7 +944,8 @@
       "name": "Strict Boss",
       "language": "es",
       "description": "硬朗有力，干脆利落，严厉紧迫",
-      "preview_url": "/assets/media-tts/samples/vx_241ec2102c23.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_241ec2102c23.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_66122dd7d5ee",
@@ -870,7 +955,8 @@
       "name": "Strong-willed Boy",
       "language": "es",
       "description": "清亮坚定，充满激情，热血",
-      "preview_url": "/assets/media-tts/samples/vx_66122dd7d5ee.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_66122dd7d5ee.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_0f68a24c572b",
@@ -880,7 +966,8 @@
       "name": "Thoughtful Lady",
       "language": "es",
       "description": "柔和细腻，舒缓自然，生活化",
-      "preview_url": "/assets/media-tts/samples/vx_0f68a24c572b.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_0f68a24c572b.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_b976cb166a13",
@@ -890,7 +977,8 @@
       "name": "Thoughtful Man",
       "language": "es",
       "description": "温润磁性，娓娓道来，亲切自然",
-      "preview_url": "/assets/media-tts/samples/vx_b976cb166a13.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_b976cb166a13.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_e582b67a9ae0",
@@ -900,7 +988,8 @@
       "name": "Tough Boss",
       "language": "es",
       "description": "低沉沙哑，极具戏剧张力，严肃厚重",
-      "preview_url": "/assets/media-tts/samples/vx_e582b67a9ae0.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_e582b67a9ae0.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_2aee4bc4d3a1",
@@ -910,7 +999,8 @@
       "name": "Whimsical Girl",
       "language": "es",
       "description": "甜美细腻，轻快灵动，古灵精怪",
-      "preview_url": "/assets/media-tts/samples/vx_2aee4bc4d3a1.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_2aee4bc4d3a1.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_b7e80b218b98",
@@ -920,7 +1010,8 @@
       "name": "Wise Scholar",
       "language": "es",
       "description": "清亮质朴，如话家常，邻家男孩",
-      "preview_url": "/assets/media-tts/samples/vx_b7e80b218b98.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_b7e80b218b98.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_510a3152d368",
@@ -930,7 +1021,8 @@
       "name": "Wise Lady",
       "language": "es",
       "description": "清亮优雅，节奏精准，神秘引导感",
-      "preview_url": "/assets/media-tts/samples/vx_510a3152d368.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_510a3152d368.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_5bf21428fd78",
@@ -940,7 +1032,8 @@
       "name": "Assertive Woman",
       "language": "fi",
       "description": "清脆有力，节奏紧凑，新闻现场感",
-      "preview_url": "/assets/media-tts/samples/vx_5bf21428fd78.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_5bf21428fd78.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_824e3e221765",
@@ -950,7 +1043,8 @@
       "name": "Friendly Boy",
       "language": "fi",
       "description": "明朗亲切，轻快流畅，邻家朋友感",
-      "preview_url": "/assets/media-tts/samples/vx_824e3e221765.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_824e3e221765.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_db48b90d0da4",
@@ -960,7 +1054,8 @@
       "name": "Upbeat Man",
       "language": "fi",
       "description": "清亮自然，轻快流畅，日常交谈感",
-      "preview_url": "/assets/media-tts/samples/vx_db48b90d0da4.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_db48b90d0da4.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_9b5b0e32522c",
@@ -970,7 +1065,8 @@
       "name": "Casual Man",
       "language": "fr",
       "description": "温润且富有质感，娓娓道来，具有思辨性",
-      "preview_url": "/assets/media-tts/samples/vx_9b5b0e32522c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_9b5b0e32522c.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_0b4bb3b146dc",
@@ -980,7 +1076,8 @@
       "name": "Female Anchor",
       "language": "fr",
       "description": "略带沙哑，娓娓道来，极具文艺感",
-      "preview_url": "/assets/media-tts/samples/vx_0b4bb3b146dc.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_0b4bb3b146dc.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_75bc730f319c",
@@ -990,7 +1087,8 @@
       "name": "Patient Female Presenter",
       "language": "fr",
       "description": "知性清晰，流畅自然，专业客观",
-      "preview_url": "/assets/media-tts/samples/vx_75bc730f319c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_75bc730f319c.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_01c09b221591",
@@ -1000,7 +1098,8 @@
       "name": "Male Narrator",
       "language": "fr",
       "description": "清澈干净，娓娓道来，亲切自然",
-      "preview_url": "/assets/media-tts/samples/vx_01c09b221591.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_01c09b221591.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_cd985f3922b1",
@@ -1010,7 +1109,8 @@
       "name": "Level-Headed Man",
       "language": "fr",
       "description": "清晰明朗，娓娓道来，专家权威感",
-      "preview_url": "/assets/media-tts/samples/vx_cd985f3922b1.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_cd985f3922b1.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_12d23f785fdd",
@@ -1020,7 +1120,8 @@
       "name": "Movie Lead Female",
       "language": "fr",
       "description": "清脆明亮，急促多变，情绪饱满",
-      "preview_url": "/assets/media-tts/samples/vx_12d23f785fdd.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_12d23f785fdd.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_cec369b496aa",
@@ -1030,7 +1131,8 @@
       "name": "News Anchor",
       "language": "hi",
       "description": "清晰明亮，字正腔圆，新闻播报感",
-      "preview_url": "/assets/media-tts/samples/vx_cec369b496aa.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_cec369b496aa.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_fc778d49259c",
@@ -1040,7 +1142,8 @@
       "name": "Tranquil Woman",
       "language": "hi",
       "description": "温暖沉静，娓娓道来，极具画面感",
-      "preview_url": "/assets/media-tts/samples/vx_fc778d49259c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_fc778d49259c.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_cd4a61ce7624",
@@ -1050,7 +1153,8 @@
       "name": "Trustworthy Advisor",
       "language": "hi",
       "description": "厚实，娓娓道来，亲切自然",
-      "preview_url": "/assets/media-tts/samples/vx_cd4a61ce7624.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_cd4a61ce7624.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_9ea4f95207e6",
@@ -1060,7 +1164,8 @@
       "name": "Bossy Leader",
       "language": "id",
       "description": "低沉粗犷，语气强硬，战场指挥感",
-      "preview_url": "/assets/media-tts/samples/vx_9ea4f95207e6.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_9ea4f95207e6.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_8e149454dc5a",
@@ -1070,7 +1175,8 @@
       "name": "Calm Woman",
       "language": "id",
       "description": "清脆明亮，流畅自然，戏剧张力",
-      "preview_url": "/assets/media-tts/samples/vx_8e149454dc5a.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_8e149454dc5a.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_4a20e4ce1812",
@@ -1080,7 +1186,8 @@
       "name": "Caring Man",
       "language": "id",
       "description": "富有磁性，抑扬顿挫，电影独白般",
-      "preview_url": "/assets/media-tts/samples/vx_4a20e4ce1812.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_4a20e4ce1812.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_6bffce474db0",
@@ -1090,7 +1197,8 @@
       "name": "Charming Girl",
       "language": "id",
       "description": "甜美细腻，自然随性，亲切邻家",
-      "preview_url": "/assets/media-tts/samples/vx_6bffce474db0.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_6bffce474db0.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_8622643e6fe1",
@@ -1100,7 +1208,8 @@
       "name": "Confident Woman",
       "language": "id",
       "description": "明亮圆润，从容坚定，干练大方",
-      "preview_url": "/assets/media-tts/samples/vx_8622643e6fe1.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_8622643e6fe1.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_b6f610719f94",
@@ -1110,7 +1219,8 @@
       "name": "Determined Boy",
       "language": "id",
       "description": "清亮有力，坚定果敢，热血",
-      "preview_url": "/assets/media-tts/samples/vx_b6f610719f94.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_b6f610719f94.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_8f80a1b4eabc",
@@ -1120,7 +1230,8 @@
       "name": "Gentle Girl",
       "language": "id",
       "description": "软糯轻柔，舒缓慵懒，呆萌",
-      "preview_url": "/assets/media-tts/samples/vx_8f80a1b4eabc.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_8f80a1b4eabc.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_a8f639e49395",
@@ -1130,7 +1241,8 @@
       "name": "Reserved Young Man",
       "language": "id",
       "description": "干净清澈，娓娓道来，内敛深情",
-      "preview_url": "/assets/media-tts/samples/vx_a8f639e49395.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_a8f639e49395.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_6f7ac2d62570",
@@ -1140,7 +1252,8 @@
       "name": "Sweet Girl",
       "language": "id",
       "description": "高亢明亮，戏剧化，自恋傲娇",
-      "preview_url": "/assets/media-tts/samples/vx_6f7ac2d62570.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_6f7ac2d62570.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_bb681b680480",
@@ -1150,7 +1263,8 @@
       "name": "Brave Heroine",
       "language": "it",
       "description": "略带沙哑，干脆利落，高冷御姐",
-      "preview_url": "/assets/media-tts/samples/vx_bb681b680480.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_bb681b680480.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_4174eec4fba3",
@@ -1160,7 +1274,8 @@
       "name": "Diligent Leader",
       "language": "it",
       "description": "略带沙哑，从容不迫，高傲且充满气场",
-      "preview_url": "/assets/media-tts/samples/vx_4174eec4fba3.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_4174eec4fba3.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_efbfe932733c",
@@ -1170,7 +1285,8 @@
       "name": "Narrator",
       "language": "it",
       "description": "低沉浑厚，娓娓道来，沉浸式",
-      "preview_url": "/assets/media-tts/samples/vx_efbfe932733c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_efbfe932733c.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_04f959f61249",
@@ -1180,7 +1296,8 @@
       "name": "Wandering Sorcerer",
       "language": "it",
       "description": "低沉沙哑，慵懒随意，优雅神秘",
-      "preview_url": "/assets/media-tts/samples/vx_04f959f61249.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_04f959f61249.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_cda3d38c98d0",
@@ -1190,7 +1307,8 @@
       "name": "Calm Lady",
       "language": "ja",
       "description": "清冷优雅，从容不迫，高贵自信",
-      "preview_url": "/assets/media-tts/samples/vx_cda3d38c98d0.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_cda3d38c98d0.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_3d8731264730",
@@ -1200,7 +1318,8 @@
       "name": "Cold Queen",
       "language": "ja",
       "description": "低沉沙哑，慵懒随意，御姐气场",
-      "preview_url": "/assets/media-tts/samples/vx_3d8731264730.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_3d8731264730.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_ca1dd989b006",
@@ -1210,7 +1329,8 @@
       "name": "Decisive Princess",
       "language": "ja",
       "description": "清脆透亮，节奏紧凑，傲娇严厉",
-      "preview_url": "/assets/media-tts/samples/vx_ca1dd989b006.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_ca1dd989b006.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_a7a3634df1a9",
@@ -1220,7 +1340,8 @@
       "name": "Dependable Woman",
       "language": "ja",
       "description": "清脆明亮，干脆利落，爽朗大方",
-      "preview_url": "/assets/media-tts/samples/vx_a7a3634df1a9.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_a7a3634df1a9.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_c86a65771053",
@@ -1230,7 +1351,8 @@
       "name": "Dominant Man",
       "language": "ja",
       "description": "质感冷冽，冷静克制，高冷",
-      "preview_url": "/assets/media-tts/samples/vx_c86a65771053.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_c86a65771053.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_98b84089f8c4",
@@ -1240,7 +1362,8 @@
       "name": "Generous Izakaya Owner",
       "language": "ja",
       "description": "豪爽沙哑，激情高昂，自信热血",
-      "preview_url": "/assets/media-tts/samples/vx_98b84089f8c4.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_98b84089f8c4.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_08a82fd91c86",
@@ -1250,7 +1373,8 @@
       "name": "Gentle Butler",
       "language": "ja",
       "description": "磁性且略带慵懒，轻松自如，优雅而神秘",
-      "preview_url": "/assets/media-tts/samples/vx_08a82fd91c86.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_08a82fd91c86.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_ca6d392ff899",
@@ -1260,7 +1384,8 @@
       "name": "Graceful Maiden",
       "language": "ja",
       "description": "清澈柔和，舒缓有礼，治愈且知性",
-      "preview_url": "/assets/media-tts/samples/vx_ca6d392ff899.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_ca6d392ff899.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_4ce5d9dca776",
@@ -1270,7 +1395,8 @@
       "name": "Innocent Boy",
       "language": "ja",
       "description": "清澈纯净，温和礼貌，少年感",
-      "preview_url": "/assets/media-tts/samples/vx_4ce5d9dca776.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_4ce5d9dca776.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_c19002d3b8ea",
@@ -1280,7 +1406,8 @@
       "name": "Intellectual Senior",
       "language": "ja",
       "description": "清澈柔和，舒缓从容，宁静致远",
-      "preview_url": "/assets/media-tts/samples/vx_c19002d3b8ea.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_c19002d3b8ea.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_44d8fcd2d1bd",
@@ -1290,7 +1417,8 @@
       "name": "Kind Lady",
       "language": "ja",
       "description": "温柔妩媚，舒缓从容，知性御姐感",
-      "preview_url": "/assets/media-tts/samples/vx_44d8fcd2d1bd.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_44d8fcd2d1bd.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_e7201d040371",
@@ -1300,7 +1428,8 @@
       "name": "Loyal Knight",
       "language": "ja",
       "description": "清冷孤傲，干脆利落，守护者氛围",
-      "preview_url": "/assets/media-tts/samples/vx_e7201d040371.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_e7201d040371.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_b70b8e2a5363",
@@ -1310,7 +1439,8 @@
       "name": "Optimistic Youth",
       "language": "ja",
       "description": "清爽明快，充满活力，阳光少年形象",
-      "preview_url": "/assets/media-tts/samples/vx_b70b8e2a5363.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_b70b8e2a5363.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_d55edfc717aa",
@@ -1320,7 +1450,8 @@
       "name": "Serious Commander",
       "language": "ja",
       "description": "温润清冷，优雅从容，神秘学者感",
-      "preview_url": "/assets/media-tts/samples/vx_d55edfc717aa.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_d55edfc717aa.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_2985d148e174",
@@ -1330,7 +1461,8 @@
       "name": "Sporty Student",
       "language": "ja",
       "description": "清亮朝气，干脆利落，自信飞扬",
-      "preview_url": "/assets/media-tts/samples/vx_2985d148e174.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_2985d148e174.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_396021436e2d",
@@ -1340,7 +1472,8 @@
       "name": "Airheaded Girl",
       "language": "ko",
       "description": "清脆明亮，干脆利落，傲娇感",
-      "preview_url": "/assets/media-tts/samples/vx_396021436e2d.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_396021436e2d.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_2ecca91f19de",
@@ -1350,7 +1483,8 @@
       "name": "Athletic Girl",
       "language": "ko",
       "description": "清脆明亮，欢快跳跃，元气满满",
-      "preview_url": "/assets/media-tts/samples/vx_2ecca91f19de.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_2ecca91f19de.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_2ec06c7473b4",
@@ -1360,7 +1494,8 @@
       "name": "Athletic Student",
       "language": "ko",
       "description": "明亮高亢，干脆利落，热血激昂",
-      "preview_url": "/assets/media-tts/samples/vx_2ec06c7473b4.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_2ec06c7473b4.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_58279bead5ea",
@@ -1370,7 +1505,8 @@
       "name": "Brave Adventurer",
       "language": "ko",
       "description": "清脆明亮，灵动活泼，顽皮乐观",
-      "preview_url": "/assets/media-tts/samples/vx_58279bead5ea.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_58279bead5ea.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_55070dbff229",
@@ -1380,7 +1516,8 @@
       "name": "Brave Female Warrior",
       "language": "ko",
       "description": "清亮凛冽，干脆利落，领袖风范",
-      "preview_url": "/assets/media-tts/samples/vx_55070dbff229.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_55070dbff229.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_134044c1c3cb",
@@ -1390,7 +1527,8 @@
       "name": "Brave Youth",
       "language": "ko",
       "description": "清朗明快，轻快跳跃，恋爱氛围感",
-      "preview_url": "/assets/media-tts/samples/vx_134044c1c3cb.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_134044c1c3cb.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_1941c1c6a8a3",
@@ -1400,7 +1538,8 @@
       "name": "Calm Gentleman",
       "language": "ko",
       "description": "低沉优雅，从容不迫，充满故事感",
-      "preview_url": "/assets/media-tts/samples/vx_1941c1c6a8a3.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_1941c1c6a8a3.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_108a1a50c568",
@@ -1410,7 +1549,8 @@
       "name": "Calm Lady",
       "language": "ko",
       "description": "清冷优雅，沉稳内敛，威严冷静",
-      "preview_url": "/assets/media-tts/samples/vx_108a1a50c568.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_108a1a50c568.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_3c7d901614be",
@@ -1420,7 +1560,8 @@
       "name": "Caring Woman",
       "language": "ko",
       "description": "清脆明亮，轻快活泼，俏皮可爱",
-      "preview_url": "/assets/media-tts/samples/vx_3c7d901614be.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_3c7d901614be.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_90dad5ef22ce",
@@ -1430,7 +1571,8 @@
       "name": "Charming Elder Sister",
       "language": "ko",
       "description": "华丽优雅，从容不迫，神秘且撩人",
-      "preview_url": "/assets/media-tts/samples/vx_90dad5ef22ce.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_90dad5ef22ce.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_3286fd351325",
@@ -1440,7 +1582,8 @@
       "name": "Charming Sister",
       "language": "ko",
       "description": "低沉略带沙哑，自信且充满压迫感，危险迷人",
-      "preview_url": "/assets/media-tts/samples/vx_3286fd351325.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_3286fd351325.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_f87a063ea0e2",
@@ -1450,7 +1593,8 @@
       "name": "Cheerful Boyfriend",
       "language": "ko",
       "description": "清亮干净，轻快跃动，温暖阳光",
-      "preview_url": "/assets/media-tts/samples/vx_f87a063ea0e2.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_f87a063ea0e2.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_13a3c58c5264",
@@ -1460,7 +1604,8 @@
       "name": "Cheerful Cool Junior",
       "language": "ko",
       "description": "清亮爽朗，自信轻快，热血无畏",
-      "preview_url": "/assets/media-tts/samples/vx_13a3c58c5264.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_13a3c58c5264.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_185fe74bac2c",
@@ -1470,7 +1615,8 @@
       "name": "Cheerful Little Sister",
       "language": "ko",
       "description": "清脆明亮，语速轻快活泼，热情亲切",
-      "preview_url": "/assets/media-tts/samples/vx_185fe74bac2c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_185fe74bac2c.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_39091ebc63a7",
@@ -1480,7 +1626,8 @@
       "name": "Childhood Friend Girl",
       "language": "ko",
       "description": "明亮沙哑，干练利落，自信俏皮",
-      "preview_url": "/assets/media-tts/samples/vx_39091ebc63a7.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_39091ebc63a7.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_206f0d8ee75e",
@@ -1490,7 +1637,8 @@
       "name": "Cocky Guy",
       "language": "ko",
       "description": "中气十足，极具爆发力，狂妄感",
-      "preview_url": "/assets/media-tts/samples/vx_206f0d8ee75e.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_206f0d8ee75e.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_a2e93654dbdf",
@@ -1500,7 +1648,8 @@
       "name": "Cold Girl",
       "language": "ko",
       "description": "轻柔慵懒，缓慢拖沓，淡漠疏离",
-      "preview_url": "/assets/media-tts/samples/vx_a2e93654dbdf.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_a2e93654dbdf.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_83ac559e1d32",
@@ -1510,7 +1659,8 @@
       "name": "Cold Young Man",
       "language": "ko",
       "description": "清冷清澈，娓娓道来，冷静且克制",
-      "preview_url": "/assets/media-tts/samples/vx_83ac559e1d32.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_83ac559e1d32.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_8f821b3697ff",
@@ -1520,7 +1670,8 @@
       "name": "Confident Boss",
       "language": "ko",
       "description": "沙哑磁性，从容不迫，幕后操纵感",
-      "preview_url": "/assets/media-tts/samples/vx_8f821b3697ff.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_8f821b3697ff.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_e8a2c7c337c7",
@@ -1530,7 +1681,8 @@
       "name": "Considerate Senior",
       "language": "ko",
       "description": "温暖厚实，舒缓从容，关怀感",
-      "preview_url": "/assets/media-tts/samples/vx_e8a2c7c337c7.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_e8a2c7c337c7.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_c25e6bfcd80d",
@@ -1540,7 +1692,8 @@
       "name": "Decisive Queen",
       "language": "ko",
       "description": "清脆明亮，干脆利落，强气自信",
-      "preview_url": "/assets/media-tts/samples/vx_c25e6bfcd80d.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_c25e6bfcd80d.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_46f1ea77989b",
@@ -1550,7 +1703,8 @@
       "name": "Dominant Man",
       "language": "ko",
       "description": "冷峻低沉，沉稳克制，高冷贵公子",
-      "preview_url": "/assets/media-tts/samples/vx_46f1ea77989b.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_46f1ea77989b.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_11b1ee25f085",
@@ -1560,7 +1714,8 @@
       "name": "Elegant Princess",
       "language": "ko",
       "description": "清冷高贵，干练利落，威严自信",
-      "preview_url": "/assets/media-tts/samples/vx_11b1ee25f085.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_11b1ee25f085.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_2c218f51b035",
@@ -1570,7 +1725,8 @@
       "name": "Enchanting Sister",
       "language": "ko",
       "description": "极富磁性，从容自信，高冷威严",
-      "preview_url": "/assets/media-tts/samples/vx_2c218f51b035.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_2c218f51b035.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_1424000c246d",
@@ -1580,7 +1736,8 @@
       "name": "Enthusiastic Teen",
       "language": "ko",
       "description": "清亮高亢，急促有力，少年英雄感",
-      "preview_url": "/assets/media-tts/samples/vx_1424000c246d.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_1424000c246d.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_806a097b46f8",
@@ -1590,7 +1747,8 @@
       "name": "Friendly Big Sister",
       "language": "ko",
       "description": "略带沙哑，自信从容，极具诱惑力",
-      "preview_url": "/assets/media-tts/samples/vx_806a097b46f8.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_806a097b46f8.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_03c570ac7d9f",
@@ -1600,7 +1758,8 @@
       "name": "Gentle Boss",
       "language": "ko",
       "description": "阴冷沙哑，阴狠果断，黑暗压迫感",
-      "preview_url": "/assets/media-tts/samples/vx_03c570ac7d9f.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_03c570ac7d9f.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_79f896241a6b",
@@ -1610,7 +1769,8 @@
       "name": "Gentle Woman",
       "language": "ko",
       "description": "清澈温润，彬彬有礼，大家闺秀感",
-      "preview_url": "/assets/media-tts/samples/vx_79f896241a6b.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_79f896241a6b.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_41bc92fff108",
@@ -1620,7 +1780,8 @@
       "name": "Haughty Lady",
       "language": "ko",
       "description": "通透澄澈，不紧不慢，孤傲神秘",
-      "preview_url": "/assets/media-tts/samples/vx_41bc92fff108.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_41bc92fff108.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_0a515b8b149c",
@@ -1630,7 +1791,8 @@
       "name": "Innocent Boy",
       "language": "ko",
       "description": "清澈稚嫩，温柔诚恳，乖巧少年",
-      "preview_url": "/assets/media-tts/samples/vx_0a515b8b149c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_0a515b8b149c.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_1a398e538ee5",
@@ -1640,7 +1802,8 @@
       "name": "Intellectual Man",
       "language": "ko",
       "description": "低沉醇厚，舒缓慵懒，温柔亲昵",
-      "preview_url": "/assets/media-tts/samples/vx_1a398e538ee5.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_1a398e538ee5.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_84ebdc37ea16",
@@ -1650,7 +1813,8 @@
       "name": "Intellectual Senior",
       "language": "ko",
       "description": "温润清澈，舒缓从容，淡然诗意",
-      "preview_url": "/assets/media-tts/samples/vx_84ebdc37ea16.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_84ebdc37ea16.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_e471e748070c",
@@ -1660,7 +1824,8 @@
       "name": "Lonely Warrior",
       "language": "ko",
       "description": "略带沙哑，干脆利落，冷峻魅力",
-      "preview_url": "/assets/media-tts/samples/vx_e471e748070c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_e471e748070c.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_1485ad1d525a",
@@ -1670,7 +1835,8 @@
       "name": "Mature Lady",
       "language": "ko",
       "description": "冷艳锐利，果断傲慢，自信轻蔑",
-      "preview_url": "/assets/media-tts/samples/vx_1485ad1d525a.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_1485ad1d525a.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_fd03045561e7",
@@ -1680,7 +1846,8 @@
       "name": "Mysterious Girl",
       "language": "ko",
       "description": "甜美高亢，干脆利落，元气满满",
-      "preview_url": "/assets/media-tts/samples/vx_fd03045561e7.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_fd03045561e7.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_f730d9b18812",
@@ -1690,7 +1857,8 @@
       "name": "Optimistic Youth",
       "language": "ko",
       "description": "清亮，轻快活泼，元气满满",
-      "preview_url": "/assets/media-tts/samples/vx_f730d9b18812.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_f730d9b18812.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_171d6d134208",
@@ -1700,7 +1868,8 @@
       "name": "Playboy Charmer",
       "language": "ko",
       "description": "慵懒磁性，轻快流畅，极具撩拨感",
-      "preview_url": "/assets/media-tts/samples/vx_171d6d134208.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_171d6d134208.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_00a6970b4dc3",
@@ -1710,7 +1879,8 @@
       "name": "Possessive Man",
       "language": "ko",
       "description": "冷冽富有磁性，从容不迫，高冷统领感",
-      "preview_url": "/assets/media-tts/samples/vx_00a6970b4dc3.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_00a6970b4dc3.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_c11d82211ef7",
@@ -1720,7 +1890,8 @@
       "name": "Quirky Girl",
       "language": "ko",
       "description": "清脆明亮，轻快跳跃，元气少女感",
-      "preview_url": "/assets/media-tts/samples/vx_c11d82211ef7.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_c11d82211ef7.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_f4f4d11bf474",
@@ -1730,7 +1901,8 @@
       "name": "Reliable Sister",
       "language": "ko",
       "description": "干练沙哑，干脆利落，酷飒御姐感",
-      "preview_url": "/assets/media-tts/samples/vx_f4f4d11bf474.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_f4f4d11bf474.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_a782afeead4e",
@@ -1740,7 +1912,8 @@
       "name": "Reliable Youth",
       "language": "ko",
       "description": "干净纯粹，干脆利落，正气凛然",
-      "preview_url": "/assets/media-tts/samples/vx_a782afeead4e.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_a782afeead4e.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_f7cc5b9fb6f7",
@@ -1750,7 +1923,8 @@
       "name": "Sassy Girl",
       "language": "ko",
       "description": "甜美娇俏，轻快跳跃，元气满满",
-      "preview_url": "/assets/media-tts/samples/vx_f7cc5b9fb6f7.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_f7cc5b9fb6f7.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_ebc27bec9914",
@@ -1760,7 +1934,8 @@
       "name": "Shy Girl",
       "language": "ko",
       "description": "细腻气声，轻柔舒缓，邻家少女感",
-      "preview_url": "/assets/media-tts/samples/vx_ebc27bec9914.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_ebc27bec9914.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_9d92d2b78be5",
@@ -1770,7 +1945,8 @@
       "name": "Soothing Lady",
       "language": "ko",
       "description": "温柔慵懒，舒缓流畅，亲切迷人",
-      "preview_url": "/assets/media-tts/samples/vx_9d92d2b78be5.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_9d92d2b78be5.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_545ee3a740cb",
@@ -1780,7 +1956,8 @@
       "name": "Strict Boss",
       "language": "ko",
       "description": "清亮透彻，抑扬顿挫，王者气场",
-      "preview_url": "/assets/media-tts/samples/vx_545ee3a740cb.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_545ee3a740cb.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_01540d62c440",
@@ -1790,7 +1967,8 @@
       "name": "Sweet Girl",
       "language": "ko",
       "description": "清脆甜美，轻快活泼，热情且富有感染力",
-      "preview_url": "/assets/media-tts/samples/vx_01540d62c440.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_01540d62c440.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_0f82acaa60ac",
@@ -1800,7 +1978,8 @@
       "name": "Thoughtful Woman",
       "language": "ko",
       "description": "清脆明亮，轻快活泼，亲切可爱",
-      "preview_url": "/assets/media-tts/samples/vx_0f82acaa60ac.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_0f82acaa60ac.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_5f68b606a222",
@@ -1810,7 +1989,8 @@
       "name": "Wise Elf",
       "language": "ko",
       "description": "温柔细腻，舒缓轻柔，认真羞涩",
-      "preview_url": "/assets/media-tts/samples/vx_5f68b606a222.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_5f68b606a222.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_49cb8a5abdfb",
@@ -1820,7 +2000,8 @@
       "name": "Wise Teacher",
       "language": "ko",
       "description": "清亮明快，干脆利落，运筹帷幄的傲气",
-      "preview_url": "/assets/media-tts/samples/vx_49cb8a5abdfb.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_49cb8a5abdfb.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_b8642012115c",
@@ -1830,7 +2011,8 @@
       "name": "Bossy leader",
       "language": "nl",
       "description": "沙哑颗粒感，斩钉截铁，霸气外露",
-      "preview_url": "/assets/media-tts/samples/vx_b8642012115c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_b8642012115c.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_93fe56997b1a",
@@ -1840,7 +2022,8 @@
       "name": "Kind-hearted girl",
       "language": "nl",
       "description": "甜美细腻，清晰明快，温暖亲切",
-      "preview_url": "/assets/media-tts/samples/vx_93fe56997b1a.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_93fe56997b1a.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_c159dfde464d",
@@ -1850,7 +2033,8 @@
       "name": "Calm Woman",
       "language": "pl",
       "description": "清晰柔和，娓娓道来，富有知识涵养",
-      "preview_url": "/assets/media-tts/samples/vx_c159dfde464d.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_c159dfde464d.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_9ef39ed417ff",
@@ -1860,7 +2044,8 @@
       "name": "Casual Woman",
       "language": "pl",
       "description": "温暖且自然，如同日常交谈，富有生活气息",
-      "preview_url": "/assets/media-tts/samples/vx_9ef39ed417ff.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_9ef39ed417ff.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_5f77e7583414",
@@ -1870,7 +2055,8 @@
       "name": "Male Narrator",
       "language": "pl",
       "description": "沉稳厚实，从容平缓，专业严谨",
-      "preview_url": "/assets/media-tts/samples/vx_5f77e7583414.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_5f77e7583414.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_32245604952c",
@@ -1880,7 +2066,8 @@
       "name": "Male Anchor",
       "language": "pl",
       "description": "清亮，节奏极快，热情洋溢",
-      "preview_url": "/assets/media-tts/samples/vx_32245604952c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_32245604952c.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_a22796527b0c",
@@ -1890,7 +2077,8 @@
       "name": "Angry Man",
       "language": "pt",
       "description": "紧绷且略带沙哑，节奏急促，极具对抗性",
-      "preview_url": "/assets/media-tts/samples/vx_a22796527b0c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_a22796527b0c.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_13cd4e98d5d6",
@@ -1900,7 +2088,8 @@
       "name": "Anime Character",
       "language": "pt",
       "description": "高亢明亮，急促紧凑，充满戏剧张力",
-      "preview_url": "/assets/media-tts/samples/vx_13cd4e98d5d6.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_13cd4e98d5d6.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_4d86cd0a6a73",
@@ -1910,7 +2099,8 @@
       "name": "Arnold",
       "language": "pt",
       "description": "浑厚低沉，从容不迫，亲历者叙事感",
-      "preview_url": "/assets/media-tts/samples/vx_4d86cd0a6a73.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_4d86cd0a6a73.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_833c4c7cdee2",
@@ -1920,7 +2110,8 @@
       "name": "Assertive Queen",
       "language": "pt",
       "description": "华丽富有质感，自信坚定，高贵冷艳",
-      "preview_url": "/assets/media-tts/samples/vx_833c4c7cdee2.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_833c4c7cdee2.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_51318aaeca1e",
@@ -1930,7 +2121,8 @@
       "name": "Attractive Girl",
       "language": "pt",
       "description": "甜美细腻，自然随性，邻家女孩感",
-      "preview_url": "/assets/media-tts/samples/vx_51318aaeca1e.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_51318aaeca1e.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_8b893a6ce710",
@@ -1940,7 +2132,8 @@
       "name": "Bossy Leader",
       "language": "pt",
       "description": "低沉沙哑，强硬有力，严肃冷峻",
-      "preview_url": "/assets/media-tts/samples/vx_8b893a6ce710.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_8b893a6ce710.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_533b3bc156e0",
@@ -1950,7 +2143,8 @@
       "name": "Calm Leader",
       "language": "pt",
       "description": "低沉粗犷，随意自然，街头江湖气",
-      "preview_url": "/assets/media-tts/samples/vx_533b3bc156e0.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_533b3bc156e0.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_c3b5b9ebe3e3",
@@ -1960,7 +2154,8 @@
       "name": "Captivating Storyteller",
       "language": "pt",
       "description": "低沉浑厚，娓娓道来，充满叙事感",
-      "preview_url": "/assets/media-tts/samples/vx_c3b5b9ebe3e3.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_c3b5b9ebe3e3.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_e590879bd13d",
@@ -1970,7 +2165,8 @@
       "name": "Caring Girlfriend",
       "language": "pt",
       "description": "甜美细腻，富有韵律感，亲切温柔",
-      "preview_url": "/assets/media-tts/samples/vx_e590879bd13d.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_e590879bd13d.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_ae1ba9684419",
@@ -1980,7 +2176,8 @@
       "name": "Charming Lady",
       "language": "pt",
       "description": "气声饱满，耳边低语，性感撩人",
-      "preview_url": "/assets/media-tts/samples/vx_ae1ba9684419.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_ae1ba9684419.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_dcaa055fdee0",
@@ -1990,7 +2187,8 @@
       "name": "Charming Queen",
       "language": "pt",
       "description": "冷艳磁性，慵懒优雅，高冷神秘",
-      "preview_url": "/assets/media-tts/samples/vx_dcaa055fdee0.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_dcaa055fdee0.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_d8a6402e0a6c",
@@ -2000,7 +2198,8 @@
       "name": "Charming Santa",
       "language": "pt",
       "description": "低沉沙哑，抑扬顿挫，威严神秘",
-      "preview_url": "/assets/media-tts/samples/vx_d8a6402e0a6c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_d8a6402e0a6c.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_121cbe1e6902",
@@ -2010,7 +2209,8 @@
       "name": "Chatty Girl",
       "language": "pt",
       "description": "甜美明亮，轻快活泼，邻家亲切感",
-      "preview_url": "/assets/media-tts/samples/vx_121cbe1e6902.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_121cbe1e6902.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_e55694b93718",
@@ -2020,7 +2220,8 @@
       "name": "Comedian",
       "language": "pt",
       "description": "高亢明亮，抑扬顿挫，幽默滑稽",
-      "preview_url": "/assets/media-tts/samples/vx_e55694b93718.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_e55694b93718.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_a1309075d60a",
@@ -2030,7 +2231,8 @@
       "name": "Compelling Girl",
       "language": "pt",
       "description": "清晰坚实，节奏紧凑，指令感强",
-      "preview_url": "/assets/media-tts/samples/vx_a1309075d60a.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_a1309075d60a.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_dbcac204997c",
@@ -2040,7 +2242,8 @@
       "name": "Confident Woman",
       "language": "pt",
       "description": "明亮穿透，坚定有力，自信且充满气场",
-      "preview_url": "/assets/media-tts/samples/vx_dbcac204997c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_dbcac204997c.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_e48653906e36",
@@ -2050,7 +2253,8 @@
       "name": "Conscientious Instructor",
       "language": "pt",
       "description": "清脆明亮，轻快流畅，热情亲切",
-      "preview_url": "/assets/media-tts/samples/vx_e48653906e36.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_e48653906e36.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_19c391659926",
@@ -2060,7 +2264,8 @@
       "name": "Debator",
       "language": "pt",
       "description": "沙哑粗砺，松弛痞气，狡黠市侩",
-      "preview_url": "/assets/media-tts/samples/vx_19c391659926.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_19c391659926.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_07e434f0392f",
@@ -2070,7 +2275,8 @@
       "name": "Deep-voiced Gentleman",
       "language": "pt",
       "description": "低沉沙哑，张弛有度，极具戏剧张力",
-      "preview_url": "/assets/media-tts/samples/vx_07e434f0392f.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_07e434f0392f.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_73e2cbc8b766",
@@ -2080,7 +2286,8 @@
       "name": "Determined Manager",
       "language": "pt",
       "description": "尖锐且充满张力，节奏急促，严肃且具有对抗性",
-      "preview_url": "/assets/media-tts/samples/vx_73e2cbc8b766.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_73e2cbc8b766.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_47166edbe689",
@@ -2090,7 +2297,8 @@
       "name": "Dramatist",
       "language": "pt",
       "description": "沙哑，张扬夸张，狂放不羁",
-      "preview_url": "/assets/media-tts/samples/vx_47166edbe689.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_47166edbe689.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_582eb3589723",
@@ -2100,7 +2308,8 @@
       "name": "Elegant Girl",
       "language": "pt",
       "description": "声线清脆尖细，节奏急促，富有戏剧张力",
-      "preview_url": "/assets/media-tts/samples/vx_582eb3589723.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_582eb3589723.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_1e93102a5281",
@@ -2110,7 +2319,8 @@
       "name": "Energetic Boy",
       "language": "pt",
       "description": "阳光清爽，活力四射，邻家大男孩",
-      "preview_url": "/assets/media-tts/samples/vx_1e93102a5281.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_1e93102a5281.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_10b425a011ac",
@@ -2120,7 +2330,8 @@
       "name": "Fascinating Boy",
       "language": "pt",
       "description": "明亮，跳跃轻快，热情洋溢",
-      "preview_url": "/assets/media-tts/samples/vx_10b425a011ac.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_10b425a011ac.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_1b40b4195664",
@@ -2130,7 +2341,8 @@
       "name": "Fragile Boy",
       "language": "pt",
       "description": "带有颤抖气声，节奏迟疑，脆弱",
-      "preview_url": "/assets/media-tts/samples/vx_1b40b4195664.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_1b40b4195664.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_8bd7444ffd2c",
@@ -2140,7 +2352,8 @@
       "name": "Frank Lady",
       "language": "pt",
       "description": "略带沙哑，节奏急促，充满生活气息",
-      "preview_url": "/assets/media-tts/samples/vx_8bd7444ffd2c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_8bd7444ffd2c.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_11696153793c",
@@ -2150,7 +2363,8 @@
       "name": "Friendly Neighbor",
       "language": "pt",
       "description": "清脆明亮，语速干脆，充满活力",
-      "preview_url": "/assets/media-tts/samples/vx_11696153793c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_11696153793c.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_075a2d58ff8f",
@@ -2160,7 +2374,8 @@
       "name": "Fussy hostess",
       "language": "pt",
       "description": "尖锐高亢，急促且充满压迫感，暴躁女王",
-      "preview_url": "/assets/media-tts/samples/vx_075a2d58ff8f.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_075a2d58ff8f.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_950a7b1cf749",
@@ -2170,7 +2385,8 @@
       "name": "Gentle Teacher",
       "language": "pt",
       "description": "声线清澈，循循善诱，耐心讲解",
-      "preview_url": "/assets/media-tts/samples/vx_950a7b1cf749.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_950a7b1cf749.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_e0afb10419a0",
@@ -2180,7 +2396,8 @@
       "name": "Ghost",
       "language": "pt",
       "description": "低沉沙哑，节奏干脆，冷静克制",
-      "preview_url": "/assets/media-tts/samples/vx_e0afb10419a0.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_e0afb10419a0.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_64917e45e9b7",
@@ -2190,7 +2407,8 @@
       "name": "Godfather",
       "language": "pt",
       "description": "沙哑低沉，缓慢凝重，充满压迫感",
-      "preview_url": "/assets/media-tts/samples/vx_64917e45e9b7.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_64917e45e9b7.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_532808a3ce2f",
@@ -2200,7 +2418,8 @@
       "name": "Gorgeous Lady",
       "language": "pt",
       "description": "妩媚动人，娓娓道来，慵懒高贵",
-      "preview_url": "/assets/media-tts/samples/vx_532808a3ce2f.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_532808a3ce2f.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_46924b45a081",
@@ -2210,7 +2429,8 @@
       "name": "Grim Reaper",
       "language": "pt",
       "description": "低沉沙哑，节奏冷酷，阴郁恐怖",
-      "preview_url": "/assets/media-tts/samples/vx_46924b45a081.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_46924b45a081.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_42f13ad4e8cd",
@@ -2220,7 +2440,8 @@
       "name": "Grinch",
       "language": "pt",
       "description": "沙哑粗砺，夸张多变，滑稽狡黠",
-      "preview_url": "/assets/media-tts/samples/vx_42f13ad4e8cd.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_42f13ad4e8cd.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_ab180a694e86",
@@ -2230,7 +2451,8 @@
       "name": "Humorous Elder",
       "language": "pt",
       "description": "沙哑颤抖，夸张跳跃，诙谐幽默",
-      "preview_url": "/assets/media-tts/samples/vx_ab180a694e86.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_ab180a694e86.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_925adf0a51b6",
@@ -2240,7 +2462,8 @@
       "name": "Inspiring Lady",
       "language": "pt",
       "description": "清脆甜美，充满活力，热情洋溢",
-      "preview_url": "/assets/media-tts/samples/vx_925adf0a51b6.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_925adf0a51b6.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_300acf4957b8",
@@ -2250,7 +2473,8 @@
       "name": "Jovial Man",
       "language": "pt",
       "description": "粗犷且略带沙哑，节奏轻松随意，滑稽且极具亲和力",
-      "preview_url": "/assets/media-tts/samples/vx_300acf4957b8.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_300acf4957b8.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_598c78696f39",
@@ -2260,7 +2484,8 @@
       "name": "Kind-hearted Girl",
       "language": "pt",
       "description": "清澈甜美，轻快流畅，积极阳光",
-      "preview_url": "/assets/media-tts/samples/vx_598c78696f39.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_598c78696f39.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_e3decf583ed7",
@@ -2270,7 +2495,8 @@
       "name": "Lovely Lady",
       "language": "pt",
       "description": "略带沙哑，干脆利落，具有统御力",
-      "preview_url": "/assets/media-tts/samples/vx_e3decf583ed7.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_e3decf583ed7.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_9a5bf223c88c",
@@ -2280,7 +2506,8 @@
       "name": "Mature Partner",
       "language": "pt",
       "description": "粗砺沙哑，抑扬顿挫，爱发牢骚",
-      "preview_url": "/assets/media-tts/samples/vx_9a5bf223c88c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_9a5bf223c88c.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_9b85903bd067",
@@ -2290,7 +2517,8 @@
       "name": "Narrator",
       "language": "pt",
       "description": "温暖亲切，轻快活泼，热情感染力",
-      "preview_url": "/assets/media-tts/samples/vx_9b85903bd067.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_9b85903bd067.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_6f0b74def15a",
@@ -2300,7 +2528,8 @@
       "name": "Naughty Schoolgirl",
       "language": "pt",
       "description": "清脆甜美，轻快跳跃，俏皮可爱",
-      "preview_url": "/assets/media-tts/samples/vx_6f0b74def15a.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_6f0b74def15a.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_262a3c62204d",
@@ -2310,7 +2539,8 @@
       "name": "Passionate Warrior",
       "language": "pt",
       "description": "清亮激昂，节奏紧凑，热血自信",
-      "preview_url": "/assets/media-tts/samples/vx_262a3c62204d.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_262a3c62204d.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_6d2c6a481903",
@@ -2320,7 +2550,8 @@
       "name": "Playful Girl",
       "language": "pt",
       "description": "甜美清亮，灵动活泼，元气少女感",
-      "preview_url": "/assets/media-tts/samples/vx_6d2c6a481903.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_6d2c6a481903.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_591502fa9591",
@@ -2330,7 +2561,8 @@
       "name": "Playful Spirit",
       "language": "pt",
       "description": "高亢明亮，节奏急促，俏皮叛逆",
-      "preview_url": "/assets/media-tts/samples/vx_591502fa9591.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_591502fa9591.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_32b858260181",
@@ -2340,7 +2572,8 @@
       "name": "Pompous lady",
       "language": "pt",
       "description": "高亢尖锐，矫揉造作，傲慢",
-      "preview_url": "/assets/media-tts/samples/vx_32b858260181.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_32b858260181.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_e17fb12232ce",
@@ -2350,7 +2583,8 @@
       "name": "Powerful Soldier",
       "language": "pt",
       "description": "沙哑爆发，紧凑有力，热血激昂",
-      "preview_url": "/assets/media-tts/samples/vx_e17fb12232ce.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_e17fb12232ce.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_d422db00da59",
@@ -2360,7 +2594,8 @@
       "name": "Powerful Veteran",
       "language": "pt",
       "description": "粗砺深沉，缓慢坚定，上位者气息",
-      "preview_url": "/assets/media-tts/samples/vx_d422db00da59.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_d422db00da59.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_27d8861a56da",
@@ -2370,7 +2605,8 @@
       "name": "Rational Man",
       "language": "pt",
       "description": "低沉浑厚，缓慢从容，权威气质",
-      "preview_url": "/assets/media-tts/samples/vx_27d8861a56da.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_27d8861a56da.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_9ade6874428c",
@@ -2380,7 +2616,8 @@
       "name": "Reliable Man",
       "language": "pt",
       "description": "低沉醇厚，娓娓道来，智者风范",
-      "preview_url": "/assets/media-tts/samples/vx_9ade6874428c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_9ade6874428c.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_9a0eb853dc35",
@@ -2390,7 +2627,8 @@
       "name": "Reserved Young Man",
       "language": "pt",
       "description": "纯净透亮，彬彬有礼，内敛真诚",
-      "preview_url": "/assets/media-tts/samples/vx_9a0eb853dc35.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_9a0eb853dc35.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_2b12e04173a8",
@@ -2400,7 +2638,8 @@
       "name": "Romantic Husband",
       "language": "pt",
       "description": "略带沙哑，抑扬顿挫，愤世嫉俗",
-      "preview_url": "/assets/media-tts/samples/vx_2b12e04173a8.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_2b12e04173a8.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_8fc818701a2c",
@@ -2410,7 +2649,8 @@
       "name": "Rudolph",
       "language": "pt",
       "description": "鼻音质感，略显稚嫩，卡通形象感",
-      "preview_url": "/assets/media-tts/samples/vx_8fc818701a2c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_8fc818701a2c.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_77081c26e291",
@@ -2420,7 +2660,8 @@
       "name": "Sad Teen",
       "language": "pt",
       "description": "略带沙哑，节奏急促，充满了讽刺",
-      "preview_url": "/assets/media-tts/samples/vx_77081c26e291.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_77081c26e291.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_e059f6ccc777",
@@ -2430,7 +2671,8 @@
       "name": "Santa Claus",
       "language": "pt",
       "description": "浑厚洪亮，戏剧化，喜庆欢快",
-      "preview_url": "/assets/media-tts/samples/vx_e059f6ccc777.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_e059f6ccc777.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_5151bcad7f76",
@@ -2440,7 +2682,8 @@
       "name": "Sensible Manager",
       "language": "pt",
       "description": "厚重且略带沙哑，充满情感起伏，忧心忡忡",
-      "preview_url": "/assets/media-tts/samples/vx_5151bcad7f76.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_5151bcad7f76.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_3bdc9559f777",
@@ -2450,7 +2693,8 @@
       "name": "Sentimental Lady",
       "language": "pt",
       "description": "尖锐明亮，夸张多变，傲慢且神经质",
-      "preview_url": "/assets/media-tts/samples/vx_3bdc9559f777.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_3bdc9559f777.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_2b957de40535",
@@ -2460,7 +2704,8 @@
       "name": "Serene Elder",
       "language": "pt",
       "description": "低沉沙哑，娓娓道来，故事感",
-      "preview_url": "/assets/media-tts/samples/vx_2b957de40535.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_2b957de40535.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_9bec878b35c6",
@@ -2470,7 +2715,8 @@
       "name": "Serene Woman",
       "language": "pt",
       "description": "明亮清晰，节奏灵活，舞台表演感",
-      "preview_url": "/assets/media-tts/samples/vx_9bec878b35c6.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_9bec878b35c6.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_ea377222dd16",
@@ -2480,7 +2726,8 @@
       "name": "Smart Young Girl",
       "language": "pt",
       "description": "高昂清脆，灵动活泼，机灵古怪",
-      "preview_url": "/assets/media-tts/samples/vx_ea377222dd16.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_ea377222dd16.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_b42e1e12251c",
@@ -2490,7 +2737,8 @@
       "name": "Steady Mentor",
       "language": "pt",
       "description": "沙哑粗犷，抑扬顿挫，狂妄阴森",
-      "preview_url": "/assets/media-tts/samples/vx_b42e1e12251c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_b42e1e12251c.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_51ee29921981",
@@ -2500,7 +2748,8 @@
       "name": "Stressed Lady",
       "language": "pt",
       "description": "颤抖且略带气声，急促不安，绝望且焦虑",
-      "preview_url": "/assets/media-tts/samples/vx_51ee29921981.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_51ee29921981.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_03acc603cfc7",
@@ -2510,7 +2759,8 @@
       "name": "Strict Boss",
       "language": "pt",
       "description": "清晰高亢，果断干脆，紧张专注",
-      "preview_url": "/assets/media-tts/samples/vx_03acc603cfc7.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_03acc603cfc7.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_a130568fe6a0",
@@ -2520,7 +2770,8 @@
       "name": "Strong-willed Boy",
       "language": "pt",
       "description": "清朗坚定，抑扬顿挫，热血",
-      "preview_url": "/assets/media-tts/samples/vx_a130568fe6a0.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_a130568fe6a0.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_9fb42dbfd455",
@@ -2530,7 +2781,8 @@
       "name": "Sweet Girl",
       "language": "pt",
       "description": "甜美娇俏，夸张戏剧化，虚荣傲慢",
-      "preview_url": "/assets/media-tts/samples/vx_9fb42dbfd455.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_9fb42dbfd455.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_cc9f75970c87",
@@ -2540,7 +2792,8 @@
       "name": "Theatrical Actor",
       "language": "pt",
       "description": "浑厚粗犷，戏剧腔调浓郁，傲慢且充满威胁",
-      "preview_url": "/assets/media-tts/samples/vx_cc9f75970c87.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_cc9f75970c87.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_cc3a010cda83",
@@ -2550,7 +2803,8 @@
       "name": "Thoughtful Lady",
       "language": "pt",
       "description": "柔和亲切，极具生活气息，充满关切",
-      "preview_url": "/assets/media-tts/samples/vx_cc3a010cda83.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_cc3a010cda83.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_5b0871c992fa",
@@ -2560,7 +2814,8 @@
       "name": "Thoughtful Man",
       "language": "pt",
       "description": "清亮干净，节奏轻快，诚恳活力",
-      "preview_url": "/assets/media-tts/samples/vx_5b0871c992fa.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_5b0871c992fa.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_5bbfe077c06d",
@@ -2570,7 +2825,8 @@
       "name": "Tough Boss",
       "language": "pt",
       "description": "略带沙哑，沉稳严肃，充满故事感",
-      "preview_url": "/assets/media-tts/samples/vx_5bbfe077c06d.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_5bbfe077c06d.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_3b4b7d10d35c",
@@ -2580,7 +2836,8 @@
       "name": "Upset Girl",
       "language": "pt",
       "description": "轻柔细腻，缓慢迟疑，忧郁歉意",
-      "preview_url": "/assets/media-tts/samples/vx_3b4b7d10d35c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_3b4b7d10d35c.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_95f45e5ef3a1",
@@ -2590,7 +2847,8 @@
       "name": "Whimsical Girl",
       "language": "pt",
       "description": "清脆明亮，灵动多变，奇幻色彩",
-      "preview_url": "/assets/media-tts/samples/vx_95f45e5ef3a1.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_95f45e5ef3a1.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_d8beb03cd9a8",
@@ -2600,7 +2858,8 @@
       "name": "Wise Scholar",
       "language": "pt",
       "description": "清亮明快，干脆利落，邻家亲切感",
-      "preview_url": "/assets/media-tts/samples/vx_d8beb03cd9a8.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_d8beb03cd9a8.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_2d5c3c4749ec",
@@ -2610,7 +2869,8 @@
       "name": "Wise lady",
       "language": "pt",
       "description": "清晰明亮，从容不迫，具有引导性",
-      "preview_url": "/assets/media-tts/samples/vx_2d5c3c4749ec.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_2d5c3c4749ec.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_e5586128c3dc",
@@ -2620,7 +2880,8 @@
       "name": "Optimistic Youth",
       "language": "ro",
       "description": "清脆明亮，轻快活泼，热情",
-      "preview_url": "/assets/media-tts/samples/vx_e5586128c3dc.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_e5586128c3dc.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_fd6a6cace7ed",
@@ -2630,7 +2891,8 @@
       "name": "Gentle Woman",
       "language": "ro",
       "description": "清亮悦耳，轻快流畅，亲切自然",
-      "preview_url": "/assets/media-tts/samples/vx_fd6a6cace7ed.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_fd6a6cace7ed.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_7d2b7d0ffe50",
@@ -2640,7 +2902,8 @@
       "name": "Reliable Man",
       "language": "ro",
       "description": "沉稳厚实，铿锵有力，权威感",
-      "preview_url": "/assets/media-tts/samples/vx_7d2b7d0ffe50.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_7d2b7d0ffe50.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_97e2c140df01",
@@ -2650,7 +2913,8 @@
       "name": "Energetic Youth",
       "language": "ro",
       "description": "清亮且略带沙哑质感，流畅自然，亲切且富有知识性",
-      "preview_url": "/assets/media-tts/samples/vx_97e2c140df01.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_97e2c140df01.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_eb937d7abe9c",
@@ -2660,7 +2924,8 @@
       "name": "Ambitious Woman",
       "language": "ru",
       "description": "略带沙哑，干练直爽，酷飒御姐感",
-      "preview_url": "/assets/media-tts/samples/vx_eb937d7abe9c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_eb937d7abe9c.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_3c20fdfe3d1a",
@@ -2670,7 +2935,8 @@
       "name": "Attractive Guy",
       "language": "ru",
       "description": "低沉磁性，语调慵懒，霸道男友感",
-      "preview_url": "/assets/media-tts/samples/vx_3c20fdfe3d1a.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_3c20fdfe3d1a.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_68ad84a6c5fa",
@@ -2680,7 +2946,8 @@
       "name": "Bad-tempered Boy",
       "language": "ru",
       "description": "稚嫩清亮，干脆利落，二次元画面感",
-      "preview_url": "/assets/media-tts/samples/vx_68ad84a6c5fa.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_68ad84a6c5fa.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_9ad640a9c4b3",
@@ -2690,7 +2957,8 @@
       "name": "Bright Queen",
       "language": "ru",
       "description": "略带沙哑，干脆利落，不羁野性",
-      "preview_url": "/assets/media-tts/samples/vx_9ad640a9c4b3.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_9ad640a9c4b3.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_735e7ca4bd56",
@@ -2700,7 +2968,8 @@
       "name": "Crazy Girl",
       "language": "ru",
       "description": "高亢明亮，充满爆发力，古灵精怪",
-      "preview_url": "/assets/media-tts/samples/vx_735e7ca4bd56.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_735e7ca4bd56.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_4cba64ed158b",
@@ -2710,7 +2979,8 @@
       "name": "Handsome Childhood Friend",
       "language": "ru",
       "description": "低沉沙哑，慵懒随意，耳边低语感",
-      "preview_url": "/assets/media-tts/samples/vx_4cba64ed158b.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_4cba64ed158b.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_1186883e31da",
@@ -2720,7 +2990,8 @@
       "name": "Pessimistic Girl",
       "language": "ru",
       "description": "清冷脆弱，克制不安，悲观内向",
-      "preview_url": "/assets/media-tts/samples/vx_1186883e31da.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_1186883e31da.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_29dc347dd48d",
@@ -2730,7 +3001,8 @@
       "name": "Reliable Man",
       "language": "ru",
       "description": "低沉沙哑，沉稳有力，历尽沧桑",
-      "preview_url": "/assets/media-tts/samples/vx_29dc347dd48d.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_29dc347dd48d.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_d83395db0316",
@@ -2740,7 +3012,8 @@
       "name": "Confident Woman",
       "language": "th",
       "description": "明亮，轻快流畅，自信",
-      "preview_url": "/assets/media-tts/samples/vx_d83395db0316.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_d83395db0316.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_25a3c6f827cc",
@@ -2750,7 +3023,8 @@
       "name": "Energetic Woman",
       "language": "th",
       "description": "清亮，条理清晰，充满活力",
-      "preview_url": "/assets/media-tts/samples/vx_25a3c6f827cc.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_25a3c6f827cc.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_c9d2da5b684d",
@@ -2760,7 +3034,8 @@
       "name": "Serene Man",
       "language": "th",
       "description": "醇厚温润，娓娓道来，治愈感",
-      "preview_url": "/assets/media-tts/samples/vx_c9d2da5b684d.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_c9d2da5b684d.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_f4b30f018863",
@@ -2770,7 +3045,8 @@
       "name": "Friendly Man",
       "language": "th",
       "description": "明亮亲切，轻快流畅，极具亲和力",
-      "preview_url": "/assets/media-tts/samples/vx_f4b30f018863.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_f4b30f018863.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_f7dd55e8799b",
@@ -2780,7 +3056,8 @@
       "name": "Calm Woman",
       "language": "tr",
       "description": "柔和质感，舒缓流畅，沉稳亲和",
-      "preview_url": "/assets/media-tts/samples/vx_f7dd55e8799b.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_f7dd55e8799b.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_aa5c1bc0fa87",
@@ -2790,7 +3067,8 @@
       "name": "Trustworthy man",
       "language": "tr",
       "description": "低沉沙哑，娓娓道来，质朴真诚",
-      "preview_url": "/assets/media-tts/samples/vx_aa5c1bc0fa87.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_aa5c1bc0fa87.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_cd0fa5c23640",
@@ -2800,7 +3078,8 @@
       "name": "Calm Woman",
       "language": "uk",
       "description": "知性温婉，娓娓道来，治愈感",
-      "preview_url": "/assets/media-tts/samples/vx_cd0fa5c23640.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_cd0fa5c23640.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_1e94c1d959b1",
@@ -2810,7 +3089,8 @@
       "name": "Wise Scholar",
       "language": "uk",
       "description": "清亮质朴，自然随性，亲切接地气",
-      "preview_url": "/assets/media-tts/samples/vx_1e94c1d959b1.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_1e94c1d959b1.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_565bf767e403",
@@ -2820,7 +3100,8 @@
       "name": "Kind-hearted girl",
       "language": "vi",
       "description": "甜美细腻，轻快流畅，邻家女孩",
-      "preview_url": "/assets/media-tts/samples/vx_565bf767e403.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_565bf767e403.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_dbd27c4a9332",
@@ -2830,7 +3111,8 @@
       "name": "嚣张小姐",
       "language": "zh",
       "description": "娇俏明亮，灵动跳跃，傲娇自信",
-      "preview_url": "/assets/media-tts/samples/vx_dbd27c4a9332.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_dbd27c4a9332.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_e362eade68aa",
@@ -2840,7 +3122,8 @@
       "name": "绅士青年",
       "language": "zh",
       "description": "",
-      "preview_url": null
+      "preview_url": null,
+      "avatar_url": null
     },
     {
       "id": "vx_95a34f4db476",
@@ -2850,7 +3133,8 @@
       "name": "害羞少女",
       "language": "zh",
       "description": "",
-      "preview_url": null
+      "preview_url": null,
+      "avatar_url": null
     },
     {
       "id": "vx_b5721d197297",
@@ -2860,7 +3144,8 @@
       "name": "清脆少女",
       "language": "zh",
       "description": "清脆甜美，娓娓道来，治愈亲切",
-      "preview_url": "/assets/media-tts/samples/vx_b5721d197297.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_b5721d197297.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_de46739d858d",
@@ -2870,7 +3155,8 @@
       "name": "憨憨萌兽",
       "language": "zh",
       "description": "软萌稚嫩，轻快活泼，天真烂漫",
-      "preview_url": "/assets/media-tts/samples/vx_de46739d858d.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_de46739d858d.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_1f3e27224978",
@@ -2880,7 +3166,8 @@
       "name": "探索少女",
       "language": "zh",
       "description": "",
-      "preview_url": null
+      "preview_url": null,
+      "avatar_url": null
     },
     {
       "id": "vx_104f02ff8925",
@@ -2890,7 +3177,8 @@
       "name": "温柔学姐",
       "language": "zh",
       "description": "温婉柔和，娓娓道来，亲切且富有感染力",
-      "preview_url": "/assets/media-tts/samples/vx_104f02ff8925.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_104f02ff8925.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_8b222c735591",
@@ -2900,7 +3188,8 @@
       "name": "温润青年",
       "language": "zh",
       "description": "清亮干净，娓娓道来，邻家大哥哥",
-      "preview_url": "/assets/media-tts/samples/vx_8b222c735591.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_8b222c735591.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_2180a4ead8ae",
@@ -2910,7 +3199,8 @@
       "name": "温润男声",
       "language": "zh",
       "description": "温润清亮，娓娓道来，阳光自律",
-      "preview_url": "/assets/media-tts/samples/vx_2180a4ead8ae.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_2180a4ead8ae.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_ae24e3e1a4ea",
@@ -2920,7 +3210,8 @@
       "name": "港普空姐",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_ae24e3e1a4ea.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_ae24e3e1a4ea.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_e8ba9897e783",
@@ -2930,7 +3221,8 @@
       "name": "搞笑大爷",
       "language": "zh",
       "description": "沧桑醇厚，松弛接地气，幽默热心",
-      "preview_url": "/assets/media-tts/samples/vx_e8ba9897e783.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_e8ba9897e783.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_28fbfb3c0984",
@@ -2940,7 +3232,8 @@
       "name": "睿智少女",
       "language": "zh",
       "description": "",
-      "preview_url": null
+      "preview_url": null,
+      "avatar_url": null
     },
     {
       "id": "vx_20f901e829ec",
@@ -2950,7 +3243,8 @@
       "name": "热心大婶",
       "language": "zh",
       "description": "高昂明亮，碎碎念，生活气息",
-      "preview_url": "/assets/media-tts/samples/vx_20f901e829ec.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_20f901e829ec.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_89ee83bf0e85",
@@ -2960,7 +3254,8 @@
       "name": "花甲奶奶",
       "language": "zh",
       "description": "略带沙哑，娓娓道来，极具亲和力",
-      "preview_url": "/assets/media-tts/samples/vx_89ee83bf0e85.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_89ee83bf0e85.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_7fdb3e6c839a",
@@ -2970,7 +3265,8 @@
       "name": "慵懒少女",
       "language": "zh",
       "description": "",
-      "preview_url": null
+      "preview_url": null,
+      "avatar_url": null
     },
     {
       "id": "vx_e26fa57b1bf7",
@@ -2980,7 +3276,8 @@
       "name": "抒情男声",
       "language": "zh",
       "description": "温润醇厚，娓娓道来，治愈感",
-      "preview_url": "/assets/media-tts/samples/vx_e26fa57b1bf7.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_e26fa57b1bf7.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_c81caef80f13",
@@ -2990,7 +3287,8 @@
       "name": "播报男声",
       "language": "zh",
       "description": "清澈干净，自然流畅，邻家大哥哥",
-      "preview_url": "/assets/media-tts/samples/vx_c81caef80f13.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_c81caef80f13.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_6c8a70db2cd2",
@@ -3000,7 +3298,8 @@
       "name": "傲娇御姐",
       "language": "zh",
       "description": "低沉沙哑，慵懒舒缓，性感撩人",
-      "preview_url": "/assets/media-tts/samples/vx_6c8a70db2cd2.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_6c8a70db2cd2.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_f1bca3d6c1d3",
@@ -3010,7 +3309,8 @@
       "name": "新闻女声",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_f1bca3d6c1d3.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_f1bca3d6c1d3.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_4a8fe2e72352",
@@ -3020,7 +3320,8 @@
       "name": "清澈邻家弟弟",
       "language": "zh",
       "description": "清澈干净，娓娓道来，邻家男孩感",
-      "preview_url": "/assets/media-tts/samples/vx_4a8fe2e72352.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_4a8fe2e72352.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_7ab726df58e7",
@@ -3030,7 +3331,8 @@
       "name": "电台男主播",
       "language": "zh",
       "description": "清亮明快，干脆利落，略带傲娇",
-      "preview_url": "/assets/media-tts/samples/vx_7ab726df58e7.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_7ab726df58e7.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_0086eaeca594",
@@ -3040,7 +3342,8 @@
       "name": "沉稳高管",
       "language": "zh",
       "description": "低沉厚实，磁性，从容不迫",
-      "preview_url": "/assets/media-tts/samples/vx_0086eaeca594.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_0086eaeca594.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_c7a25791a4aa",
@@ -3050,7 +3353,8 @@
       "name": "真诚青年",
       "language": "zh",
       "description": "清澈干净，娓娓道来，具有治愈感",
-      "preview_url": "/assets/media-tts/samples/vx_c7a25791a4aa.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_c7a25791a4aa.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_5e9d3cadd191",
@@ -3060,7 +3364,8 @@
       "name": "软软女孩",
       "language": "zh",
       "description": "甜美软糯，轻快自然，亲切活泼",
-      "preview_url": "/assets/media-tts/samples/vx_5e9d3cadd191.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_5e9d3cadd191.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_f27bbb876b57",
@@ -3070,7 +3375,8 @@
       "name": "南方小哥",
       "language": "zh",
       "description": "温润细腻，娓娓道来，亲切邻家",
-      "preview_url": "/assets/media-tts/samples/vx_f27bbb876b57.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_f27bbb876b57.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_bc013a6bdbeb",
@@ -3080,7 +3386,8 @@
       "name": "率真弟弟",
       "language": "zh",
       "description": "明朗干净，直率自然，邻家少年",
-      "preview_url": "/assets/media-tts/samples/vx_bc013a6bdbeb.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_bc013a6bdbeb.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_4a4ebb36dcef",
@@ -3090,7 +3397,8 @@
       "name": "嘴硬竹马",
       "language": "zh",
       "description": "清朗温暖，自然随性，邻家大男孩",
-      "preview_url": "/assets/media-tts/samples/vx_4a4ebb36dcef.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_4a4ebb36dcef.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_b65575741de6",
@@ -3100,7 +3408,8 @@
       "name": "甜美女声",
       "language": "zh",
       "description": "甜美细腻，舒缓自然，邻家亲切感",
-      "preview_url": "/assets/media-tts/samples/vx_b65575741de6.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_b65575741de6.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_36dd4308d525",
@@ -3110,7 +3419,8 @@
       "name": "不羁青年",
       "language": "zh",
       "description": "低沉磁性，慵懒随意，霸道",
-      "preview_url": "/assets/media-tts/samples/vx_36dd4308d525.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_36dd4308d525.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_2e4ac4c72a88",
@@ -3120,7 +3430,8 @@
       "name": "慈爱阿姨",
       "language": "zh",
       "description": "",
-      "preview_url": null
+      "preview_url": null,
+      "avatar_url": null
     },
     {
       "id": "vx_922f064b150d",
@@ -3130,7 +3441,8 @@
       "name": "温暖闺蜜",
       "language": "zh",
       "description": "温柔清亮，舒缓且充满关切，亲切自然",
-      "preview_url": "/assets/media-tts/samples/vx_922f064b150d.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_922f064b150d.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_8e7f274efe1d",
@@ -3140,7 +3452,8 @@
       "name": "温暖少女",
       "language": "zh",
       "description": "甜美细腻，娓娓道来，治愈感",
-      "preview_url": "/assets/media-tts/samples/vx_8e7f274efe1d.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_8e7f274efe1d.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_15b5199da358",
@@ -3150,7 +3463,8 @@
       "name": "善良少女",
       "language": "zh",
       "description": "",
-      "preview_url": null
+      "preview_url": null,
+      "avatar_url": null
     },
     {
       "id": "vx_812e9a26bdc1",
@@ -3160,7 +3474,8 @@
       "name": "阅历姐姐",
       "language": "zh",
       "description": "温润厚实，娓娓道来，极具亲和力",
-      "preview_url": "/assets/media-tts/samples/vx_812e9a26bdc1.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_812e9a26bdc1.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_02f30634f1fc",
@@ -3170,7 +3485,8 @@
       "name": "机械战甲",
       "language": "zh",
       "description": "金属质感，机械顿挫，科幻色彩",
-      "preview_url": "/assets/media-tts/samples/vx_02f30634f1fc.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_02f30634f1fc.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_4486731e5671",
@@ -3180,7 +3496,8 @@
       "name": "睿智长者",
       "language": "zh",
       "description": "",
-      "preview_url": null
+      "preview_url": null,
+      "avatar_url": null
     },
     {
       "id": "vx_867a6d2a918f",
@@ -3190,7 +3507,8 @@
       "name": "霸道少爷",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_867a6d2a918f.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_867a6d2a918f.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_019dd06ac37e",
@@ -3200,7 +3518,8 @@
       "name": "病娇弟弟",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_019dd06ac37e.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_019dd06ac37e.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_3c2f3ef64f1e",
@@ -3210,7 +3529,8 @@
       "name": "卡通猪小琪",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_3c2f3ef64f1e.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_3c2f3ef64f1e.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_ddec2ec2431c",
@@ -3220,7 +3540,8 @@
       "name": "纯真学弟",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_ddec2ec2431c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_ddec2ec2431c.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_2aea325a19d3",
@@ -3230,7 +3551,8 @@
       "name": "聪明男童",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_2aea325a19d3.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_2aea325a19d3.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_1031e93f6f7e",
@@ -3240,7 +3562,8 @@
       "name": "可爱男童",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_1031e93f6f7e.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_1031e93f6f7e.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_3f413bdaead6",
@@ -3250,7 +3573,8 @@
       "name": "淡雅学姐",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_3f413bdaead6.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_3f413bdaead6.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_f40255380818",
@@ -3260,7 +3584,8 @@
       "name": "嗲嗲学妹",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_f40255380818.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_f40255380818.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_8c91dd8e0c5d",
@@ -3270,7 +3595,8 @@
       "name": "成熟女性音色",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_8c91dd8e0c5d.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_8c91dd8e0c5d.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_3841b510d604",
@@ -3280,7 +3606,8 @@
       "name": "成熟女性音色-beta",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_3841b510d604.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_3841b510d604.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_9f69a970029f",
@@ -3290,7 +3617,8 @@
       "name": "少女音色",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_9f69a970029f.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_9f69a970029f.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_250127677f2d",
@@ -3300,7 +3628,8 @@
       "name": "少女音色-beta",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_250127677f2d.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_250127677f2d.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_61815283c61d",
@@ -3310,7 +3639,8 @@
       "name": "甜美女性音色",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_61815283c61d.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_61815283c61d.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_4954bd6f5cf6",
@@ -3320,7 +3650,8 @@
       "name": "甜美女性音色-beta",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_4954bd6f5cf6.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_4954bd6f5cf6.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_1df3d89ff417",
@@ -3330,7 +3661,8 @@
       "name": "御姐音色",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_1df3d89ff417.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_1df3d89ff417.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_c51bee8f04ad",
@@ -3340,7 +3672,8 @@
       "name": "御姐音色-beta",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_c51bee8f04ad.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_c51bee8f04ad.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_3afdc09aabd0",
@@ -3350,7 +3683,8 @@
       "name": "俊朗男友",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_3afdc09aabd0.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_3afdc09aabd0.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_204b072f2472",
@@ -3360,7 +3694,8 @@
       "name": "冷淡学长",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_204b072f2472.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_204b072f2472.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_bbeae53af2a3",
@@ -3370,7 +3705,8 @@
       "name": "萌萌女童",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_bbeae53af2a3.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_bbeae53af2a3.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_bb809edcd9fc",
@@ -3380,7 +3716,8 @@
       "name": "霸道青年音色",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_bb809edcd9fc.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_bb809edcd9fc.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_2763b5dc19ba",
@@ -3390,7 +3727,8 @@
       "name": "霸道青年音色-beta",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_2763b5dc19ba.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_2763b5dc19ba.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_b279f4157ab1",
@@ -3400,7 +3738,8 @@
       "name": "青年大学生音色",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_b279f4157ab1.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_b279f4157ab1.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_29c9c66d0c41",
@@ -3410,7 +3749,8 @@
       "name": "青年大学生音色-beta",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_29c9c66d0c41.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_29c9c66d0c41.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_8e4b39927e9a",
@@ -3420,7 +3760,8 @@
       "name": "精英青年音色",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_8e4b39927e9a.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_8e4b39927e9a.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_dc199a3fdec1",
@@ -3430,7 +3771,8 @@
       "name": "精英青年音色-beta",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_dc199a3fdec1.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_dc199a3fdec1.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_1f40faeb2696",
@@ -3440,7 +3782,8 @@
       "name": "青涩青年音色",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_1f40faeb2696.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_1f40faeb2696.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_165cb1decd85",
@@ -3450,7 +3793,8 @@
       "name": "青涩青年音色-beta",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_165cb1decd85.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_165cb1decd85.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_42f085cf48e8",
@@ -3460,7 +3804,8 @@
       "name": "俏皮萌妹",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_42f085cf48e8.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_42f085cf48e8.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_7c727acf00bf",
@@ -3470,7 +3815,8 @@
       "name": "甜心小玲",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_7c727acf00bf.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_7c727acf00bf.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_2c7eb9a9533e",
@@ -3480,7 +3826,8 @@
       "name": "妩媚御姐",
       "language": "zh",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_2c7eb9a9533e.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_2c7eb9a9533e.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_4ec576970a3c",
@@ -3490,7 +3837,8 @@
       "name": "可爱女孩",
       "language": "zhYue",
       "description": "稚嫩甜美，灵动自然，纯真",
-      "preview_url": "/assets/media-tts/samples/vx_4ec576970a3c.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_4ec576970a3c.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_cab7bbf07a16",
@@ -3500,7 +3848,8 @@
       "name": "温柔女声",
       "language": "zhYue",
       "description": "略带沙哑，语速较快，直率自然",
-      "preview_url": "/assets/media-tts/samples/vx_cab7bbf07a16.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_cab7bbf07a16.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_552ceaf08648",
@@ -3510,7 +3859,8 @@
       "name": "善良女声",
       "language": "zhYue",
       "description": "略带沙哑，娓娓道来，亲切犀利",
-      "preview_url": "/assets/media-tts/samples/vx_552ceaf08648.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_552ceaf08648.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_da9d879e06cc",
@@ -3520,7 +3870,8 @@
       "name": "活泼男声",
       "language": "zhYue",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_da9d879e06cc.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_da9d879e06cc.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_c7d39e864f30",
@@ -3530,7 +3881,8 @@
       "name": "专业女主持",
       "language": "zhYue",
       "description": "清晰明亮，紧凑流畅，新闻现场感",
-      "preview_url": "/assets/media-tts/samples/vx_c7d39e864f30.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_c7d39e864f30.mp3",
+      "avatar_url": null
     },
     {
       "id": "vx_233f915b901d",
@@ -3540,7 +3892,8 @@
       "name": "专业男主持",
       "language": "zhYue",
       "description": "",
-      "preview_url": "/assets/media-tts/samples/vx_233f915b901d.mp3"
+      "preview_url": "/assets/media-tts/samples/vx_233f915b901d.mp3",
+      "avatar_url": null
     }
   ]
 }

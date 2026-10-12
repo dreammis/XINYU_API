@@ -24,6 +24,9 @@ test('manifest assets survive Git text conversion and a Linux-style checkout byt
       'gitbook/assets/fixture/voices.json': Buffer.from('{\r\n  "voices": []\r\n}\r\n'),
       'catalog/fixture/assets/samples/voice.mp3': Buffer.from([255, 251, 144, 0, 13, 10, 255]),
       'gitbook/assets/fixture/samples/voice.mp3': Buffer.from([255, 251, 144, 0, 13, 10, 255]),
+      'projects/fixture/newapi/media-tts/public-assets/avatars/voice.png': Buffer.from([137,80,78,71,13,10,26,10,0,255]),
+      'catalog/fixture/assets/avatars/voice.png': Buffer.from([137,80,78,71,13,10,26,10,0,255]),
+      'gitbook/assets/fixture/avatars/voice.png': Buffer.from([137,80,78,71,13,10,26,10,0,255]),
     };
     for (const [name, bytes] of Object.entries(assets)) {
       await mkdir(path.dirname(path.join(directory, name)), { recursive: true });
@@ -62,6 +65,8 @@ test('binary public assets retain exact bytes and fail on hash or path drift', a
     const guides = {zh: await readFile(path.join(destination, 'guide.zh.md'), 'utf8'), en: await readFile(path.join(destination, 'guide.en.md'), 'utf8')};
     for (const assets of [{'../secret.mp3': 'public/audio.mp3'}, {'sample.mp3':'../secret.mp3'}, {'sample.mp3':'private/source.py'}, ['public/audio.mp3']]) assert.throws(() => validateBundle({...manifest, assets}, spec, guides));
     manifest.assets = {'sample.mp3':'public/sample.mp3'};
+    for (const extension of ['png', 'jpg', 'webp']) validateBundle({...manifest, assets: {[`avatar.${extension}`]: `public/avatar.${extension}`}}, spec, guides);
+    for (const extension of ['svg', 'html']) assert.throws(() => validateBundle({...manifest, assets: {[`avatar.${extension}`]: `public/avatar.${extension}`}}, spec, guides), /unsupported public asset/);
     const binary = Buffer.from([255,251,144,0,128,254,0,10]);
     const manifestBytes = JSON.stringify(manifest, null, 2) + '\n';
     await mkdir(path.join(destination, 'assets'), {recursive:true});

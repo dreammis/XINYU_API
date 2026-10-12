@@ -1,0 +1,38 @@
+{
+  "repository": "QuantumNous/new-api",
+  "tag": "v1.0.0-rc.41",
+  "revision": "2035a82aeb5414253a728bd937d4b8f97aa99b9b",
+  "retrievedAt": "2026-10-10T08:50:20.3242233Z",
+  "files": [
+    {
+      "source": "docs/plugin-api/README.md",
+      "url": "https://raw.githubusercontent.com/QuantumNous/new-api/2035a82aeb5414253a728bd937d4b8f97aa99b9b/docs/plugin-api/README.md",
+      "file": "newapi/reference/v1.0.0-rc.41/plugin-api/README.md",
+      "sha256": "67bca48689b670ab14fdcb9d034841d2c2f385aafd48433ae59076a8e8edc042"
+    },
+    {
+      "source": "docs/plugin-api/v1.md",
+      "url": "https://raw.githubusercontent.com/QuantumNous/new-api/2035a82aeb5414253a728bd937d4b8f97aa99b9b/docs/plugin-api/v1.md",
+      "file": "newapi/reference/v1.0.0-rc.41/plugin-api/v1.md",
+      "sha256": "90a6be21a649694625d583909cd8ad14b8a8c92c8ef3f78ebacc1b3ed1c17200"
+    },
+    {
+      "source": "docs/plugin-api/v1.d.ts",
+      "url": "https://raw.githubusercontent.com/QuantumNous/new-api/2035a82aeb5414253a728bd937d4b8f97aa99b9b/docs/plugin-api/v1.d.ts",
+      "file": "newapi/reference/v1.0.0-rc.41/plugin-api/v1.d.ts",
+      "sha256": "8be7bc105b23abdccffcc1b11bb2c911299920bb2fbd26cecfc18608b1773e31"
+    },
+    {
+      "source": "LICENSE",
+      "url": "https://raw.githubusercontent.com/QuantumNous/new-api/2035a82aeb5414253a728bd937d4b8f97aa99b9b/LICENSE",
+      "file": "newapi/reference/v1.0.0-rc.41/LICENSE",
+      "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef"
+    },
+    {
+      "source": "docs/plugin-api/v1.schema.json",
+      "url": "https://raw.githubusercontent.com/QuantumNous/new-api/2035a82aeb5414253a728bd937d4b8f97aa99b9b/docs/plugin-api/v1.schema.json",
+      "file": "newapi/reference/v1.0.0-rc.41/plugin-api/v1.schema.json",
+      "sha256": "27052347ab0f524d0678158d829c6ad1804c4d51facca226b77b2b9110c1c3b9"
+    }
+  ]
+}
